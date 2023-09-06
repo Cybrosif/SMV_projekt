@@ -50,7 +50,7 @@
                     <input type="text" name="" id="" class="form-control my-4 py-2" placeholder="Geslo" />
                     <div class="text-center mt-1">
                         <button class="btn btn-primary">Prijava</button>
-                        <a href="#" class="nav-link">Še nimate profila?</a>
+                        <a href="#" class="nav-link">Že imate profil?</a>
                     </div>
                     </form>
                 </div>
