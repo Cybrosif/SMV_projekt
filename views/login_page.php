@@ -10,16 +10,36 @@
         .card {
             width: 500px;
             height: 400px;
-            position: absolute;
+            padding: 20px;
+            
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .container{
+          position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            padding: 20px; 
+            
+            width: 1200px;
+            height: 600px;
+        }
+
+        .line{
+          position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .info{
+          padding: 20px;
         }
 </style>
 
   <body> 
-            <div class="card border-0 shadow">
+        <div class="container d-flex flex-row border-0 shadow rounded">
+            <div class="card border-0">
                 <div class="card-body">
                     <form action="">
                     <svg class="form-control border-0 my-3" xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -34,8 +54,12 @@
                     </div>
                     </form>
                 </div>
-        </div>
-            
+          </div>
+          <div class="vr line" style="height: 90%;"></div>
+          <div class="info">
+                  adsgjosjn
+                </div>
+      </div>   
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
   </body>
