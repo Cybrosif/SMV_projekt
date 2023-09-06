@@ -38,7 +38,7 @@
         .logo{
           width:400px;
           margin-top: 100px;
-          margin-left:120px;
+          margin-left:140px;
         }
 </style>
 
