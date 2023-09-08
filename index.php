@@ -1,3 +1,3 @@
 <?php
-    include('status_check.php');
+    //include('status_check.php');
 ?>
