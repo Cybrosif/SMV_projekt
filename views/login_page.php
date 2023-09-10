@@ -54,7 +54,7 @@
                     <input type="text" name="password" id="" class="form-control my-2 py-2" placeholder="Geslo" />
                     <div class="my-4"></div>
                     <div class="text-center mt-1">
-                        <button class="btn btn-primary " name='login' >Prijava</button>
+                        <button class="btn btn-primary " type="submit" name='login' >Prijava</button>
                         <a href="registration_page.php" class="nav-link">Še nimate profila?</a>
                     </div>
                     </form>

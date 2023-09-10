@@ -1,6 +1,5 @@
 <?php
           include '../links/db.php';
-        exit();
         if (isset($_POST['login'])) {
             $email = $_POST['email'];
             $password = $_POST['password'];
