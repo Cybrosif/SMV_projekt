@@ -1,6 +1,6 @@
 <?php
   include '../session_start.php';
-  if($_SESSION['prijavljen'] == true){
+  if(!empty($_SESSION['prijavljen']) && $_SESSION['prijavljen'] == true){
     header("Location: home.php");
 }
 ?>
