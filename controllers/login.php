@@ -6,8 +6,6 @@
         if (isset($_POST['login'])) {
             $email = $_POST['email'];
             $password = $_POST['password'];
-            echo $email;
-            echo $password;
         }
         else{
             header("Location: ../index.php");
@@ -16,15 +14,14 @@
 
         $hash = password_hash($password, PASSWORD_BCRYPT);
 
-          $stmt = $link->prepare("SELECT id, ime, priimek, geslo, vloga  FROM Uporabniki WHERE Email = ?");
-          $stmt->bind_param("s", $email,);
-          $stmt->execute();
-          $stmt->bind_result($id, $ime, $priimek, $geslo, $vloga);
-          $stmt->fetch();
-          $stmt->close();
+        $stmt = $link->prepare("SELECT id, ime, priimek, geslo, vloga FROM Uporabniki WHERE Email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->bind_result($id, $ime, $priimek, $hashedPassword, $vloga);
+        $stmt->fetch();
+        $stmt->close();
           
-          
-          if($geslo == $hash){
+          if(password_verify($password, $hashedPassword)){
             $_SESSION['prijavljen'] = true;
             $_SESSION['user_id'] = $id;
             $_SESSION['user_ime'] = $ime;
