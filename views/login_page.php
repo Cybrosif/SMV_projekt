@@ -1,3 +1,9 @@
+<?php
+  include '../session_start.php';
+  if($_SESSION['prijavljen'] == true){
+    header("Location: home.php");
+}
+?>
 <!doctype html>
 <html lang="en">
   <head>

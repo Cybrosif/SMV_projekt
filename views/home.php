@@ -1,3 +1,7 @@
+<?php
+include '../session_start.php';
+    echo  $_SESSION['user_email'];
+?>
 <!doctype html>
 <html lang="en">
 

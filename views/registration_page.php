@@ -1,3 +1,9 @@
+<?php
+  include '../session_start.php';
+  if($_SESSION['prijavljen'] == true){
+    header("Location: home.php");
+}
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -42,20 +48,20 @@
         <div class="container d-flex flex-row border-0 shadow rounded">
             <div class="card border-0">
                 <div class="card-body">
-                    <form action="" id="registrationForm">
+                    <form action="../controllers/registration.php" id="registrationForm" method="POST">
                         <svg class="form-control border-0 my-3" xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                           <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                           <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                         </svg>
-                        <input type="text" name="" id="" class="form-control my-1 py-2" placeholder="Ime" />
-                        <input type="text" name="" id="" class="form-control my-1 py-2" placeholder="Priimek" />
-                        <input type="text" name="" id="" class="form-control my-3 py-2" placeholder="Email" />
+                        <input type="text" name="name" id="" class="form-control my-1 py-2" placeholder="Ime" />
+                        <input type="text" name="surname" id="" class="form-control my-1 py-2" placeholder="Priimek" />
+                        <input type="text" name="email" id="" class="form-control my-3 py-2" placeholder="Email" />
                         <input type="password" name="password" id="password" class="form-control my-1 py-2" placeholder="Geslo" />
                         <input type="password" name="confirmPassword" id="confirmPassword" class="form-control my-1 py-2" placeholder="Ponovite geslo" />
                         <span id="passwordWarning" class="text-danger" style="margin-bottom: 215px;"></span>
                         <div class="my-4"></div>
                         <div class="text-center mt-1">
-                            <button class="btn btn-primary">Registracija</button>
+                            <button class="btn btn-primary" name="registration">Registracija</button>
                             <a href="login_page.php" class="nav-link">Že imate profil?</a>
                         </div>
                     </form>
