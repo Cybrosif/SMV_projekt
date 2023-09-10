@@ -1,6 +1,6 @@
 <?php
-    $user = 'root';
-    $password = '';
+    $user = 'username';
+    $password = 'password';
     $db = 'classorbit';
     $host = 'localhost';
     $port = 3306;
