@@ -42,9 +42,9 @@
         }
 </style>
         <?php
-          include '../links/db.php';
+          /*include '../links/db.php';
 
-          $imeToSearch = "Anej"; // Replace with the actual name you want to search for
+          $imeToSearch = "Anej";
 
           $stmt = $link->prepare("SELECT * FROM Uporabniki WHERE Ime = ?");
           $stmt->bind_param("s", $imeToSearch);
@@ -62,7 +62,7 @@
               echo "ID: $id, Ime: $Ime, Priimek: $Priimek, Vloga: $Vloga, Geslo: $Geslo, Email: $Email<br>";
           }
 
-          $stmt->close();
+          $stmt->close();*/
 
         ?>
   <body> 
