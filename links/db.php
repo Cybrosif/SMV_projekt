@@ -14,14 +14,4 @@
        $db,
        $port
     );
-
-    if ($success) {
-        
-        echo 'ja';
-        
-        // Rest of your PHP code here
-    } else {
-        echo "Database connection failed.";
-    }
-    exit();
 ?>

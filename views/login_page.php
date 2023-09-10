@@ -43,13 +43,27 @@
 </style>
         <?php
           include '../links/db.php';
-          $stmt = $link->prepare("SELECT * FROM Uporabniki WHERE Ime = ?");
-          $stmt->bind_param("s", "Anej");
-          $stmt->execute();
-          $stmt->bind_result($id, $Ime, $Priimek, $Vloga, $Geslo,$Email);
-          $stmt->fetch();
 
-          echo $id;
+          $imeToSearch = "Anej"; // Replace with the actual name you want to search for
+
+          $stmt = $link->prepare("SELECT * FROM Uporabniki WHERE Ime = ?");
+          $stmt->bind_param("s", $imeToSearch);
+          $stmt->execute();
+          $result = $stmt->get_result();
+
+          while ($row = $result->fetch_assoc()) {
+              $id = $row['ID'];
+              $Ime = $row['Ime'];
+              $Priimek = $row['Priimek'];
+              $Vloga = $row['Vloga'];
+              $Geslo = $row['Geslo'];
+              $Email = $row['Email'];
+
+              echo "ID: $id, Ime: $Ime, Priimek: $Priimek, Vloga: $Vloga, Geslo: $Geslo, Email: $Email<br>";
+          }
+
+          $stmt->close();
+
         ?>
   <body> 
         <div class="container d-flex flex-row border-0 shadow rounded">
