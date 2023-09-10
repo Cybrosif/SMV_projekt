@@ -42,7 +42,7 @@
         }
 </style>
         <?php
-          include '../database.php';
+          include '../links/db.php';
           $stmt = $link->prepare("SELECT * FROM Uporabniki WHERE Ime = ?");
           $stmt->bind_param("s", "Anej");
           $stmt->execute();
