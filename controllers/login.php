@@ -19,4 +19,5 @@
           $stmt->close();
 
           echo 'id';
+          exit();
         ?>
