@@ -39,7 +39,7 @@
         $hash = password_hash($password, PASSWORD_BCRYPT);
 
         $stmt = $link->prepare("INSERT INTO Uporabniki (Ime, Priimek, Geslo, Email) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssss", $name, $surname, $email, $password);
+        $stmt->bind_param("ssss", $name, $surname, $email, $hash);
         $stmt->execute();
 
         $stmt = $link->prepare("SELECT id, ime, priimek, geslo, vloga  FROM Uporabniki WHERE Email = ?");

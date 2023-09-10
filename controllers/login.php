@@ -24,7 +24,7 @@
           $stmt->close();
           
           
-          if($geslo == $password){
+          if($geslo == $hash){
             $_SESSION['prijavljen'] = true;
             $_SESSION['user_id'] = $id;
             $_SESSION['user_ime'] = $ime;
