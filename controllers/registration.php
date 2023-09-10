@@ -38,7 +38,7 @@
     else {
         $hash = password_hash($password, PASSWORD_BCRYPT);
 
-        $stmt = $link->prepare("INSERT INTO Uporabniki (Ime, Priimek, Geslo, Email) VALUES (?, ?, ?, ?)");
+        $stmt = $link->prepare("INSERT INTO Uporabniki (Ime, Priimek, Email, Geslo) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("ssss", $name, $surname, $email, $hash);
         $stmt->execute();
 
