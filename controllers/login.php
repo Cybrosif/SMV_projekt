@@ -17,6 +17,6 @@
           $stmt->bind_result($id, $ime, $priimek, $vloga, $geslo, $email);
           $stmt->close();
 
-          echo 'id';
+          echo $id;
           exit();
         ?>
