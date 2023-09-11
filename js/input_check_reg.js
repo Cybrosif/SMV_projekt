@@ -1,7 +1,6 @@
 const passwordInput = document.getElementById("password");
 const confirmPasswordInput = document.getElementById("confirmPassword");
 const passwordWarning = document.getElementById("passwordWarning");
-const warning = document.getElementById("warning");
 const registrationForm = document.getElementById("registrationForm");
 const submitButton = document.querySelector(".btn.btn-primary");
 
@@ -20,12 +19,12 @@ function checkInputs() {
     });
 
     if (!allFilled) {
-        warning.textContent = 'Vsa polja morajo biti izpolnjena!';
+        passwordWarning.textContent = 'Vsa polja morajo biti izpolnjena!';
         submitButton.disabled = true;
         return;
     }
 
-    warning.textContent = '';
+    passwordWarning.textContent = '';
 
     if (passwordInput.value !== confirmPasswordInput.value) {
         passwordWarning.textContent = "Gesla se ne ujemata.";

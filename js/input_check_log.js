@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
+    const email = document.getElementsByName('email')[0];
+    const password = document.getElementsByName('password')[0];
     const submitButton = document.querySelector('button');
 
     function checkInputs() {
