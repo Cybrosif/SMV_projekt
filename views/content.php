@@ -1,40 +1,50 @@
 <?php
-$page = $_GET['page'] ?? 'dashboard';
+$page = $_GET['page'];
 
 switch ($page) {
-    case 'home':
-        echo "<h1 class='h2'>Domov</h1>";
-        // Your dashboard content logic
+    case 'dashboard':
+        echo "<h1 class='text-center primary-text'>Nadzorna plošča</h1>";
+        echo "<p class='text-center second-text'>Tukaj lahko upravljate vse svoje podatke in imate pregled nad svojim poslovanjem</p>";
         break;
 
-    case 'profil':
-        echo "<h1 class='h2'>Profil</h1>";
+    case 'users':
+        echo "<h1 class='text-center primary-text'>Upravljanje uporabnikov</h1>";
+        // Your users management content logic
+        break;
+
+    case 'subjects':
+        echo "<h1 class='text-center primary-text'>Upravljanje predmetov</h1>";
+        // Your subjects management content logic
+        break;
+
+    case 'upload':
+        echo "<h1 class='text-center primary-text'>Nalaganje gradiv</h1>";
+        // Your upload content logic
+        break;
+
+    case 'tasks':
+        echo "<h1 class='text-center primary-text'>Pregled nalog</h1>";
+        // Your tasks content logic
+        break;
+
+    case 'logout':
+        echo "<h1 class='text-center primary-text'>Odjava</h1>";
+        // Your logout content logic
+        break;
+
+    case 'profile':
+        echo "<h1 class='text-center primary-text'>Profil</h1>";
         // Your profile content logic
         break;
 
-    case 'nastavitve':
-        echo "<h1 class='h2'>Nastavitve</h1>";
+    case 'settings':
+        echo "<h1 class='text-center primary-text'>Nastavitve</h1>";
         // Your settings content logic
         break;
 
-    case 'Neki':
-        echo "<h1 class='h2'>Neki</h1>";
-        echo "Bedak";
-        break;
-
-    case 'Neki2':
-        echo "<h1 class='h2'>Neki2</h1>";
-        // Your products content logic
-        break;
-
-    case 'Neki3':
-        echo "<h1 class='h2'>Neki3</h1>";
-        // Your customers content logic
-        break;
-
     default:
-        echo "<h1 class='h2'>Welcome</h1>";
-        echo "<p>Welcome to the modern dashboard!</p>";
+        echo "<h1 class='text-center primary-text'>Dobrodošli na nadzorni plošči</h1>";
+        echo "<p class='text-center second-text'>Tukaj lahko upravljate vse svoje podatke in imate pregled nad svojim poslovanjem</p>";
         break;
 }
 ?>
