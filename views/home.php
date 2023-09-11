@@ -39,14 +39,14 @@
   
   #wrapper {
     overflow-x: hidden;
-    background-image: linear-gradient(
+    /*background-image: linear-gradient(
       to right,
       #baf3d7,
       #c2f5de,
       #cbf7e4,
       #d4f8ea,
       #ddfaef
-    );
+    );*/
   }
   
   #sidebar-wrapper {
@@ -109,9 +109,9 @@
 <body>
     <div class="d-flex" id="wrapper">
         <!-- Sidebar -->
-        <div class="bg-white" id="sidebar-wrapper">
+        <div class="bg-white shadow rounded" id="sidebar-wrapper">
             <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom"><i
-                    class="fas fa-user-secret me-2"></i>Codersbite</div>
+                    class="fas"></i>Classorbit</div>
             <div class="list-group list-group-flush my-3">
                 <a href="#" class="list-group-item list-group-item-action bg-transparent second-text active"><i
                         class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
