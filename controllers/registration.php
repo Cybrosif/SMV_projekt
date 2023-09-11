@@ -1,5 +1,5 @@
 <?php
-    include '../links/db.php';
+    include '../../db.php';
     include '../session_start.php';
 
     if (isset($_POST['registration'])) {
