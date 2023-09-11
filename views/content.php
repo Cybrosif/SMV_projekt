@@ -17,21 +17,6 @@ switch ($page) {
         // Your settings content logic
         break;
 
-    case 'Neki':
-        echo "<h1 class='h2'>Neki</h1>";
-        echo "Bedak";
-        break;
-
-    case 'Neki2':
-        echo "<h1 class='h2'>Neki2</h1>";
-        // Your products content logic
-        break;
-
-    case 'Neki3':
-        echo "<h1 class='h2'>Neki3</h1>";
-        // Your customers content logic
-        break;
-
     default:
         echo "<h1 class='h2'>Welcome</h1>";
         echo "<p>Welcome to the modern dashboard!</p>";
