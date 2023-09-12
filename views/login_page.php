@@ -57,7 +57,7 @@
                     <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                     </svg>
                     <input type="text" name="email" id="" class="form-control my-2 py-2" placeholder="Email" />
-                    <input type="text" name="password" id="" class="form-control my-2 py-2" placeholder="Geslo" />
+                    <input type="password" name="password" id="" class="form-control my-2 py-2" placeholder="Geslo" />
                     <div class="my-4"></div>
                     <div class="text-center mt-1">
                         <button class="btn btn-primary " type="submit" name='login' >Prijava</button>
@@ -71,7 +71,7 @@
                   <img src="../imgs/logo.png" alt="" class="logo">
                 </div>
       </div>   
-
+    <script src="../js/input_check_log.js"></script>                 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
   </body>
 </html>
