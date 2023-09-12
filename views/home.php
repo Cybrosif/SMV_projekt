@@ -1,3 +1,9 @@
+<?php 
+    include '../session_start.php';
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -99,17 +105,29 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        $(document).ready(function () {
+            $(document).ready(function () {
             $("#menu-toggle").click(function (e) {
                 e.preventDefault();
                 $("#wrapper").toggleClass("toggled");
             });
             $(".list-group-item").click(function (e) {
                 e.preventDefault();
+                $(".list-group-item.active").removeClass("active");
+                $(this).addClass("active");
                 let page = $(this).data("page");
-                $.get("content.php", { page: page }, function (data) {
-                    $("#content").html(data);
-                });
+                if (page === 'logout') {
+                    $.ajax({
+                        type: "POST",
+                        url: "../controllers/logout.php",
+                        success: function (data) {
+                            window.location.href = 'login_page.php';
+                        }
+                    });
+                } else {
+                    $.get("content.php", { page: page }, function (data) {
+                        $("#content").html(data);
+                    });
+                }
             });
         });
     </script>
@@ -128,8 +146,16 @@
                         class="fas fa-user-edit me-2"></i>Upravljanje uporabnikov</a>
                 <a href="#" data-page="subjects" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-book me-2"></i>Upravljanje predmetov</a>
-                <a href="#" data-page="upload" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-file-upload me-2"></i>Nalaganje gradiv</a>
+                
+                <?php 
+                    if($_SESSION['user_vloga']=='učitelj'){
+                        echo '<a href="#" data-page="upload" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fas fa-file-upload me-2"></i>Nalaganje gradiv</a>';
+                    }
+                ?>
+
+
+
                 <a href="#" data-page="tasks" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-tasks me-2"></i>Pregled nalog</a>
                 <a href="#" data-page="logout" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
@@ -143,7 +169,7 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
                 <div class="d-flex align-items-center">
                     <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle"></i>
-                    <h2 class="h5 mb-0 primary-text">Nadzorna plošča</h2>
+                    <h2 class="h5 mb-0 primary-text">Meni</h2>
                 </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -155,12 +181,13 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-user me-2"></i>Ime Priimek
+                                <i class="fas fa-user me-2"></i><?php echo $_SESSION['user_ime'] ?>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item text-secondary text-center" href="#" data-page="profile">Profil</a></li>
                                 <li><a class="dropdown-item text-secondary text-center" href="#" data-page="settings">Nastavitve</a></li>
-                                <li><a class="dropdown-item text-secondary text-center" href="#" data-page="logout">Odjava</a></li>
+                                <a href="#" data-page="logout" class="list-group-item list-group-item-action bg-transparent second-text fw-bold" id="logout"><i
+                                    class="fas fa-sign-out-alt me-2"></i>Odjava</a>
                             </ul>
                         </li>
                     </ul>
