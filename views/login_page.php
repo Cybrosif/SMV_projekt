@@ -17,7 +17,6 @@
             width: 500px;
             height: 400px;
             padding: 20px;
-            /**/
             position: relative;
             top: 50%;
             transform: translateY(-50%);
