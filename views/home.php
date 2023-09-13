@@ -1,6 +1,8 @@
 <?php 
     include '../session_start.php';
-
+    ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 ?>
 
 
@@ -42,7 +44,7 @@
         }
 
         #wrapper {
-            overflow-x: hidden;
+            overflow-x: hidden
         }
 
         #sidebar-wrapper {
@@ -104,32 +106,35 @@
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-            $(document).ready(function () {
-            $("#menu-toggle").click(function (e) {
-                e.preventDefault();
-                $("#wrapper").toggleClass("toggled");
+        $(document).ready(function () {
+                $("#menu-toggle").click(function (e) {
+                    e.preventDefault();
+                    $("#wrapper").toggleClass("toggled");
+                });
+
+                // Update this selector to include .dropdown-item
+                $(".list-group-item, .dropdown-item").click(function (e) {
+                    e.preventDefault();
+                    $(".list-group-item.active").removeClass("active");
+                    $(this).addClass("active");
+                    let page = $(this).data("page");
+                    if (page === 'logout') {
+                        $.ajax({
+                            type: "POST",
+                            url: "../controllers/logout.php",
+                            success: function (data) {
+                                window.location.href = 'login_page.php';
+                            }
+                        });
+                    } else {
+                        $.get("content.php", { page: page }, function (data) {
+                            $("#content").html(data);
+                        });
+                    }
+                });
             });
-            $(".list-group-item").click(function (e) {
-                e.preventDefault();
-                $(".list-group-item.active").removeClass("active");
-                $(this).addClass("active");
-                let page = $(this).data("page");
-                if (page === 'logout') {
-                    $.ajax({
-                        type: "POST",
-                        url: "../controllers/logout.php",
-                        success: function (data) {
-                            window.location.href = 'login_page.php';
-                        }
-                    });
-                } else {
-                    $.get("content.php", { page: page }, function (data) {
-                        $("#content").html(data);
-                    });
-                }
-            });
-        });
     </script>
 </head>
 
@@ -186,8 +191,8 @@
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item text-secondary text-center" href="#" data-page="profile">Profil</a></li>
                                 <li><a class="dropdown-item text-secondary text-center" href="#" data-page="settings">Nastavitve</a></li>
-                                <a href="#" data-page="logout" class="list-group-item list-group-item-action bg-transparent second-text fw-bold" id="logout"><i
-                                    class="fas fa-sign-out-alt me-2"></i>Odjava</a>
+                                <!-- <a href="#" data-page="logout" class="list-group-item list-group-item-action bg-transparent second-text fw-bold" id="logout"><i
+                                    class="fas fa-sign-out-alt me-2"></i>Odjava</a> -->
                             </ul>
                         </li>
                     </ul>
