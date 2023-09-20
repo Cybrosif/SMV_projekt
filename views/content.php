@@ -38,9 +38,9 @@ switch ($page) {
             // Your profile content logic
             break;
     
-        case 'settings':
+        case 'settings':         
+            echo "<div class='container shadow rounded'>";
             echo "<h1 class='text-center primary-text my-4'>Nastavitve</h1>";
-            echo "<div class='container'>";
             echo "<form id='settingsForm' action='../controllers/settings.php' method='post'>";
             echo "<div id='passwordWarning' class='row mb-3'>";
             echo "<div class='col-md-6'>";
