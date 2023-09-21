@@ -16,7 +16,7 @@ error_reporting(E_ALL);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>Šolska Podpora</title>
     <style>
-              :root {
+        :root {
             --main-bg-color: #0066cc;
             --main-text-color: #0066cc;
             --second-text-color: #bbbec5;
@@ -44,7 +44,7 @@ error_reporting(E_ALL);
         }
 
         #wrapper {
-            overflow-x: hidden
+            overflow-x: hidden;
         }
 
         #sidebar-wrapper {
@@ -102,6 +102,130 @@ error_reporting(E_ALL);
             #wrapper.toggled #sidebar-wrapper {
                 margin-left: -15rem;
             }
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0; /* General text color for dark mode */
+        }
+
+        body.dark-mode .bg-transparent {
+            background-color: #242424 !important;
+        }
+
+        body.dark-mode .navbar-light .navbar-toggler-icon {
+            background-color: #ffffff;
+        }
+
+        body.dark-mode #wrapper {
+            background-color: #242424 !important; /* This ensures the entire sidebar goes dark */
+        }
+
+        body.dark-mode #sidebar-wrapper,
+        body.dark-mode #sidebar-wrapper .bg-white {
+            background-color: #242424 !important;
+        }
+
+        body.dark-mode #sidebar-wrapper .list-group-item {
+            color: #e0e0e0; /* Sidebar item text color */
+            background-color: #242424 !important;
+        }
+
+        body.dark-mode #sidebar-wrapper .list-group-item.active {
+            color: #0066cc; /* Active sidebar item text color */
+            background-color: #121212 !important;
+        }
+
+        body.dark-mode #sidebar-wrapper .sidebar-heading {
+            color: #ffffff;
+            background-color: #121212 !important;
+        }
+
+        body.dark-mode .navbar-light .navbar-toggler-icon {
+            background-color: #ffffff;
+        }
+        body.dark-mode .dropdown-menu {
+            background-color: #242424 !important;
+        }
+
+        body.dark-mode .dropdown-item {
+            color: #e0e0e0 !important;
+        }
+
+        body.dark-mode .dropdown-item:hover, 
+        body.dark-mode .dropdown-item:focus {
+            color: #ffffff !important;
+            background-color: #121212 !important;
+        }
+
+
+        /* Modern Toggle Styles */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        body.dark-mode .switch .slider {
+            background-color: #555;
+        }
+
+        body.dark-mode input:checked + .slider {
+            background-color: #bbb;
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
