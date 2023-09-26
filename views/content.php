@@ -5,7 +5,7 @@ include '../session_start.php';
 switch ($page) {
     case 'dashboard':
         echo "<h1 class='text-center primary-text'>Nadzorna plošča</h1>";
-        echo "<p class='text-center second-text'>Tukaj lahko upravljate vse svoje podatke in imate pregled nad svojim poslovanjem</p>";
+
         break;
 
     case 'users':
@@ -120,8 +120,7 @@ switch ($page) {
         break;
 
     default:
-        echo "<h1 class='text-center primary-text'>Dobrodošli na nadzorni plošči</h1>";
-        echo "<p class='text-center second-text'>Tukaj lahko upravljate vse svoje podatke in imate pregled nad svojim poslovanjem</p>";
+        echo "<h1 class='text-center primary-text'>Nadzorna plošča</h1>";
         break;
 }
 ?>

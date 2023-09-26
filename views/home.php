@@ -271,13 +271,19 @@ error_reporting(E_ALL);
             <div class="list-group list-group-flush my-3">
                 <a href="#" data-page="dashboard" class="list-group-item list-group-item-action bg-transparent second-text active"><i
                         class="fas fa-tachometer-alt me-2"></i>Nadzorna plošča</a>
+
                 <a href="#" data-page="users" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-user-edit me-2"></i>Upravljanje uporabnikov</a>
-                <a href="#" data-page="subjects" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-book me-2"></i>Upravljanje predmetov</a>
                 
+                <?php        
+                    if($_SESSION['user_vloga']=='administrator'){
+                        echo '<a href="#" data-page="subjects" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fas fa-book me-2"></i>Upravljanje predmetov</a>';
+                    }
+                ?>
                 <?php 
-                    if($_SESSION['user_vloga']=='učitelj'){
+                    $user_vloga = $_SESSION['user_vloga'];
+                    if ($user_vloga == 'učitelj' || $user_vloga == 'administrator'){
                         echo '<a href="#" data-page="upload" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-file-upload me-2"></i>Nalaganje gradiv</a>';
                     }
@@ -327,7 +333,6 @@ error_reporting(E_ALL);
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <h1 class="text-center primary-text">Dobrodošli na nadzorni plošči</h1>
-                        <p class="text-center second-text">Tukaj lahko upravljate vse svoje podatke in imate pregled nad svojim poslovanjem</p>
                     </div>
                 </div>
             </div>
