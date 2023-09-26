@@ -22,6 +22,11 @@ error_reporting(E_ALL);
             --second-text-color: #bbbec5;
             --second-bg-color: #c1efde;
         }
+        .dropdown-item.active, .dropdown-item:active {
+            color: #fff;
+            text-decoration: none;
+            background-color: white;
+        }
 
         .primary-text {
             color: var(--main-text-color);
