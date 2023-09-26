@@ -11,27 +11,27 @@ try {
         $user_id = $_SESSION['user_id'];
 
         if ($password !== $password_confirm) {
-            header('Location: ../home.php?page=settings&error=password_mismatch');
+            echo "Error: Passwords do not match!";
             exit();
         }
 
         $password_hash = password_hash($password, PASSWORD_BCRYPT);
 
-        $sql = "UPDATE Uporabniki SET Ime = :username, Geslo = :password_hash WHERE ID = :user_id";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
-        $stmt->bindParam(':password_hash', $password_hash, PDO::PARAM_STR);
-        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $sql = "UPDATE Uporabniki SET Ime = ?, Geslo = ? WHERE ID = ?";
+        $stmt = $link->prepare($sql);
+        $stmt->bind_param('ssi', $username, $password_hash, $user_id);
         $stmt->execute();
 
-        if ($stmt->rowCount() > 0) {
-            $_SESSION['user_ime'] = $username;
-            header('Location: ../home.php?page=settings&success=password_updated');
+        if ($stmt->affected_rows > 0) {
+            include '../logout.php'; // Assuming this file handles the session termination
+            header('Location: ../views/login_page.php');
+            include 'logout.php';
+            exit();
         } else {
-            header('Location: ../home.php?page=settings&error=update_failed');
+            echo "Error: Failed to update password!";
         }
     }
-} catch (PDOException $e) {
+} catch (Exception $e) {
     echo "Error: " . $e->getMessage();
 }
 ?>
