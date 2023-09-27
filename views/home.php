@@ -18,240 +18,275 @@ error_reporting(E_ALL);
     <title>Šolska Podpora</title>
     <style>
         :root {
-        --main-bg-color: #0066cc;
-        --main-text-color: #0066cc;
-        --second-text-color: #bbbec5;
-        --second-bg-color: #c1efde;
-    }
+            --main-bg-color: #0066cc;
+            --main-text-color: #0066cc;
+            --second-text-color: #bbbec5;
+            --second-bg-color: #c1efde;
+        }
+        .dropdown-item.active, .dropdown-item:active {
+            color: #fff;
+            text-decoration: none;
+            background-color: white;
+        }
 
-    .dropdown-item.active, .dropdown-item:active {
-        color: #fff;
-        text-decoration: none;
-        background-color: white;
-    }
+        .primary-text {
+            color: var(--main-text-color);
+        }
 
-    .primary-text {
-        color: var(--main-text-color);
-    }
+        .second-text {
+            color: var(--second-text-color);
+        }
 
-    .second-text {
-        color: var(--second-text-color);
-    }
+        .primary-bg {
+            background-color: var(--main-bg-color);
+        }
 
-    #wrapper {
-        overflow-x: hidden;
-    }
+        .secondary-bg {
+            background-color: var(--second-bg-color);
+        }
 
-    #sidebar-wrapper {
-        min-height: 100vh;
-        margin-left: -15rem;
-        -webkit-transition: margin 0.25s ease-out;
-        -moz-transition: margin 0.25s ease-out;
-        -o-transition: margin 0.25s ease-out;
-        transition: margin 0.25s ease-out;
-    }
+        .rounded-full {
+            border-radius: 100%;
+        }
 
-    #sidebar-wrapper .sidebar-heading {
-        padding: 0.875rem 1.25rem;
-        font-size: 1.2rem;
-    }
+        #wrapper {
+            overflow-x: hidden;
+        }
 
-    #sidebar-wrapper .list-group {
-        width: 15rem;
-    }
-
-    #page-content-wrapper {
-        min-width: 100vw;
-    }
-
-    #wrapper.toggled #sidebar-wrapper {
-        margin-left: 0;
-    }
-
-    #menu-toggle {
-        cursor: pointer;
-    }
-
-    .list-group-item {
-        border: none;
-        padding: 20px 30px;
-    }
-
-    .list-group-item.active {
-        background-color: transparent;
-        color: var(--main-text-color);
-        font-weight: bold;
-        border: none;
-    }
-
-    @media (min-width: 768px) {
         #sidebar-wrapper {
-            margin-left: 0;
+            min-height: 100vh;
+            margin-left: -15rem;
+            -webkit-transition: margin 0.25s ease-out;
+            -moz-transition: margin 0.25s ease-out;
+            -o-transition: margin 0.25s ease-out;
+            transition: margin 0.25s ease-out;
+        }
+
+        #sidebar-wrapper .sidebar-heading {
+            padding: 0.875rem 1.25rem;
+            font-size: 1.2rem;
+        }
+
+        #sidebar-wrapper .list-group {
+            width: 15rem;
         }
 
         #page-content-wrapper {
-            min-width: 0;
-            width: 100%;
+            min-width: 100vw;
         }
 
         #wrapper.toggled #sidebar-wrapper {
-            margin-left: -15rem;
+            margin-left: 0;
         }
-    }
 
-    body.dark-mode {
-        background-color: #121212;
-        color: #e0e0e0;
-    }
+        #menu-toggle {
+            cursor: pointer;
+        }
 
-    body.dark-mode .navbar-light .navbar-toggler-icon {
-        background-color: #ffffff;
-    }
+        .list-group-item {
+            border: none;
+            padding: 20px 30px;
+        }
 
-    body.dark-mode #wrapper {
-        background-color: #242424;
-    }
+        .list-group-item.active {
+            background-color: transparent;
+            color: var(--main-text-color);
+            font-weight: bold;
+            border: none;
+        }
 
-    body.dark-mode #sidebar-wrapper,
-    body.dark-mode #sidebar-wrapper .bg-white {
-        background-color: #242424;
-    }
+        @media (min-width: 768px) {
+            #sidebar-wrapper {
+                margin-left: 0;
+            }
 
-    body.dark-mode #sidebar-wrapper .list-group-item {
-        color: #e0e0e0;
-        background-color: #242424;
-    }
+            #page-content-wrapper {
+                min-width: 0;
+                width: 100%;
+            }
 
-    body.dark-mode #sidebar-wrapper .list-group-item.active {
-        color: #0066cc;
-        background-color: #121212;
-    }
+            #wrapper.toggled #sidebar-wrapper {
+                margin-left: -15rem;
+            }
+        }
 
-    body.dark-mode .navbar-light .navbar-toggler-icon {
-        background-color: #ffffff;
-    }
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0; /* General text color for dark mode */
+        }
 
-    body.dark-mode .dropdown-menu {
-        background-color: #242424;
-    }
+        body.dark-mode .bg-transparent {
+            background-color: #242424 !important;
+        }
 
-    body.dark-mode .dropdown-item {
-        color: #e0e0e0;
-    }
+        body.dark-mode .navbar-light .navbar-toggler-icon {
+            background-color: #ffffff;
+        }
 
-    body.dark-mode .dropdown-item:hover, 
-    body.dark-mode .dropdown-item:focus {
-        color: #ffffff;
-        background-color: #121212;
-    }
+        body.dark-mode #wrapper {
+            background-color: #242424 !important; /* This ensures the entire sidebar goes dark */
+        }
 
-    .switch {
-        position: relative;
-        display: inline-block;
-        width: 60px;
-        height: 34px;
-    }
+        body.dark-mode #sidebar-wrapper,
+        body.dark-mode #sidebar-wrapper .bg-white {
+            background-color: #242424 !important;
+        }
 
-    .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
+        body.dark-mode #sidebar-wrapper .list-group-item {
+            color: #e0e0e0; /* Sidebar item text color */
+            background-color: #242424 !important;
+        }
 
-    .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ccc;
-        -webkit-transition: .4s;
-        transition: .4s;
-    }
+        body.dark-mode #sidebar-wrapper .list-group-item.active {
+            color: #0066cc; /* Active sidebar item text color */
+            background-color: #121212 !important;
+        }
 
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 26px;
-        width: 26px;
-        left: 4px;
-        bottom: 4px;
-        background-color: white;
-        -webkit-transition: .4s;
-        transition: .4s;
-    }
+        body.dark-mode #sidebar-wrapper .sidebar-heading {
+            color: #ffffff;
+            background-color: #121212 !important;
+        }
 
-    input:checked + .slider {
-        background-color: #2196F3;
-    }
+        body.dark-mode .navbar-light .navbar-toggler-icon {
+            background-color: #ffffff;
+        }
+        body.dark-mode .dropdown-menu {
+            background-color: #242424 !important;
+        }
 
-    input:focus + .slider {
-        box-shadow: 0 0 1px #2196F3;
-    }
+        body.dark-mode .dropdown-item {
+            color: #e0e0e0 !important;
+        }
 
-    input:checked + .slider:before {
-        -webkit-transform: translateX(26px);
-        -ms-transform: translateX(26px);
-        transform: translateX(26px);
-    }
+        body.dark-mode .dropdown-item:hover, 
+        body.dark-mode .dropdown-item:focus {
+            color: #ffffff !important;
+            background-color: #121212 !important;
+        }
 
-    .slider.round {
-        border-radius: 34px;
-    }
 
-    .slider.round:before {
-        border-radius: 50%;
-    }
+        /* Modern Toggle Styles */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
 
-    body.dark-mode .switch .slider {
-        background-color: #555;
-    }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
 
-    body.dark-mode input:checked + .slider {
-        background-color: #bbb;
-    }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
 
-    .custom-col {
-        flex: 0 0 20%;
-        max-width: 20%;
-    }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
 
-    .class-link {
-        text-decoration: none;
-        color: #000000;
-    }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
 
-    .class-link:hover {
-        text-decoration: none;
-    }
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
 
-    .modern-box {
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
 
-    .modern-box:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    }
+        .slider.round {
+            border-radius: 34px;
+        }
 
-    .row-no-padding {
-        margin-right: 0;
-        margin-left: 0;
-    }
+        .slider.round:before {
+            border-radius: 50%;
+        }
 
-    .row-no-padding > [class^="col-"],
-    .row-no-padding > [class*=" col-"] {
-        padding-right: 5px;
-        padding-left: 5px;
-    }
+        body.dark-mode .switch .slider {
+            background-color: #555;
+        }
 
-    .custom-side-shadow {
-        box-shadow: 8px 8px 10px rgba(0, 0, 0, 0.3);
-    }
+        body.dark-mode input:checked + .slider {
+            background-color: #bbb;
+        }
+        .class-link {
+            text-decoration: none;  /* Remove underline */
+            color: #000000;  /* Set text color */
+            padding: 10px;  /* Reduced padding */
+            font-size: 14px;  /* Reduced font size */
+            /* width: 100px;  Optional: Set explicit width */
+            /* height: 50px;  Optional: Set explicit height */
+        }
 
+        .class-link:hover {
+            text-decoration: none;  /* Ensure underline doesn't appear on hover */
+        }
+        .modern-box {
+            border-radius: 10px;  /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Shadow for a lifted effect */
+            transition: transform 0.2s, box-shadow 0.2s;  /* Smooth transition for hover effect */
+        }
+
+        .modern-box:hover {
+            transform: translateY(-5px);  /* Move the box slightly upwards on hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);  /* Increase shadow on hover */
+        }
+        .custom-col {
+            flex: 0 0 20%;  /* This ensures the box takes up 20% of the row width */
+            max-width: 20%; /* This ensures the box doesn't grow beyond 20% of the row width */
+            margin-bottom: 10px;  /* Adjust the space between the boxes */
+        }
+        .row-no-padding {
+            margin-right: 0;
+            margin-left: 0;
+        }
+
+        .row-no-padding > [class^="col-"],
+        .row-no-padding > [class*=" col-"] {
+            padding-right: 5px;
+            padding-left: 5px;
+        }
+        .box-shadow {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);  /* Increased blur and spread for a stronger shadow */
+            transition: box-shadow 0.3s ease;  /* Smooth transition for hover effect */
+        }
+
+        .box-shadow:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);  /* Even more pronounced shadow on hover */
+        }
+        .strong-shadow {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);  /* This is a strong shadow */
+        }
+        .custom-strong-shadow {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        .custom-side-shadow {
+            box-shadow: 8px 8px 10px rgba(0, 0, 0, 0.3);
+        }
 
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

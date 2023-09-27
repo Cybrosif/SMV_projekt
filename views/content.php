@@ -29,7 +29,8 @@ switch ($page) {
         echo "<h1 class='text-center primary-text mb-5'>Razredi</h1>";  // Increased bottom margin
 
         // Include the Poppins font for modern text appearance
-        echo "<link href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap' rel='stylesheet'>";
+        echo '<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">';
+  
     
         // Fetch classes from the database
         $sql = "SELECT * FROM Razredi"; // Assuming your table name is Razredi
@@ -40,7 +41,7 @@ switch ($page) {
             echo "<div class='row row row-no-padding'>";
             while($row = $result->fetch_assoc()) {
                 echo "<div class='custom-col mb-3'>";  // Adjusted for 5 boxes in a row
-                echo "<a href='content.php?data-page=" . $row['Ime_razreda'] . "' class='d-block p-3 text-center class-link modern-box custom-side-shadow' style='background-color: #80bfff; font-family: Poppins, sans-serif;'>";
+                echo "<a href='content.php?data-page=" . $row['Ime_razreda'] . "' class='d-block p-3 text-center class-link modern-box custom-side-shadow' style='background-color: #3394e1; font-family: Poppins, sans-serif;'>";
                 echo $row['Ime_razreda'];
                 echo "</a>";
                 echo "</div>";
@@ -64,7 +65,8 @@ switch ($page) {
             break;
     
     case 'settings':
-        echo "<h1 class='text-center primary-text my-4'>Nastavitve</h1>";            echo "<div class='container'>";
+        echo "<h1 class='text-center primary-text my-4'>Nastavitve</h1>";            
+        echo "<div class='container'>";
         echo "<form id='settingsForm' action='../controllers/settings.php' method='post'>";
         echo "<div id='passwordWarning' class='row mb-3'>";
         echo "<div class='col-md-6'>";
