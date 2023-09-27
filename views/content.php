@@ -1,6 +1,8 @@
 <?php
 $page = $_GET['page'];
+include '../../db.php';
 include '../session_start.php';
+
 
 switch ($page) {
     case 'dashboard':
@@ -24,9 +26,32 @@ switch ($page) {
         break;
 
     case 'classes':
-        echo "<h1 class='text-center primary-text'>Razredi</h1>";
-        // Your tasks content logic
-        break;
+        echo "<h1 class='text-center primary-text mb-5'>Razredi</h1>";  // Increased bottom margin
+
+        // Include the Poppins font for modern text appearance
+        echo "<link href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap' rel='stylesheet'>";
+    
+        // Fetch classes from the database
+        $sql = "SELECT * FROM Razredi"; // Assuming your table name is Razredi
+        $result = $link->query($sql);
+    
+        if ($result->num_rows > 0) {
+            echo "<div class='container'>";
+            echo "<div class='row row row-no-padding'>";
+            while($row = $result->fetch_assoc()) {
+                echo "<div class='custom-col mb-3'>";  // Adjusted for 5 boxes in a row
+                echo "<a href='content.php?data-page=" . $row['Ime_razreda'] . "' class='d-block p-3 text-center class-link modern-box custom-side-shadow' style='background-color: #80bfff; font-family: Poppins, sans-serif;'>";
+                echo $row['Ime_razreda'];
+                echo "</a>";
+                echo "</div>";
+            }
+            echo "</div>";
+            echo "</div>";
+        } else {
+            echo "<p class='text-center second-text'>No classes found!</p>";
+        }
+    break;
+
 
     case 'logout':
         echo "<h1 class='text-center primary-text'>Odjava</h1>";
