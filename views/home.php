@@ -296,8 +296,8 @@ error_reporting(E_ALL);
 
 
 
-                <a href="#" data-page="tasks" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-tasks me-2"></i>Pregled nalog</a>
+                <a href="#" data-page="classes" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fas fa-tasks me-2"></i>Razredi</a>
                 <a href="#" data-page="logout" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-sign-out-alt me-2"></i>Odjava</a>
             </div>

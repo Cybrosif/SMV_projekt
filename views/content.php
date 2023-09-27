@@ -23,8 +23,8 @@ switch ($page) {
         // Your upload content logic
         break;
 
-    case 'tasks':
-        echo "<h1 class='text-center primary-text'>Pregled nalog</h1>";
+    case 'classes':
+        echo "<h1 class='text-center primary-text'>Razredi</h1>";
         // Your tasks content logic
         break;
 
