@@ -300,7 +300,7 @@ error_reporting(E_ALL);
                 });
 
                 // Update this selector to include .dropdown-item
-                $(".list-group-item, .dropdown-item").click(function (e) {
+                $(".list-group-item, .dropdown-item, .class-link").click(function (e) {
                     e.preventDefault();
                     $(".list-group-item.active").removeClass("active");
                     $(this).addClass("active");
@@ -321,6 +321,41 @@ error_reporting(E_ALL);
                 });
             });
     </script>
+    <script>
+        function fetchRazredDetails(razredId) {
+            $.ajax({
+                url: 'content.php',
+                type: 'GET',
+                data: { page: 'specific_razred', razred_id: razredId },
+                success: function(response) {
+                    // Assuming you have a content div where you want to display the response
+                    $('#content').html(response);
+                },
+                error: function() {
+                    alert('Failed to fetch razred details.');
+                }
+            });
+        }
+    </script>
+    
+    <script>
+        function verifyKljucVpisa(razredId) {
+            var kljucVpisa = $('#kljucVpisaInput').val();
+            $.ajax({
+                url: 'content.php',
+                type: 'GET',
+                data: { page: 'verify_kljuc', razred_id: razredId, kljucVpisa: kljucVpisa },
+                success: function(response) {
+                    $('#verificationMessage').html(response);
+                },
+                error: function() {
+                    alert('Failed to verify Kljuc Vpisa.');
+                }
+            });
+        }
+
+    </script>
+
 </head>
 
 <body>

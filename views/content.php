@@ -26,22 +26,21 @@ switch ($page) {
         break;
 
     case 'classes':
-        echo "<h1 class='text-center primary-text mb-5'>Razredi</h1>";  // Increased bottom margin
+        echo "<h1 class='text-center primary-text mb-5'>Razredi</h1>";
 
-        // Include the Poppins font for modern text appearance
         echo '<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">';
-  
-    
-        // Fetch classes from the database
-        $sql = "SELECT * FROM Razredi"; // Assuming your table name is Razredi
+
+        $sql = "SELECT * FROM Razredi";
         $result = $link->query($sql);
-    
+
         if ($result->num_rows > 0) {
             echo "<div class='container'>";
-            echo "<div class='row row row-no-padding'>";
+            echo "<div class='row'>";
             while($row = $result->fetch_assoc()) {
-                echo "<div class='custom-col mb-3'>";  // Adjusted for 5 boxes in a row
-                echo "<a href='content.php?data-page=" . $row['Ime_razreda'] . "' class='d-block p-3 text-center class-link modern-box custom-side-shadow' style='background-color: #3394e1; font-family: Poppins, sans-serif;'>";
+                echo "<div class='custom-col mb-3'>";
+
+                echo "<a href='javascript:void(0);' onclick='fetchRazredDetails(" . $row['Razred_ID'] . ");' class='d-block p-3 text-center class-link modern-box custom-side-shadow' style='background-color: #3394e1; font-family: Poppins, sans-serif;'>";
+                
                 echo $row['Ime_razreda'];
                 echo "</a>";
                 echo "</div>";
@@ -142,9 +141,52 @@ switch ($page) {
         </script>";
 
 
-
-           
         break;
+
+    case 'specific_razred':
+        $razredId = $_GET['razred_id'];
+    
+        // Fetch the name of the razred using the given ID
+        $sql = "SELECT Ime_razreda FROM Razredi WHERE Razred_ID = ?";
+        $stmt = $link->prepare($sql);
+        $stmt->bind_param("i", $razredId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $razred = $result->fetch_assoc();
+        
+        if ($razred) {
+            $razredName = $razred['Ime_razreda'];
+            
+            echo "<h2 class='text-center primary-text mb-4'>Vnesite ključ vpisa za razred: " . htmlspecialchars($razredName) . "</h2>";
+            echo "<div class='text-center'>";
+            echo "<input type='text' id='kljucVpisaInput' class='form-control d-inline-block' style='vertical-align: middle; margin-right: 10px; width: auto;' placeholder='Vnesite ključ vpisa' />";
+            echo "<button onclick='verifyKljucVpisa(" . $razredId . ")' class='btn btn-primary' style='vertical-align: middle;'>Potrdi</button>";
+            echo "<div id='verificationMessage' class='mt-3'></div>";
+            echo "</div>";
+        } else {
+            echo "<h2 class='text-center primary-text mb-4'>Razred ni najden!</h2>";
+        }
+        break;
+        
+    case 'verify_kljuc':
+        $razredId = $_GET['razred_id'];
+        $providedKljucVpisa = $_GET['kljucVpisa'];
+            
+        // Fetch the Kljuc Vpisa from the database for the specific razred
+        $sql = "SELECT Kljuc_Vpisa FROM Razredi WHERE Razred_ID = ?";
+        $stmt = $link->prepare($sql);
+        $stmt->bind_param("i", $razredId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $razred = $result->fetch_assoc();
+            
+        if ($razred && $razred['Kljuc_Vpisa'] == $providedKljucVpisa) {
+            echo "Pravilni kljuc vpisa"; 
+        } else {
+            echo "Napacni Kljuc Vpisa!";
+        }
+        break;
+        
 
     default:
         echo "<h1 class='text-center primary-text'>Nadzorna plošča</h1>";
