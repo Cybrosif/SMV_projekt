@@ -24,3 +24,20 @@ if ($result->num_rows > 0) {
     echo "<p class='text-center second-text'>No classes found!</p>";
 }
 ?>
+
+<script>
+        function fetchRazredDetails(razredId) {
+            $.ajax({
+                url: '../controllers/content.php',
+                type: 'GET',
+                data: { page: 'specific_class', razred_id: razredId },
+                success: function(response) {
+                    
+                    $('#content').html(response);
+                },
+                error: function() {
+                    alert('Failed to fetch razred details.');
+                }
+            });
+        }
+    </script>
