@@ -293,38 +293,9 @@ error_reporting(E_ALL);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function () {
-                $("#menu-toggle").click(function (e) {
-                    e.preventDefault();
-                    $("#wrapper").toggleClass("toggled");
-                });
-
-                // Update this selector to include .dropdown-item
-                $(".list-group-item, .dropdown-item, .class-link").click(function (e) {
-                    e.preventDefault();
-                    $(".list-group-item.active").removeClass("active");
-                    $(this).addClass("active");
-                    let page = $(this).data("page");
-                    if (page === 'logout') {
-                        $.ajax({
-                            type: "POST",
-                            url: "../controllers/logout.php",
-                            success: function (data) {
-                                window.location.href = 'login_page.php';
-                            }
-                        });
-                    } else {
-                        $.get("content.php", { page: page }, function (data) {
-                            $("#content").html(data);
-                        });
-                    }
-                });
-            });
-    </script>
-    <script>
-        function fetchRazredDetails(razredId) {
+        /*function fetchRazredDetails(razredId) {
             $.ajax({
-                url: 'content.php',
+                url: '../controllers/content.php',
                 type: 'GET',
                 data: { page: 'specific_razred', razred_id: razredId },
                 success: function(response) {
@@ -335,14 +306,14 @@ error_reporting(E_ALL);
                     alert('Failed to fetch razred details.');
                 }
             });
-        }
+        }*/
     </script>
     
     <script>
-        function verifyKljucVpisa(razredId) {
+        /*function verifyKljucVpisa(razredId) {
             var kljucVpisa = $('#kljucVpisaInput').val();
             $.ajax({
-                url: 'content.php',
+                url: '../controllers/content.php',
                 type: 'GET',
                 data: { page: 'verify_kljuc', razred_id: razredId, kljucVpisa: kljucVpisa },
                 success: function(response) {
@@ -352,7 +323,7 @@ error_reporting(E_ALL);
                     alert('Failed to verify Kljuc Vpisa.');
                 }
             });
-        }
+        }*/
 
     </script>
 
@@ -364,31 +335,24 @@ error_reporting(E_ALL);
         <div class="bg-white shadow rounded" id="sidebar-wrapper">
             <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom"><i
                     class="fas"></i>CLASSORBIT</div>
+
             <div class="list-group list-group-flush my-3">
                 <a href="#" data-page="dashboard" class="list-group-item list-group-item-action bg-transparent second-text active"><i
                         class="fas fa-tachometer-alt me-2"></i>Nadzorna plošča</a>
-
-                <a href="#" data-page="users" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-user-edit me-2"></i>Upravljanje uporabnikov</a>
-                
+             
                 <?php        
                     if($_SESSION['user_vloga']=='administrator'){
                         echo '<a href="#" data-page="subjects" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-book me-2"></i>Upravljanje predmetov</a>';
                     }
                 ?>
-                <?php 
-                    $user_vloga = $_SESSION['user_vloga'];
-                    if ($user_vloga == 'učitelj' || $user_vloga == 'administrator'){
-                        echo '<a href="#" data-page="upload" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-file-upload me-2"></i>Nalaganje gradiv</a>';
-                    }
-                ?>
-
-
 
                 <a href="#" data-page="classes" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                     <i class="fas fa-list me-2"></i>Razredi</a>
+
+                <a href="#" data-page="user-management" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fas fa-user-edit me-2"></i>Upravljanje uporabnikov</a>
+
                 <a href="#" data-page="logout" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                     <i class="fas fa-sign-out-alt me-2"></i>Odjava</a>
             </div>
@@ -412,13 +376,10 @@ error_reporting(E_ALL);
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-user me-2"></i><?php echo $_SESSION['user_ime'] ?>
+                                <i class="fas fa-user me-2"></i><?php echo $_SESSION['user_ime']?>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item text-secondary text-center" href="#" data-page="profile">Profil</a></li>
                                 <li><a class="dropdown-item text-secondary text-center" href="#" data-page="settings">Nastavitve</a></li>
-                                <!-- <a href="#" data-page="logout" class="list-group-item list-group-item-action bg-transparent second-text fw-bold" id="logout"><i
-                                    class="fas fa-sign-out-alt me-2"></i>Odjava</a> -->
                             </ul>
                         </li>
                     </ul>
@@ -426,16 +387,42 @@ error_reporting(E_ALL);
             </nav>
 
             <div class="container-fluid" id="content">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <h1 class="text-center primary-text">Dobrodošli na nadzorni plošči</h1>
-                    </div>
-                </div>
+                    <!-- sm grejo podatki iz content.php -->
             </div>
+            
         </div>
         <!-- /#page-content-wrapper -->
     </div>
     <!-- /#wrapper -->
 </body>
+<script>
+        $(document).ready(function () {
+                $("#menu-toggle").click(function (e) {
+                    e.preventDefault();
+                    $("#wrapper").toggleClass("toggled");
+                });
 
+                // Update this selector to include .dropdown-item
+                $(".list-group-item, .dropdown-item, .class-link").click(function (e) {
+                    e.preventDefault();
+                    $(".list-group-item.active").removeClass("active");
+                    $(this).addClass("active");
+                    let page = $(this).data("page");
+                    if (page === 'logout') {
+                        $.ajax({
+                            type: "POST",
+                            url: "../controllers/logout.php",
+                            success: function (data) {
+                                window.location.href = 'login_page.php';
+                            }
+                        });
+                    } else {
+                        $.get("../controllers/content.php", { page: page }, function (data) {
+                            $("#content").html(data);
+                        });
+                    }
+                });
+                $("[data-page='dashboard']").click();
+            });
+    </script>
 </html>

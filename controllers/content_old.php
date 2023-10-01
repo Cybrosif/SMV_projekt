@@ -6,8 +6,8 @@ include '../session_start.php';
 
 switch ($page) {
     case 'dashboard':
-        echo "<h1 class='text-center primary-text'>Nadzorna plošča</h1>";
-
+        include '../content/dashboard.php';
+        
         break;
 
     case 'users':
@@ -26,30 +26,7 @@ switch ($page) {
         break;
 
     case 'classes':
-        echo "<h1 class='text-center primary-text mb-5'>Razredi</h1>";
-
-        echo '<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">';
-
-        $sql = "SELECT * FROM Razredi";
-        $result = $link->query($sql);
-
-        if ($result->num_rows > 0) {
-            echo "<div class='container'>";
-            echo "<div class='row'>";
-            while($row = $result->fetch_assoc()) {
-                echo "<div class='custom-col mb-3'>";
-
-                echo "<a href='javascript:void(0);' onclick='fetchRazredDetails(" . $row['Razred_ID'] . ");' class='d-block p-3 text-center class-link modern-box custom-side-shadow' style='background-color: #3394e1; font-family: Poppins, sans-serif;'>";
-                
-                echo $row['Ime_razreda'];
-                echo "</a>";
-                echo "</div>";
-            }
-            echo "</div>";
-            echo "</div>";
-        } else {
-            echo "<p class='text-center second-text'>No classes found!</p>";
-        }
+        include '../content/classes.php';
     break;
 
 
