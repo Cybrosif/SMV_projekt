@@ -13,6 +13,7 @@ error_reporting(E_ALL);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>Šolska Podpora</title>
     <style>
@@ -232,39 +233,100 @@ error_reporting(E_ALL);
         body.dark-mode input:checked + .slider {
             background-color: #bbb;
         }
+        .class-link {
+            text-decoration: none;  /* Remove underline */
+            color: #000000;  /* Set text color */
+            padding: 10px;  /* Reduced padding */
+            font-size: 14px;  /* Reduced font size */
+            /* width: 100px;  Optional: Set explicit width */
+            /* height: 50px;  Optional: Set explicit height */
+        }
+
+        .class-link:hover {
+            text-decoration: none;  /* Ensure underline doesn't appear on hover */
+        }
+        .modern-box {
+            border-radius: 10px;  /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Shadow for a lifted effect */
+            transition: transform 0.2s, box-shadow 0.2s;  /* Smooth transition for hover effect */
+        }
+
+        .modern-box:hover {
+            transform: translateY(-5px);  /* Move the box slightly upwards on hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);  /* Increase shadow on hover */
+        }
+        .custom-col {
+            flex: 0 0 20%;  /* This ensures the box takes up 20% of the row width */
+            max-width: 20%; /* This ensures the box doesn't grow beyond 20% of the row width */
+            margin-bottom: 10px;  /* Adjust the space between the boxes */
+        }
+        .row-no-padding {
+            margin-right: 0;
+            margin-left: 0;
+        }
+
+        .row-no-padding > [class^="col-"],
+        .row-no-padding > [class*=" col-"] {
+            padding-right: 5px;
+            padding-left: 5px;
+        }
+        .box-shadow {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);  /* Increased blur and spread for a stronger shadow */
+            transition: box-shadow 0.3s ease;  /* Smooth transition for hover effect */
+        }
+
+        .box-shadow:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);  /* Even more pronounced shadow on hover */
+        }
+        .strong-shadow {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);  /* This is a strong shadow */
+        }
+        .custom-strong-shadow {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        .custom-side-shadow {
+            box-shadow: 8px 8px 10px rgba(0, 0, 0, 0.3);
+        }
+
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function () {
-                $("#menu-toggle").click(function (e) {
-                    e.preventDefault();
-                    $("#wrapper").toggleClass("toggled");
-                });
-
-                // Update this selector to include .dropdown-item
-                $(".list-group-item, .dropdown-item").click(function (e) {
-                    e.preventDefault();
-                    $(".list-group-item.active").removeClass("active");
-                    $(this).addClass("active");
-                    let page = $(this).data("page");
-                    if (page === 'logout') {
-                        $.ajax({
-                            type: "POST",
-                            url: "../controllers/logout.php",
-                            success: function (data) {
-                                window.location.href = 'login_page.php';
-                            }
-                        });
-                    } else {
-                        $.get("content.php", { page: page }, function (data) {
-                            $("#content").html(data);
-                        });
-                    }
-                });
+        /*function fetchRazredDetails(razredId) {
+            $.ajax({
+                url: '../controllers/content.php',
+                type: 'GET',
+                data: { page: 'specific_razred', razred_id: razredId },
+                success: function(response) {
+                    // Assuming you have a content div where you want to display the response
+                    $('#content').html(response);
+                },
+                error: function() {
+                    alert('Failed to fetch razred details.');
+                }
             });
+        }*/
     </script>
+    
+    <script>
+        /*function verifyKljucVpisa(razredId) {
+            var kljucVpisa = $('#kljucVpisaInput').val();
+            $.ajax({
+                url: '../controllers/content.php',
+                type: 'GET',
+                data: { page: 'verify_kljuc', razred_id: razredId, kljucVpisa: kljucVpisa },
+                success: function(response) {
+                    $('#verificationMessage').html(response);
+                },
+                error: function() {
+                    alert('Failed to verify Kljuc Vpisa.');
+                }
+            });
+        }*/
+
+    </script>
+
 </head>
 
 <body>
@@ -273,33 +335,26 @@ error_reporting(E_ALL);
         <div class="bg-white shadow rounded" id="sidebar-wrapper">
             <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom"><i
                     class="fas"></i>CLASSORBIT</div>
+
             <div class="list-group list-group-flush my-3">
                 <a href="#" data-page="dashboard" class="list-group-item list-group-item-action bg-transparent second-text active"><i
                         class="fas fa-tachometer-alt me-2"></i>Nadzorna plošča</a>
-
-                <a href="#" data-page="users" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-user-edit me-2"></i>Upravljanje uporabnikov</a>
-                
+             
                 <?php        
                     if($_SESSION['user_vloga']=='administrator'){
                         echo '<a href="#" data-page="subjects" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-book me-2"></i>Upravljanje predmetov</a>';
                     }
                 ?>
-                <?php 
-                    $user_vloga = $_SESSION['user_vloga'];
-                    if ($user_vloga == 'učitelj' || $user_vloga == 'administrator'){
-                        echo '<a href="#" data-page="upload" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-file-upload me-2"></i>Nalaganje gradiv</a>';
-                    }
-                ?>
 
+                <a href="#" data-page="classes" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fas fa-list me-2"></i>Razredi</a>
 
+                <a href="#" data-page="user-management" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fas fa-user-edit me-2"></i>Upravljanje uporabnikov</a>
 
-                <a href="#" data-page="tasks" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-tasks me-2"></i>Pregled nalog</a>
-                <a href="#" data-page="logout" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-sign-out-alt me-2"></i>Odjava</a>
+                <a href="#" data-page="logout" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                    <i class="fas fa-sign-out-alt me-2"></i>Odjava</a>
             </div>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -321,13 +376,10 @@ error_reporting(E_ALL);
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-user me-2"></i><?php echo $_SESSION['user_ime'] ?>
+                                <i class="fas fa-user me-2"></i><?php echo $_SESSION['user_ime']?>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item text-secondary text-center" href="#" data-page="profile">Profil</a></li>
                                 <li><a class="dropdown-item text-secondary text-center" href="#" data-page="settings">Nastavitve</a></li>
-                                <!-- <a href="#" data-page="logout" class="list-group-item list-group-item-action bg-transparent second-text fw-bold" id="logout"><i
-                                    class="fas fa-sign-out-alt me-2"></i>Odjava</a> -->
                             </ul>
                         </li>
                     </ul>
@@ -335,16 +387,42 @@ error_reporting(E_ALL);
             </nav>
 
             <div class="container-fluid" id="content">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <h1 class="text-center primary-text">Dobrodošli na nadzorni plošči</h1>
-                    </div>
-                </div>
+                    <!-- sm grejo podatki iz content.php -->
             </div>
+            
         </div>
         <!-- /#page-content-wrapper -->
     </div>
     <!-- /#wrapper -->
 </body>
+<script>
+        $(document).ready(function () {
+                $("#menu-toggle").click(function (e) {
+                    e.preventDefault();
+                    $("#wrapper").toggleClass("toggled");
+                });
 
+                // Update this selector to include .dropdown-item
+                $(".list-group-item, .dropdown-item, .class-link").click(function (e) {
+                    e.preventDefault();
+                    $(".list-group-item.active").removeClass("active");
+                    $(this).addClass("active");
+                    let page = $(this).data("page");
+                    if (page === 'logout') {
+                        $.ajax({
+                            type: "POST",
+                            url: "../controllers/logout.php",
+                            success: function (data) {
+                                window.location.href = 'login_page.php';
+                            }
+                        });
+                    } else {
+                        $.get("../controllers/content.php", { page: page }, function (data) {
+                            $("#content").html(data);
+                        });
+                    }
+                });
+                $("[data-page='dashboard']").click();
+            });
+    </script>
 </html>

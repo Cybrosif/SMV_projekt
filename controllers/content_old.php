@@ -1,11 +1,13 @@
 <?php
 $page = $_GET['page'];
+include '../../db.php';
 include '../session_start.php';
+
 
 switch ($page) {
     case 'dashboard':
-        echo "<h1 class='text-center primary-text'>Nadzorna plošča</h1>";
-
+        include '../content/dashboard.php';
+        
         break;
 
     case 'users':
@@ -23,10 +25,10 @@ switch ($page) {
         // Your upload content logic
         break;
 
-    case 'tasks':
-        echo "<h1 class='text-center primary-text'>Pregled nalog</h1>";
-        // Your tasks content logic
-        break;
+    case 'classes':
+        include '../content/classes.php';
+    break;
+
 
     case 'logout':
         echo "<h1 class='text-center primary-text'>Odjava</h1>";
@@ -39,7 +41,8 @@ switch ($page) {
             break;
     
     case 'settings':
-        echo "<h1 class='text-center primary-text my-4'>Nastavitve</h1>";            echo "<div class='container'>";
+        echo "<h1 class='text-center primary-text my-4'>Nastavitve</h1>";            
+        echo "<div class='container'>";
         echo "<form id='settingsForm' action='../controllers/settings.php' method='post'>";
         echo "<div id='passwordWarning' class='row mb-3'>";
         echo "<div class='col-md-6'>";
@@ -115,9 +118,52 @@ switch ($page) {
         </script>";
 
 
-
-           
         break;
+
+    case 'specific_razred':
+        $razredId = $_GET['razred_id'];
+    
+        // Fetch the name of the razred using the given ID
+        $sql = "SELECT Ime_razreda FROM Razredi WHERE Razred_ID = ?";
+        $stmt = $link->prepare($sql);
+        $stmt->bind_param("i", $razredId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $razred = $result->fetch_assoc();
+        
+        if ($razred) {
+            $razredName = $razred['Ime_razreda'];
+            
+            echo "<h2 class='text-center primary-text mb-4'>Vnesite ključ vpisa za razred: " . htmlspecialchars($razredName) . "</h2>";
+            echo "<div class='text-center'>";
+            echo "<input type='text' id='kljucVpisaInput' class='form-control d-inline-block' style='vertical-align: middle; margin-right: 10px; width: auto;' placeholder='Vnesite ključ vpisa' />";
+            echo "<button onclick='verifyKljucVpisa(" . $razredId . ")' class='btn btn-primary' style='vertical-align: middle;'>Potrdi</button>";
+            echo "<div id='verificationMessage' class='mt-3'></div>";
+            echo "</div>";
+        } else {
+            echo "<h2 class='text-center primary-text mb-4'>Razred ni najden!</h2>";
+        }
+        break;
+        
+    case 'verify_kljuc':
+        $razredId = $_GET['razred_id'];
+        $providedKljucVpisa = $_GET['kljucVpisa'];
+            
+        // Fetch the Kljuc Vpisa from the database for the specific razred
+        $sql = "SELECT Kljuc_Vpisa FROM Razredi WHERE Razred_ID = ?";
+        $stmt = $link->prepare($sql);
+        $stmt->bind_param("i", $razredId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $razred = $result->fetch_assoc();
+            
+        if ($razred && $razred['Kljuc_Vpisa'] == $providedKljucVpisa) {
+            echo "Pravilni kljuc vpisa"; 
+        } else {
+            echo "Napacni Kljuc Vpisa!";
+        }
+        break;
+        
 
     default:
         echo "<h1 class='text-center primary-text'>Nadzorna plošča</h1>";
