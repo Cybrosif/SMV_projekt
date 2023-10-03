@@ -24,6 +24,11 @@
 </html>
 
 <style>
+    .col{
+        border:1px solid black;
+        border-radius: 5px;
+        margin:5px;
+    }
 </style>
 
 
