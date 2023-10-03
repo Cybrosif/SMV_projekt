@@ -1,5 +1,6 @@
 <?php 
     include '../session_start.php';
+    include '../functions/status_check_true.php';
     ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -312,7 +313,7 @@ error_reporting(E_ALL);
                 <a href="#" data-page="user-management" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                     <i class="fas fa-user-edit me-2"></i>Upravljanje uporabnikov</a>
 
-                <a href="#" data-page="logout" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                <a href="#" data-page="logout"  class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                     <i class="fas fa-sign-out-alt me-2"></i>Odjava</a>
             </div>
         </div>
@@ -370,7 +371,7 @@ error_reporting(E_ALL);
                     if (page === 'logout') {
                         $.ajax({
                             type: "POST",
-                            url: "../controllers/logout.php",
+                            url: "../functions/logout.php",
                             success: function (data) {
                                 window.location.href = 'login_page.php';
                             }
