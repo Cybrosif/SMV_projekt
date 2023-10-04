@@ -1,6 +1,5 @@
 <?php
 $userId = $_SESSION['user_id']; 
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['razredi'])) {
         $razredi = $_POST['razredi'];

@@ -405,7 +405,7 @@
             if (page === 'logout') {
                 $.ajax({
                     type: "POST",
-                    url: "../controllers/logout.php",
+                    url: "../functions/logout.php",
                     success: function (data) {
                         window.location.href = 'login_page.php';
                     }
