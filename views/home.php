@@ -348,6 +348,7 @@ error_reporting(E_ALL);
 
             <div class="container-fluid" id="content">
                     <!-- sm grejo podatki iz content.php -->
+                    <?php ?>
             </div>
             
         </div>
