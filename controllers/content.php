@@ -17,9 +17,9 @@ switch ($page) {
         include '../content/settings.php';
         break;
 
-    case 'specific_class':
-        include '../content/specific_class.php';
-        break;
+        case 'specific_class':
+            include '../content/specific_class.php';
+            break;
         
     case 'verify_kljuc':
         include '../content/verify_kljuc.php';

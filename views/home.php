@@ -288,6 +288,7 @@
         .custom-side-shadow {
             box-shadow: 8px 8px 10px rgba(0, 0, 0, 0.3);
         }
+        
 
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -340,16 +341,9 @@
             <div class="list-group list-group-flush my-3">
                 <a href="#" data-page="dashboard" class="list-group-item list-group-item-action bg-transparent second-text active"><i
                         class="fas fa-tachometer-alt me-2"></i>Nadzorna plošča</a>
-             
-                <?php        
-                    if($_SESSION['user_vloga']=='administrator'){
-                        echo '<a href="#" data-page="subjects" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-book me-2"></i>Upravljanje predmetov</a>';
-                    }
-                ?>
 
                 <a href="#" data-page="classes" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
-                    <i class="fas fa-list me-2"></i>Razredi</a>
+                    <i class="fas fa-list me-2"></i>Predmeti</a>
 
                 <a href="#" data-page="user-management" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                     <i class="fas fa-user-edit me-2"></i>Upravljanje uporabnikov</a>
@@ -397,33 +391,46 @@
     <!-- /#wrapper -->
 </body>
 <script>
-        $(document).ready(function () {
-                $("#menu-toggle").click(function (e) {
-                    e.preventDefault();
-                    $("#wrapper").toggleClass("toggled");
-                });
+    $(document).ready(function () {
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
 
-                // Update this selector to include .dropdown-item
-                $(".list-group-item, .dropdown-item, .class-link").click(function (e) {
-                    e.preventDefault();
-                    $(".list-group-item.active").removeClass("active");
-                    $(this).addClass("active");
-                    let page = $(this).data("page");
-                    if (page === 'logout') {
-                        $.ajax({
-                            type: "POST",
-                            url: "../controllers/logout.php",
-                            success: function (data) {
-                                window.location.href = 'login_page.php';
-                            }
-                        });
-                    } else {
-                        $.get("../controllers/content.php", { page: page }, function (data) {
-                            $("#content").html(data);
-                        });
+        $(".list-group-item, .dropdown-item, .class-link").click(function (e) {
+            e.preventDefault();
+            $(".list-group-item.active").removeClass("active");
+            $(this).addClass("active");
+            let page = $(this).data("page");
+            if (page === 'logout') {
+                $.ajax({
+                    type: "POST",
+                    url: "../controllers/logout.php",
+                    success: function (data) {
+                        window.location.href = 'login_page.php';
                     }
                 });
-                $("[data-page='dashboard']").click();
+            } else {
+                $.get("../controllers/content.php", { page: page }, function (data) {
+                    $("#content").html(data);
+                });
+            }
+        });
+        $("[data-page='dashboard']").click();
+
+        // Event listener for form submission
+        $(document).on('submit', 'form', function(e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            $.ajax({
+                type: "POST",
+                url: "../controllers/content.php?page=classes",
+                data: formData,
+                success: function(data) {
+                    $("#content").html(data);
+                }
             });
-    </script>
+        });
+    });
+</script>
 </html>

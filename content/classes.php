@@ -1,42 +1,91 @@
 <?php
 include '../../db.php';
+include '../session_start.php';
 
-// Ensure session is started
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+$userId = $_SESSION['user_id'];  // Assume user_id is stored in session
 
-// Fetch all available Razredi from the database
-$query = "SELECT * FROM Razredi";
-$result = mysqli_query($link, $query);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['razredi'])) {
+        $razredi = $_POST['razredi'];
 
-if (!$result) {
-    die('Query Error: ' . mysqli_error($link));
-}
+        // Add new selections to the database
+        foreach ($razredi as $razredId) {
+            $query = "INSERT IGNORE INTO Uporabniki_Razredi (Uporabnik_ID, Razred_ID) VALUES ($userId, $razredId)";
+            mysqli_query($link, $query);
+        }
+    } elseif (isset($_POST['remove'])) {
+        $removeId = $_POST['remove'];
 
-// Handle the form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selectedRazredi'])) {
-    $selectedRazredi = $_POST['selectedRazredi'];
-
-    // Clear previous selections for the user
-    $deleteQuery = "DELETE FROM Uporabniki_Razredi WHERE Uporabnik_ID = ?";
-    $stmt = mysqli_prepare($link, $deleteQuery);
-    mysqli_stmt_bind_param($stmt, "i", $_SESSION['user_id']);
-    mysqli_stmt_execute($stmt);
-
-    // Store new selections for the user
-    $insertQuery = "INSERT INTO Uporabniki_Razredi (Uporabnik_ID, Razred_ID) VALUES (?, ?)";
-    $stmt = mysqli_prepare($link, $insertQuery);
-    foreach ($selectedRazredi as $razredID) {
-        mysqli_stmt_bind_param($stmt, "ii", $_SESSION['user_id'], $razredID);
-        mysqli_stmt_execute($stmt);
+        // Remove selected class from the database
+        $query = "DELETE FROM Uporabniki_Razredi WHERE Uporabnik_ID = $userId AND Razred_ID = $removeId";
+        mysqli_query($link, $query);
     }
 }
 
-// Fetch the Razredi that the user has selected
-$userRazrediQuery = "SELECT r.* FROM Razredi r JOIN Uporabniki_Razredi ur ON r.Razred_ID = ur.Razred_ID WHERE ur.Uporabnik_ID = ?";
-$stmt = mysqli_prepare($link, $userRazrediQuery);
-mysqli_stmt_bind_param($stmt, "i", $_SESSION['user_id']);
-mysqli_stmt_execute($stmt);
-$userRazrediResult = mysqli_stmt_get_result($stmt);
+// Fetch all Razredi
+$query = "SELECT * FROM Razredi";
+$result = mysqli_query($link, $query);
+
+// Fetch selected Razredi for the user
+$selectedQuery = "SELECT Razredi.* FROM Razredi JOIN Uporabniki_Razredi ON Razredi.Razred_ID = Uporabniki_Razredi.Razred_ID WHERE Uporabniki_Razredi.Uporabnik_ID = $userId";
+$selectedResult = mysqli_query($link, $selectedQuery);
 ?>
+
+<div class="container mt-3">
+    <button class="btn btn-primary" type="button" id="toggleButton">
+        Prikaži Predmete
+    </button>
+
+    <div class="class-selection" id="classSelection" style="display:none;">
+        <form method="post" action="classes.php">
+            <h2>Izberi Predmete</h2>
+            <div class="row mb-3">
+                <?php
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<div class='col-md-4 mb-3'>";
+                    echo "<div class='form-check'>";
+                    echo "<input type='checkbox' class='form-check-input' name='razredi[]' value='{$row['Razred_ID']}' id='razred-{$row['Razred_ID']}'>";
+                    echo "<label class='form-check-label' for='razred-{$row['Razred_ID']}'>{$row['Ime_razreda']}</label>";
+                    echo "</div>";
+                    echo "</div>";
+                }
+                ?>
+            </div>
+            <button type="submit" class="btn btn-primary">Shrani</button>
+        </form>
+    </div>
+
+    <style>
+        .compact-list-group .list-group-item {
+            padding: 0.5rem 1.25rem;
+            margin-bottom: 5px;
+        }
+        .compact-list-group .btn {
+            margin: 0 0 0 10px;
+        }
+    </style>
+
+    <h2 class="mt-5">Izbrani Predmeti</h2>
+    <ul class="list-group compact-list-group">
+        <?php
+        while ($row = mysqli_fetch_assoc($selectedResult)) {
+            echo "<li class='list-group-item d-flex justify-content-between align-items-center'>";
+            echo "{$row['Ime_razreda']}";
+            echo "<form method='post' action='classes.php' class='ms-3'>";
+            echo "<input type='hidden' name='remove' value='{$row['Razred_ID']}'>";
+            echo "<button type='submit' class='btn btn-danger btn-sm'>Remove</button>";
+            echo "</form>";
+            echo "</li>";
+        }
+        ?>
+    </ul>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#toggleButton').click(function() {
+            $('#classSelection').toggle();
+        });
+    });
+</script>
