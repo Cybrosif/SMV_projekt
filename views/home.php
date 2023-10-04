@@ -1,9 +1,8 @@
 <?php 
     include '../session_start.php';
-    include '../functions/status_check_true.php';
     ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 ?>
 
 
@@ -12,7 +11,8 @@ error_reporting(E_ALL);
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -288,11 +288,46 @@ error_reporting(E_ALL);
         .custom-side-shadow {
             box-shadow: 8px 8px 10px rgba(0, 0, 0, 0.3);
         }
+        
 
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function fetchRazredDetails(razredId) {
+            $.ajax({
+                url: '../controllers/content.php',
+                type: 'GET',
+                data: { page: 'specific_razred', razred_id: razredId },
+                success: function(response) {
+                    // Assuming you have a content div where you want to display the response
+                    $('#content').html(response);
+                },
+                error: function() {
+                    alert('Failed to fetch razred details.');
+                }
+            });
+        }
+    </script>
+    
+    <script>
+        function verifyKljucVpisa(razredId) {
+            var kljucVpisa = $('#kljucVpisaInput').val();
+            $.ajax({
+                url: '../controllers/content.php',
+                type: 'GET',
+                data: { page: 'verify_kljuc', razred_id: razredId, kljucVpisa: kljucVpisa },
+                success: function(response) {
+                    $('#verificationMessage').html(response);
+                },
+                error: function() {
+                    alert('Failed to verify Kljuc Vpisa.');
+                }
+            });
+        }
+
+    </script>
 
 </head>
 
@@ -313,7 +348,7 @@ error_reporting(E_ALL);
                 <a href="#" data-page="user-management" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                     <i class="fas fa-user-edit me-2"></i>Upravljanje uporabnikov</a>
 
-                <a href="#" data-page="logout"  class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                <a href="#" data-page="logout" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                     <i class="fas fa-sign-out-alt me-2"></i>Odjava</a>
             </div>
         </div>
@@ -348,7 +383,6 @@ error_reporting(E_ALL);
 
             <div class="container-fluid" id="content">
                     <!-- sm grejo podatki iz content.php -->
-                    <?php ?>
             </div>
             
         </div>
@@ -357,33 +391,46 @@ error_reporting(E_ALL);
     <!-- /#wrapper -->
 </body>
 <script>
-        $(document).ready(function () {
-                $("#menu-toggle").click(function (e) {
-                    e.preventDefault();
-                    $("#wrapper").toggleClass("toggled");
-                });
+    $(document).ready(function () {
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
 
-                // Update this selector to include .dropdown-item
-                $(".list-group-item, .dropdown-item, .class-link").click(function (e) {
-                    e.preventDefault();
-                    $(".list-group-item.active").removeClass("active");
-                    $(this).addClass("active");
-                    let page = $(this).data("page");
-                    if (page === 'logout') {
-                        $.ajax({
-                            type: "POST",
-                            url: "../functions/logout.php",
-                            success: function (data) {
-                                window.location.href = 'login_page.php';
-                            }
-                        });
-                    } else {
-                        $.get("../controllers/content.php", { page: page }, function (data) {
-                            $("#content").html(data);
-                        });
+        $(".list-group-item, .dropdown-item, .class-link").click(function (e) {
+            e.preventDefault();
+            $(".list-group-item.active").removeClass("active");
+            $(this).addClass("active");
+            let page = $(this).data("page");
+            if (page === 'logout') {
+                $.ajax({
+                    type: "POST",
+                    url: "../controllers/logout.php",
+                    success: function (data) {
+                        window.location.href = 'login_page.php';
                     }
                 });
-                $("[data-page='dashboard']").click();
+            } else {
+                $.get("../controllers/content.php", { page: page }, function (data) {
+                    $("#content").html(data);
+                });
+            }
+        });
+        $("[data-page='dashboard']").click();
+
+        // Event listener for form submission
+        $(document).on('submit', 'form', function(e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            $.ajax({
+                type: "POST",
+                url: "../controllers/content.php?page=classes",
+                data: formData,
+                success: function(data) {
+                    $("#content").html(data);
+                }
             });
-    </script>
+        });
+    });
+</script>
 </html>
