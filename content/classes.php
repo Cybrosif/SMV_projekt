@@ -1,14 +1,10 @@
 <?php
-include '../../db.php';
-include '../session_start.php';
-
-$userId = $_SESSION['user_id'];  // Assume user_id is stored in session
+$userId = $_SESSION['user_id']; 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['razredi'])) {
         $razredi = $_POST['razredi'];
-
-        // Add new selections to the database
+   
         foreach ($razredi as $razredId) {
             $query = "INSERT IGNORE INTO Uporabniki_Razredi (Uporabnik_ID, Razred_ID) VALUES ($userId, $razredId)";
             mysqli_query($link, $query);
@@ -16,24 +12,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } elseif (isset($_POST['remove'])) {
         $removeId = $_POST['remove'];
 
-        // Remove selected class from the database
+        
         $query = "DELETE FROM Uporabniki_Razredi WHERE Uporabnik_ID = $userId AND Razred_ID = $removeId";
         mysqli_query($link, $query);
     }
 }
 
-// Fetch all Razredi
 $query = "SELECT * FROM Razredi";
 $result = mysqli_query($link, $query);
 
-// Fetch selected Razredi for the user
 $selectedQuery = "SELECT Razredi.* FROM Razredi JOIN Uporabniki_Razredi ON Razredi.Razred_ID = Uporabniki_Razredi.Razred_ID WHERE Uporabniki_Razredi.Uporabnik_ID = $userId";
 $selectedResult = mysqli_query($link, $selectedQuery);
 ?>
 
 <div class="container mt-3">
     <button class="btn btn-primary" type="button" id="toggleButton">
-        Prikaži Predmete
+        Vsi predmeti
     </button>
 
     <div class="class-selection" id="classSelection" style="display:none;">
@@ -65,7 +59,7 @@ $selectedResult = mysqli_query($link, $selectedQuery);
         }
     </style>
 
-    <h2 class="mt-5">Izbrani Predmeti</h2>
+    <h2 class="mt-5">Moji predmeti</h2>
     <ul class="list-group compact-list-group">
         <?php
         while ($row = mysqli_fetch_assoc($selectedResult)) {
