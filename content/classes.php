@@ -44,7 +44,7 @@
             echo "{$row['Ime_razreda']}";
             echo "<form method='post' action='classes.php' class='ms-3'>";
             echo "<input type='hidden' name='remove' value='{$row['Razred_ID']}'>";
-            echo "<button type='submit' class='btn btn-danger btn-sm'>Remove</button>";
+            echo "<button type='submit' class='btn btn-danger btn-sm'>Odstsrani</button>";
             echo "</form>";
             echo "</li>";
         }
