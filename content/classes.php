@@ -40,27 +40,3 @@ mysqli_stmt_bind_param($stmt, "i", $_SESSION['user_id']);
 mysqli_stmt_execute($stmt);
 $userRazrediResult = mysqli_stmt_get_result($stmt);
 ?>
-<<<<<<< Updated upstream
-=======
-
-<!-- Display the form to select Razredi -->
-<form method="post">
-    <h3>Select Razredi:</h3>
-    <?php 
-    $selectedRazrediIds = array_column(mysqli_fetch_all($userRazrediResult, MYSQLI_ASSOC), 'Razred_ID');
-    while ($row = mysqli_fetch_assoc($result)): ?>
-        <input type="checkbox" name="selectedRazredi[]" value="<?php echo $row['Razred_ID']; ?>"
-            <?php if (in_array($row['Razred_ID'], $selectedRazrediIds)) echo 'checked'; ?>>
-        <?php echo $row['Ime_razreda']; ?><br>
-    <?php endwhile; ?>
-    <input type="submit" value="Dodaj">
-</form>
-
-<!-- Display the selected Razredi for the user -->
-<h3>Your Selected Razredi:</h3>
-<ul>
-    <?php foreach ($selectedRazrediIds as $selectedRazredId): ?>
-        <li><?php echo $selectedRazredId; ?></li>
-    <?php endforeach; ?>
-</ul>
->>>>>>> Stashed changes

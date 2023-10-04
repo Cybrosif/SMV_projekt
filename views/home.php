@@ -294,7 +294,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        /*function fetchRazredDetails(razredId) {
+        function fetchRazredDetails(razredId) {
             $.ajax({
                 url: '../controllers/content.php',
                 type: 'GET',
@@ -307,11 +307,11 @@
                     alert('Failed to fetch razred details.');
                 }
             });
-        }*/
+        }
     </script>
     
     <script>
-        /*function verifyKljucVpisa(razredId) {
+        function verifyKljucVpisa(razredId) {
             var kljucVpisa = $('#kljucVpisaInput').val();
             $.ajax({
                 url: '../controllers/content.php',
@@ -324,7 +324,7 @@
                     alert('Failed to verify Kljuc Vpisa.');
                 }
             });
-        }*/
+        }
 
     </script>
 
