@@ -293,40 +293,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        /*function fetchRazredDetails(razredId) {
-            $.ajax({
-                url: '../controllers/content.php',
-                type: 'GET',
-                data: { page: 'specific_razred', razred_id: razredId },
-                success: function(response) {
-                    // Assuming you have a content div where you want to display the response
-                    $('#content').html(response);
-                },
-                error: function() {
-                    alert('Failed to fetch razred details.');
-                }
-            });
-        }*/
-    </script>
-    
-    <script>
-        /*function verifyKljucVpisa(razredId) {
-            var kljucVpisa = $('#kljucVpisaInput').val();
-            $.ajax({
-                url: '../controllers/content.php',
-                type: 'GET',
-                data: { page: 'verify_kljuc', razred_id: razredId, kljucVpisa: kljucVpisa },
-                success: function(response) {
-                    $('#verificationMessage').html(response);
-                },
-                error: function() {
-                    alert('Failed to verify Kljuc Vpisa.');
-                }
-            });
-        }*/
-
-    </script>
 
 </head>
 
@@ -340,16 +306,9 @@
             <div class="list-group list-group-flush my-3">
                 <a href="#" data-page="dashboard" class="list-group-item list-group-item-action bg-transparent second-text active"><i
                         class="fas fa-tachometer-alt me-2"></i>Nadzorna plošča</a>
-             
-                <?php        
-                    if($_SESSION['user_vloga']=='administrator'){
-                        echo '<a href="#" data-page="subjects" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-book me-2"></i>Upravljanje predmetov</a>';
-                    }
-                ?>
 
                 <a href="#" data-page="classes" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
-                    <i class="fas fa-list me-2"></i>Razredi</a>
+                    <i class="fas fa-list me-2"></i>Predmeti</a>
 
                 <a href="#" data-page="user-management" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                     <i class="fas fa-user-edit me-2"></i>Upravljanje uporabnikov</a>

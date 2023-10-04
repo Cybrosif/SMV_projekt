@@ -13,22 +13,16 @@ switch ($page) {
         include '../content/classes.php';
         break;
 
-<<<<<<< Updated upstream
         case 'settings':
             include '../content/settings.php';
             break;
-=======
-    case 'settings':
-        include '../content/settings.php';
-        break;
 
-    case 'specific_class':
-        include '../content/specific_class.php';
-        break;
+        case 'specific_class':
+            include '../content/specific_class.php';
+            break;
         
-    case 'verify_kljuc':
-        include '../content/verify_kljuc.php';
-        break;
->>>>>>> Stashed changes
+        case 'verify_kljuc':
+            include '../content/verify_kljuc.php';
+            break;
     }
 ?>
