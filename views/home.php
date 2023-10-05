@@ -339,16 +339,21 @@
                     class="fas"></i>CLASSORBIT</div>
 
             <div class="list-group list-group-flush my-3">
-                <a href="#" data-page="dashboard" class="list-group-item list-group-item-action bg-transparent second-text active"><i
+                <a href="home.php?page=dashboard" data-page="dashboard" class="list-group-item list-group-item-action bg-transparent second-text active"><i
                         class="fas fa-tachometer-alt me-2"></i>Nadzorna plošča</a>
 
-                <a href="#" data-page="classes" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                <a href="home.php?page=classes" data-page="classes" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                     <i class="fas fa-list me-2"></i>Predmeti</a>
 
-                <a href="#" data-page="user-management" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
-                    <i class="fas fa-user-edit me-2"></i>Upravljanje uporabnikov</a>
-
-                <a href="#" data-page="logout" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                <?php
+                    if($_SESSION['user_vloga'] && $_SESSION['user_vloga']== "administrator")
+                    echo
+                    '
+                        <a href="home.php?page=user-management" data-page="user-management" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                        <i class="fas fa-user-edit me-2"></i>Upravljanje uporabnikov</a>
+                    ';
+                ?>
+                <a href="home.php?page=logout" data-page="logout" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                     <i class="fas fa-sign-out-alt me-2"></i>Odjava</a>
             </div>
         </div>
@@ -383,6 +388,7 @@
 
             <div class="container-fluid" id="content">
                     <!-- sm grejo podatki iz content.php -->
+                    <?php include '../router/router.php' ?>
             </div>
             
         </div>
@@ -391,7 +397,7 @@
     <!-- /#wrapper -->
 </body>
 <script>
-    $(document).ready(function () {
+    /*$(document).ready(function () {
         $("#menu-toggle").click(function (e) {
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
@@ -405,7 +411,7 @@
             if (page === 'logout') {
                 $.ajax({
                     type: "POST",
-                    url: "../controllers/logout.php",
+                    url: "../functions/logout.php",
                     success: function (data) {
                         window.location.href = 'login_page.php';
                     }
@@ -416,10 +422,6 @@
                 });
             }
         });
-        $("[data-page='dashboard']").click();
-
-        // Event listener for form submission
-        
-    });
+    });*/
 </script>
 </html>

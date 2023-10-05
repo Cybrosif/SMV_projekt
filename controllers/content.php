@@ -22,7 +22,11 @@ switch ($page) {
             break;
         
     case 'verify_kljuc':
-        include '../content/verify_kljuc.php';
+        include '../controllers/verify_kljuc.php';
+        break;
+    
+    case 'user-management':
+        include '../content/user_administration.php';
         break;
     }
 ?>
