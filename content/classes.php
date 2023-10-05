@@ -1,4 +1,6 @@
 <?php
+include '../session_start.php';
+include '../../db.php';
 $userId = $_SESSION['user_id']; 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['razredi'])) {
@@ -81,4 +83,17 @@ $selectedResult = mysqli_query($link, $selectedQuery);
             $('#classSelection').toggle();
         });
     });
+
+    $(document).on('submit', 'form', function(e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            $.ajax({
+                type: "POST",
+                url: "../controllers/content.php?page=classes",
+                data: formData,
+                success: function(data) {
+                    $("#content").html(data);
+                }
+            });
+        });
 </script>
