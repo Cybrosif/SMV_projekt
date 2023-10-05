@@ -16,7 +16,7 @@
         </tr>
     </thead>
     <tbody>
-    <form method="post" action="user_administration.php">
+    <form method="post" action="">
         <?php
             $user_id = $_SESSION['user_id'];
             $i = 1;
@@ -50,22 +50,6 @@
 </body>
 </html>
 <script>
-$(document).ready(function() {
-    $(document).on('submit', 'form', function(e) {
-            e.preventDefault();
-            console.log("test123");
-            var formData = $(this).serialize();
-            $.ajax({
-                type: "POST",
-                url: "../controllers/content.php?page=user_administration",
-                data: formData,
-                success: function(data) {
-                    $("#content").html(data);
-                }
-            });
-        });
-});
-
 </script>
 <style>
     .col{
