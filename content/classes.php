@@ -84,4 +84,16 @@
             $('#classSelection').toggle();
         });
     });
+    $(document).on('submit', 'form', function(e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            $.ajax({
+                type: "POST",
+                url: "../controllers/content.php?page=classes",
+                data: formData,
+                success: function(data) {
+                    $("#content").html(data);
+                }
+            });
+        });
 </script>
