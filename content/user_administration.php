@@ -16,7 +16,7 @@
         </tr>
     </thead>
     <tbody>
-    <form method="post" action="">
+    <form method="post" action="" id="myForm">
         <?php
             $user_id = $_SESSION['user_id'];
             $i = 1;
@@ -29,7 +29,8 @@
                     <td>' . $row['Ime'] . '</td>
                     <td>' . $row['Priimek'] . '</td>
                     <td>
-                        <select style="border:none" name="vloga[' . $row['ID'] . ']">
+                        <input type="hidden" name="user_id[]" value="'.$row['ID'].'">
+                        <select style="border:none" name="vloga[]">
                             <option value="uporabnik" ' . ($row['Vloga'] == 'uporabnik' ? 'selected' : '') . '>Uporabnik</option>
                             <option value="Učitelj" ' . ($row['Vloga'] == 'Učitelj' ? 'selected' : '') . '>Učitelj</option>
                         </select>
@@ -49,8 +50,25 @@
 </div>
 </body>
 </html>
-<script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#myForm').on('submit', function(event){
+            event.preventDefault(); // Prevent the default form submission
+            var formData = $(this).serialize(); // Serialize form data
+            console.log(formData);
+            $.ajax({
+                type: 'POST',
+                url: '../controllers/user_administration.php', // Replace 'processing.php' with your actual PHP processing file
+                data: formData,
+                success: function(response){
+                    // Handle the response from the server if needed
+                    //console.log(response);
+                }
+            });
+        });
+    });
 </script>
+
 <style>
     .col{
         border:1px solid black;
