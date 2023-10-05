@@ -379,7 +379,7 @@
                                 <i class="fas fa-user me-2"></i><?php echo $_SESSION['user_ime']?>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item text-secondary text-center" href="#" data-page="settings">Nastavitve</a></li>
+                                <li><a class="dropdown-item text-secondary text-center" href="home.php?page=settings" data-page="settings">Nastavitve</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -397,13 +397,13 @@
     <!-- /#wrapper -->
 </body>
 <script>
-    /*$(document).ready(function () {
+    $(document).ready(function () {
         $("#menu-toggle").click(function (e) {
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
         });
-
-        $(".list-group-item, .dropdown-item, .class-link").click(function (e) {
+        
+        /*$(".list-group-item, .dropdown-item, .class-link").click(function (e) {
             e.preventDefault();
             $(".list-group-item.active").removeClass("active");
             $(this).addClass("active");
@@ -421,7 +421,7 @@
                     $("#content").html(data);
                 });
             }
-        });
-    });*/
+        });*/
+    });
 </script>
 </html>

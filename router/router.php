@@ -14,17 +14,13 @@
             case 'settings':
                 include '../content/settings.php';
                 break;
-        
-                case 'specific_class':
-                    include '../content/specific_class.php';
-                    break;
-                
-            case 'verify_kljuc':
-                include '../controllers/verify_kljuc.php';
-                break;
             
             case 'user-management':
                 include '../content/user_administration.php';
+                break;
+
+            case 'logout':
+                echo '<script type="text/javascript">window.location.href = "../functions/logout.php";</script>';
                 break;
             }
     } else {
