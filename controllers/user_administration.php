@@ -1,7 +1,9 @@
 <?php
+include('../session_start.php');
+include('../../db.php');
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id'])) {
-    include('../session_start.php');
-    include('../../db.php'); // Include your database connection file
+    
+     // Include your database connection file
     $admin_id = $_SESSION['user_id'];
 
     // Check if the logged-in user is an administrator (you may want to implement additional checks here)

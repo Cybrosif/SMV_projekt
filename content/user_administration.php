@@ -31,8 +31,8 @@
                     <td>
                         <input type="hidden" name="user_id[]" value="'.$row['ID'].'">
                         <select style="border:none" name="vloga[]">
-                            <option value="uporabnik" ' . ($row['Vloga'] == 'uporabnik' ? 'selected' : '') . '>Uporabnik</option>
-                            <option value="Učitelj" ' . ($row['Vloga'] == 'Učitelj' ? 'selected' : '') . '>Učitelj</option>
+                            <option value="učenec" ' . ($row['Vloga'] == 'učenec' ? 'selected' : '') . '>Dijak</option>
+                            <option value="učitelj" ' . ($row['Vloga'] == 'učitelj' ? 'selected' : '') . '>Profesor</option>
                         </select>
                     </td>
                     <td>
