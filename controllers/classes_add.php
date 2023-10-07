@@ -38,4 +38,6 @@ $result = mysqli_query($link, $query);
 
 $selectedQuery = "SELECT Razredi.* FROM Razredi JOIN Uporabniki_Razredi ON Razredi.Razred_ID = Uporabniki_Razredi.Razred_ID WHERE Uporabniki_Razredi.Uporabnik_ID = $userId";
 $selectedResult = mysqli_query($link, $selectedQuery);
+
+
 ?>
