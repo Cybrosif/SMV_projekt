@@ -1,5 +1,6 @@
 <?php 
     include '../session_start.php';
+    include '../functions/status_check_true.php';
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
@@ -349,8 +350,11 @@
                     if($_SESSION['user_vloga'] && $_SESSION['user_vloga']== "administrator")
                     echo
                     '
-                        <a href="home.php?page=user-management" data-page="user-management" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
-                        <i class="fas fa-user-edit me-2"></i>Upravljanje uporabnikov</a>
+                        <a href="home.php?page=student_administration" data-page="student_administration" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                        <i class="fas fa-user-edit me-2"></i>Upravljanje dijakov</a>
+
+                        <a href="home.php?page=teacher-management" data-page="teacher-management" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                        <i class="fas fa-user-edit me-2"></i>Upravljanje profesorjev</a>
                     ';
                 ?>
                 <a href="home.php?page=logout" data-page="logout" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">

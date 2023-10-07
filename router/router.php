@@ -15,8 +15,12 @@
                 include '../content/settings.php';
                 break;
             
-            case 'user-management':
-                include '../content/user_administration.php';
+            case 'student_administration':
+                include '../content/student_administration.php';
+                break;
+            
+            case 'teacher-management':
+                include '../content/teacher-management.php';
                 break;
 
             case 'logout':
