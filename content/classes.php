@@ -90,7 +90,7 @@ include '../controllers/classes_add.php';
         var formData = $(this).serialize();
         $.ajax({
             type: "POST",
-            url: "../controllers/content.php?page=classes",
+            url: "../controllers/classes_add.php",
             data: formData,
             success: function(data) {
                 $("#content").html(data);
