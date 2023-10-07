@@ -7,7 +7,7 @@ include '../controllers/classes_add.php';
 
     <div class="class-selection box-background shadow" id="classSelection" style="display:none;">
         <h3 class="mb-3">Izberite Predmet</h3>
-        <form method="post" action="../controllers/classes_add.php">
+        <form method="post" >
             <div class="row mb-3">
                 <?php
                 while ($row = mysqli_fetch_assoc($result)) {
@@ -65,7 +65,7 @@ include '../controllers/classes_add.php';
                 for ($i = $start; $i < $end; $i++) {
                     echo "<li class='list-group-item d-flex justify-content-between align-items-center'>";
                     echo "{$classes[$i]['Ime_razreda']}";
-                    echo "<form method='post' action='classes.php' class='odstrani-btn'>";
+                    echo "<form method='post' class='odstrani-btn'>";
                     echo "<input type='hidden' name='remove' value='{$classes[$i]['Razred_ID']}'>";
                     echo "<button type='submit' class='btn btn-danger btn-sm'>Odstsrani</button>";
                     echo "</form>";
@@ -88,13 +88,15 @@ include '../controllers/classes_add.php';
     $(document).on('submit', 'form', function(e) {
         e.preventDefault();
         var formData = $(this).serialize();
+        console.log("test");
         $.ajax({
             type: "POST",
             url: "../controllers/classes_add.php",
             data: formData,
             success: function(data) {
-                $("#content").html(data);
+                location.reload();
             }
         });
     });
+
 </script>
