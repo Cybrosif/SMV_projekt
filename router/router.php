@@ -23,6 +23,10 @@
                 include '../content/teacher-management.php';
                 break;
 
+            case 'user-management':
+                include '../content/user-management.php';
+                break;
+
             case 'logout':
                 echo '<script type="text/javascript">window.location.href = "../functions/logout.php";</script>';
                 break;

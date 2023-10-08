@@ -3,10 +3,32 @@
     include '../../db.php';
     $userId = $_POST['userId'];
 
-    $sql = "SELECT * FROM Uporabniki 
-    LEFT JOIN ucitelji_razredi ON Uporabniki.ID = ucitelji_razredi.Ucitelj_ID 
-    WHERE Uporabniki.ID = $userId";
+    $sql = "SELECT Vloga FROM Uporabniki WHERE ID = $userId";
+    $result = $link->query($sql);
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $vloga = $row["Vloga"];
+    }
+    $result->free();
 
+    if($vloga == "Dijak")
+    {
+        $sql = "SELECT * FROM Uporabniki 
+        LEFT JOIN uporabniki_razredi ON Uporabniki.ID = uporabniki_razredi.Uporabnik_ID 
+        WHERE Uporabniki.ID = $userId";
+        $controller = '../controllers/edit_student.php';
+    }
+    else if($vloga == "Profesor")
+    {
+        $sql = "SELECT * FROM Uporabniki 
+        LEFT JOIN ucitelji_razredi ON Uporabniki.ID = ucitelji_razredi.Ucitelj_ID 
+        WHERE Uporabniki.ID = $userId";
+        $controller = '../controllers/edit_teacher.php';
+    }
+    else
+    {
+        exit();
+    }
     $result = $link->query($sql);
 
     if ($result) {
@@ -55,7 +77,7 @@
                     <input type="hidden" name="userId" value="<?php echo $userId; ?>">
                     
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel"><?php echo $ime; ?></h1>
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel"><?php echo $vloga; ?></h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -127,7 +149,7 @@
             var formData = $(this).serialize();
             $.ajax({
                 type: 'POST',
-                url: '../controllers/edit_teacher.php', 
+                url: '<?php echo $controller; ?>', 
                 data: formData,
                 success: function(response){
                     console.log(formData);

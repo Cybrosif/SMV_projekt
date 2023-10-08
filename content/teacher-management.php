@@ -29,7 +29,7 @@
         <?php
             $user_id = $_SESSION['user_id'];
             $i = 1;
-            $query = "SELECT * FROM Uporabniki WHERE  vloga = 'učitelj'";
+            $query = "SELECT * FROM Uporabniki WHERE  vloga = 'profesor'";
             $result = mysqli_query($link, $query);   
             while ($row = mysqli_fetch_assoc($result)) {
                 echo '
@@ -37,16 +37,8 @@
                     <th scope="row">' . $i . '</th>
                     <td>' . $row['Ime'] . '</td>
                     <td>' . $row['Priimek'] . '</td>
-                    <td>' . $row['Email'] . '</td>';
-                    /*<td>
-                        <input type="hidden" name="user_id[]" value="'.$row['ID'].'">
-                        <select style="border:none" name="vloga[]">
-                            <option value="učenec" ' . ($row['Vloga'] == 'učenec' ? 'selected' : '') . '>Dijak</option>
-                            <option value="učitelj" ' . ($row['Vloga'] == 'učitelj' ? 'selected' : '') . '>Profesor</option>
-                        </select>
-                    </td>*/
-                    echo 
-                    '<td>
+                    <td>' . $row['Email'] . '</td> 
+                    <td>
                         <button class="btn btn-primary edit-btn" data-userid="' . $row['ID'] . '">Edit</button>
                     </td>
                     </tr>
@@ -62,21 +54,6 @@
 </html>
 <script type="text/javascript">
     $(document).ready(function(){
-
-        /* $('#myForm').on('submit', function(event){
-                event.preventDefault(); // Prevent the default form submission
-                var formData = $(this).serialize(); // Serialize form data
-                console.log(formData);
-                $.ajax({
-                    type: 'POST',
-                    url: '../controllers/user_administration.php', // Replace 'processing.php' with your actual PHP processing file
-                    data: formData,
-                    success: function(response){
-                        // Handle the response from the server if needed
-                        //console.log(response);
-                    }
-                });
-            });*/
 
             $('.edit-btn').on('click', function(){
             var userId = $(this).data('userid');     
