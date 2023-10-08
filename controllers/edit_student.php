@@ -3,7 +3,7 @@ include '../session_start.php';
 include '../../db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if($_SESSION['user_vloga'] != 'administrator')
+    if($_SESSION['user_vloga'] != 'Administrator')
     {
         header('Location: ../views/home.php?page=dashboard');
         exit();

@@ -27,7 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <td>' . $row['Email'] . '</td>
                 <td>' . $row['Vloga'] . '</td>
                 <td>
-                    <button class="btn btn-primary edit-btn" data-userid="' . $row['ID'] . '">Edit</button>
+                    <button class="btn btn-primary edit-btn" style="border:none;" data-userid="' . $row['ID'] . '">Uredi</button>
+                    <button class="btn btn-primary delete-btn" style="background-color:#D11A2A; border: none;" data-userid="' . $row['ID'] . '">Izbriši</button>
                 </td>
             </tr>';
     }

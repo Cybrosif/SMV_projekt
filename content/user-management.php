@@ -16,7 +16,7 @@
     
 
     <div class="mb-3">
-        <label for="filter">Filter by Role:</label>
+        <label for="filter">Filtriraj po vlogi:</label>
         <select class="form-select" id="filter" name="filter">
             <option value="all">Vsi uporabniki</option>
             <option value="Profesor">Profesorji</option>
@@ -24,8 +24,8 @@
         </select>
     </div>
     <div class="mb-3">
-        <label for="search">Search:</label>
-        <input type="text" class="form-control" id="search" placeholder="Enter search term...">
+        <label for="search">Išči:</label>
+        <input type="text" class="form-control" id="search" placeholder="Vpišite pojem za iskanje...">
     </div>
 
 
@@ -38,6 +38,7 @@
         <th scope="col">E-mail</th>
         <th scope="col">Vloga</th>
         <th scope="col"></th>
+        
         </tr>
     </thead>
     <tbody>
