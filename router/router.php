@@ -27,6 +27,10 @@
                 include '../content/user-management.php';
                 break;
 
+            case 'specific_class':
+                include '../content/specific_class.php';
+                break;
+
             case 'logout':
                 echo '<script type="text/javascript">window.location.href = "../functions/logout.php";</script>';
                 break;

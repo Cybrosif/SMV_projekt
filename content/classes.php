@@ -2,12 +2,12 @@
 include '../controllers/classes_add.php';
 ?>
 
-    <div class="container mt-3">
+<div class="container mt-3">
     <button class="btn btn-primary mb-3" type="button" id="toggleButton">Vsi predmeti</button>
 
     <div class="class-selection box-background shadow" id="classSelection" style="display:none;">
         <h3 class="mb-3">Izberite Predmet</h3>
-        <form method="post" >
+        <form method="post">
             <div class="row mb-3">
                 <?php
                 while ($row = mysqli_fetch_assoc($result)) {
@@ -41,12 +41,6 @@ include '../controllers/classes_add.php';
             padding: 0.5rem 1.25rem;
             margin-bottom: 5px;
         }
-        .odstrani-btn {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
     </style>
 
     <div class="box-background shadow">
@@ -65,10 +59,21 @@ include '../controllers/classes_add.php';
                 for ($i = $start; $i < $end; $i++) {
                     echo "<li class='list-group-item d-flex justify-content-between align-items-center'>";
                     echo "{$classes[$i]['Ime_razreda']}";
-                    echo "<form method='post' class='odstrani-btn'>";
+                    
+                    // Place the two buttons in a div for better control
+                    echo "<div class='action-buttons'>";
+
+                    // "Naloge" button
+                    echo "<a href='../views/home.php?page=specific_class&Razred_ID={$classes[$i]['Razred_ID']}' class='btn btn-info btn-sm mr-2'>Naloge</a>";
+
+                    // "Odstrani" button
+                    echo "<form method='post' class='d-inline-block'>";
                     echo "<input type='hidden' name='remove' value='{$classes[$i]['Razred_ID']}'>";
-                    echo "<button type='submit' class='btn btn-danger btn-sm'>Odstsrani</button>";
+                    echo "<button type='submit' class='btn btn-danger btn-sm'>Odstrani</button>";
                     echo "</form>";
+
+                    echo "</div>"; // Close action-buttons div
+
                     echo "</li>";
                 }
                 echo "</ul>";
@@ -98,5 +103,4 @@ include '../controllers/classes_add.php';
             }
         });
     });
-
 </script>
