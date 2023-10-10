@@ -1,5 +1,6 @@
 <?php
   include '../session_start.php';
+  include '../functions/status_check_false.php';
   if(!empty($_SESSION['prijavljen']) && $_SESSION['prijavljen'] == true){
     header("Location: home.php");
 }
