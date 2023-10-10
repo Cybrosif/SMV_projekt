@@ -4,6 +4,10 @@
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
+
+    if (isset($_GET['page'])) {
+        $data = $_GET['page'];
+    }
 ?>
 
 
@@ -340,31 +344,33 @@
                     class="fas"></i>CLASSORBIT</div>
 
             <div class="list-group list-group-flush my-3">
-                <a href="home.php?page=dashboard" data-page="dashboard" class="list-group-item list-group-item-action bg-transparent second-text active"><i
+                <a href="home.php?page=dashboard" data-page="dashboard" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php if($data == 'dashboard') echo 'active';?>"><i
                         class="fas fa-tachometer-alt me-2"></i>Nadzorna plošča</a>
 
-                <a href="home.php?page=classes" data-page="classes" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                <a href="home.php?page=classes" data-page="classes" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php if($data == 'classes') echo 'active';?>">
                     <i class="fas fa-list me-2"></i>Predmeti</a>
 
                 
+                    <?php
+                        if (isset($_SESSION['user_vloga']) && ($_SESSION['user_vloga'] == "Administrator" || $_SESSION['user_vloga'] == "administrator")) {
+                            $pages = array(
+                                
+                                "user-management" => "Upravljanje uporabnikov",
+                                "classes-management" => "Upravljanje predmetov",
+                                /*
+                                "teacher-management" => "Upravljanje profesorjev",
+                                "student_administration" => "Upravljanje dijakov"
+                                */
+                            );
 
-                <?php
-                    if(isset($_SESSION['user_vloga']) && $_SESSION['user_vloga']== "Administrator")
-                    echo
-                    '
-                        <!--<a href="home.php?page=student_administration" data-page="student_administration" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
-                        <i class="fas fa-user-edit me-2"></i>Upravljanje dijakov</a>
+                            foreach ($pages as $page => $label) {
+                                $isActive = ($data == $page) ? 'active' : '';
+                                echo '<a href="home.php?page=' . $page . '" data-page="' . $page . '" class="list-group-item list-group-item-action bg-transparent second-text fw-bold ' . $isActive . '">';
+                                echo '<i class="fas fa-pen me-2"></i>' . $label . '</a>';
+                            }
+                        }
+                    ?>
 
-                        <a href="home.php?page=teacher-management" data-page="teacher-management" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
-                        <i class="fas fa-user-edit me-2"></i>Upravljanje profesorjev</a>-->
-
-                        <a href="home.php?page=user-management" data-page="user-management" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
-                        <i class="fas fa-user-edit me-2"></i>Upravljanje uporabnikov</a>
-
-                        <a href="home.php?page=classes-management" data-page="classes-management" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
-                        <i class="fas fa-list me-2"></i>Upravljanje predmetov</a>
-                    ';
-                ?>
                 <a href="home.php?page=logout" data-page="logout" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                     <i class="fas fa-sign-out-alt me-2"></i>Odjava</a>
             </div>
