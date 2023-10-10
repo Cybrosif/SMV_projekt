@@ -335,15 +335,24 @@
 <body>
     <div class="d-flex" id="wrapper">
         <!-- Sidebar -->
+
+        <?php
+            
+            if (isset($_GET['page'])) {
+                $currentPage = $_GET['page'];
+            } else {
+                $currentPage = ''; 
+            }
+        ?>
         <div class="bg-white shadow rounded" id="sidebar-wrapper">
             <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom"><i
                     class="fas"></i>CLASSORBIT</div>
 
             <div class="list-group list-group-flush my-3">
-                <a href="home.php?page=dashboard" data-page="dashboard" class="list-group-item list-group-item-action bg-transparent second-text active"><i
+                <a href="home.php?page=dashboard" data-page="dashboard" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php echo ($currentPage == 'dashboard') ? 'active' : ''; ?> "><i
                         class="fas fa-tachometer-alt me-2"></i>Nadzorna plošča</a>
 
-                <a href="home.php?page=classes" data-page="classes" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                <a href="home.php?page=classes" data-page="classes" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php echo ($currentPage == 'classes') ? 'active' : ''; ?>">
                     <i class="fas fa-list me-2"></i>Predmeti</a>
 
                 
@@ -352,7 +361,7 @@
                     if(isset($_SESSION['user_vloga']) && $_SESSION['user_vloga']== "Administrator")
                     echo
                     '
-                        <!--<a href="home.php?page=student_administration" data-page="student_administration" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                        <!--<a href="home.php?page=student_administration" data-page="student_administration" class="list-group-item list-group-item-action bg-transparent second-text fw-bold ">
                         <i class="fas fa-user-edit me-2"></i>Upravljanje dijakov</a>
 
                         <a href="home.php?page=teacher-management" data-page="teacher-management" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
