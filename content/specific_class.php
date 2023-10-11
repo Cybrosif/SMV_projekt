@@ -21,12 +21,6 @@ $nalogeResult = mysqli_query($link, $nalogeQuery);
         body {
             background-color: #f5f5f5;
         }
-        .container {
-            background-color: #ffffff;
-            padding: 2rem;
-            border-radius: 5px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
     </style>
 
 <div class="container mt-5">

@@ -32,9 +32,8 @@
 
     </style>
 </head>
-<body>
+<div class="container">
     <h1 class='text-center primary-text'>Nadzorna plošča</h1>
-    <div class="container">
         <div class="row">
             <div class="col">
             <p class="nsl">Moji predmeti</p>
@@ -127,5 +126,4 @@
             </div>
         </div>
     </div>
-</body>
 </html>

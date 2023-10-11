@@ -23,6 +23,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>Šolska Podpora</title>
     <style>
+        body {
+            background-color: #f5f5f5;
+        }
         :root {
             --main-bg-color: #0066cc;
             --main-text-color: #0066cc;
@@ -57,6 +60,7 @@
 
         #wrapper {
             overflow-x: hidden;
+            background-color: #f5f5f5;
         }
 
         #sidebar-wrapper {
@@ -294,7 +298,12 @@
             box-shadow: 8px 8px 10px rgba(0, 0, 0, 0.3);
         }
         
-
+        .container {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
@@ -353,10 +362,10 @@
                     class="fas"></i>CLASSORBIT</div>
 
             <div class="list-group list-group-flush my-3">
-                <a href="home.php?page=dashboard" data-page="dashboard" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php if($data == 'dashboard') echo 'active';?>"><i
+                <a href="home.php?page=dashboard" data-page="dashboard" class="list-group-item list-group-item-action bg-transparent second-text fw-bold if($currentPage == 'dashboard') echo 'active';"><i
                         class="fas fa-tachometer-alt me-2"></i>Nadzorna plošča</a>
 
-                <a href="home.php?page=classes" data-page="classes" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php if($data == 'classes') echo 'active';?>">
+                <a href="home.php?page=classes" data-page="classes" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php if($currentPage == 'classes') echo 'active';?>">
                     <i class="fas fa-list me-2"></i>Predmeti</a>
 
                 
@@ -373,13 +382,14 @@
                             );
 
                             foreach ($pages as $page => $label) {
-                                $isActive = ($data == $page) ? 'active' : '';
+                                $isActive = ($currentPage == $page) ? 'active' : '';
                                 echo '<a href="home.php?page=' . $page . '" data-page="' . $page . '" class="list-group-item list-group-item-action bg-transparent second-text fw-bold ' . $isActive . '">';
                                 echo '<i class="fas fa-pen me-2"></i>' . $label . '</a>';
                             }
                         }
                     ?>
-
+            <a href="home.php?page=settings" data-page="settings" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php if($currentPage == 'settings') echo 'active';?>">
+                    <i class="fas fa-cogs me-2"></i>Nastavitve</a>
                 <a href="home.php?page=logout" data-page="logout" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                     <i class="fas fa-sign-out-alt me-2"></i>Odjava</a>
             </div>
@@ -393,12 +403,10 @@
                     <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle"></i>
                     <h2 class="h5 mb-0 primary-text">Meni</h2>
                 </div>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="ms-auto mb-2 mb-lg-0 first-text fw-bold">
+                    <i class="fas fa-user me-2"></i><?php echo $_SESSION['user_ime']?>
+                </div>
+                <!--<div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
@@ -410,7 +418,7 @@
                             </ul>
                         </li>
                     </ul>
-                </div>
+                </div>-->
             </nav>
 
             <div class="container-fluid" id="content">

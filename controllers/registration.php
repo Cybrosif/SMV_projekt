@@ -58,7 +58,7 @@
         $_SESSION['user_email'] = $email;
         $_SESSION['user_vloga'] = $vloga;
 
-        header("Location: ../views/home.php");
+        header("Location: ../views/home.php?page=dashboard");
         exit();
 
     }
