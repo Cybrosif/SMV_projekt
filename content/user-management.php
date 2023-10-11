@@ -4,8 +4,6 @@
     include '../../db.php';
 ?>
 <h1 class='text-center primary-text'>Upravljanje uporabnikov</h1>
-<body>
-
     <div class="modal fade" id="editUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -45,8 +43,6 @@
     </tbody>
     </table>
 </div>
-</body>
-</html>
 <script type="text/javascript">
     $(document).ready(function(){
         loadUsers();
