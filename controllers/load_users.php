@@ -8,10 +8,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Query the database based on the filter value and search query
     if ($filterValue === 'all') {
-        $query = "SELECT * FROM Uporabniki WHERE (vloga = 'Profesor' OR vloga = 'dijak') AND (Ime LIKE '%$searchQuery%' OR Priimek LIKE '%$searchQuery%' OR Email LIKE '%$searchQuery%')";
+        $query = "SELECT * FROM uporabniki WHERE (vloga = 'Profesor' OR vloga = 'dijak') AND (Ime LIKE '%$searchQuery%' OR Priimek LIKE '%$searchQuery%' OR Email LIKE '%$searchQuery%')";
     } else {
         // Assuming $filterValue can be 'profesor' or 'dijak'
-        $query = "SELECT * FROM Uporabniki WHERE vloga = '$filterValue' AND (Ime LIKE '%$searchQuery%' OR Priimek LIKE '%$searchQuery%' OR Email LIKE '%$searchQuery%')";
+        $query = "SELECT * FROM uporabniki WHERE vloga = '$filterValue' AND (Ime LIKE '%$searchQuery%' OR Priimek LIKE '%$searchQuery%' OR Email LIKE '%$searchQuery%')";
     }
 
     $result = mysqli_query($link, $query);

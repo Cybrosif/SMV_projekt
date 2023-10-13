@@ -6,13 +6,13 @@ $classId = $_GET['Razred_ID'];
 // Make sure to sanitize the input to prevent SQL injection
 $classId = mysqli_real_escape_string($link, $classId);
 
-$query = "SELECT Ime_razreda FROM Razredi WHERE Razred_ID = $classId";
+$query = "SELECT Ime_razreda FROM razredi WHERE Razred_ID = $classId";
 $classNameResult = mysqli_query($link, $query);
 $classNameData = mysqli_fetch_assoc($classNameResult);
 $className = $classNameData['Ime_razreda'];
 
 // Query for Naloge of the specific class
-$nalogeQuery = "SELECT Naslov, Opis, Rok FROM Naloge WHERE Razred_ID = $classId";
+$nalogeQuery = "SELECT Naslov, Opis, Rok FROM naloge WHERE Razred_ID = $classId";
 $nalogeResult = mysqli_query($link, $nalogeQuery);
 ?>
 
@@ -20,12 +20,6 @@ $nalogeResult = mysqli_query($link, $nalogeQuery);
 
         body {
             background-color: #f5f5f5;
-        }
-        .container {
-            background-color: #ffffff;
-            padding: 2rem;
-            border-radius: 5px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
     </style>
 

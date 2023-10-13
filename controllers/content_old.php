@@ -124,7 +124,7 @@ switch ($page) {
         $razredId = $_GET['razred_id'];
     
         // Fetch the name of the razred using the given ID
-        $sql = "SELECT Ime_razreda FROM Razredi WHERE Razred_ID = ?";
+        $sql = "SELECT Ime_razreda FROM razredi WHERE Razred_ID = ?";
         $stmt = $link->prepare($sql);
         $stmt->bind_param("i", $razredId);
         $stmt->execute();
@@ -150,7 +150,7 @@ switch ($page) {
         $providedKljucVpisa = $_GET['kljucVpisa'];
             
         // Fetch the Kljuc Vpisa from the database for the specific razred
-        $sql = "SELECT Kljuc_Vpisa FROM Razredi WHERE Razred_ID = ?";
+        $sql = "SELECT Kljuc_Vpisa FROM razredi WHERE Razred_ID = ?";
         $stmt = $link->prepare($sql);
         $stmt->bind_param("i", $razredId);
         $stmt->execute();
