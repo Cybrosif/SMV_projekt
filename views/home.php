@@ -357,7 +357,7 @@
                 $currentPage = ''; 
             }
         ?>
-        <div class="bg-white shadow rounded" id="sidebar-wrapper">
+        <div class="bg-white shadow rounded " id="sidebar-wrapper">
             <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom"><i
                     class="fas"></i>CLASSORBIT</div>
 
@@ -392,8 +392,9 @@
                     <i class="fas fa-cogs me-2"></i>Nastavitve</a>
                 <a href="home.php?page=logout" data-page="logout" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                     <i class="fas fa-sign-out-alt me-2"></i>Odjava</a>
-            </div>
+            </div>   
         </div>
+        
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->

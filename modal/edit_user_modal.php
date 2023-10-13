@@ -1,6 +1,7 @@
 <?php
     include '../session_start.php';
     include '../../db.php';
+    include '../functions/check_if_admin.php';
     $userId = $_POST['userId'];
 
     $sql = "SELECT Vloga FROM Uporabniki WHERE ID = $userId";

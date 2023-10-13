@@ -14,7 +14,7 @@
 
         $hash = password_hash($password, PASSWORD_BCRYPT);
 
-        $stmt = $link->prepare("SELECT id, ime, priimek, geslo, vloga FROM Uporabniki WHERE Email = ?");
+        $stmt = $link->prepare("SELECT id, ime, priimek, geslo, vloga FROM uporabniki WHERE Email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $stmt->bind_result($id, $ime, $priimek, $hashedPassword, $vloga);

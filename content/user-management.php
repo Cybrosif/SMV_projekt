@@ -14,7 +14,7 @@
 <div class="container">
     <h1 class='text-center primary-text'>Upravljanje uporabnikov</h1>
         <div class="modal fade" id="editUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
+            <div class="modal-dialog ">
                 <div class="modal-content">
                     <!-- Modal content goes here -->
                 </div>
@@ -63,6 +63,20 @@
         });
 
         
+        $('table').on('click', '.delete-btn', function(){
+            var userId = $(this).data('userid');     
+            $.ajax({
+                type: 'POST',
+                url: '../modal/delete_modal.php', 
+                data: { userId: userId },
+                success: function(response){
+                    $('#editUserModal .modal-content').html(response);
+                    $('#editUserModal').modal('show');
+                    $('#editUserModal .modal-dialog').removeClass('modal-xl');
+                }
+            });
+        });
+
         $('table').on('click', '.edit-btn', function(){
             var userId = $(this).data('userid');     
             
@@ -72,7 +86,8 @@
                 data: { userId: userId },
                 success: function(response){
                     $('#editUserModal .modal-content').html(response);
-                    $('#editUserModal').modal('show'); 
+                    $('#editUserModal').modal('show');
+                    $('#editUserModal .modal-dialog').addClass('modal-xl'); 
                 }
             });
         });

@@ -14,6 +14,9 @@
   </head>
 
   <style>
+         body {
+            background-color: #f5f5f5;
+        }
         .card {
             width: 500px;
             padding: 20px;
@@ -23,6 +26,7 @@
         }
         .container{
           position: absolute;
+          background-color: white;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
