@@ -20,11 +20,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if($password == "")
         {
-            $sql = "UPDATE uporabniki SET Ime='$ime', Priimek='$priimek', Email='$email' WHERE ID = $userId";
+            $sql = "UPDATE uporabniki SET Ime='$ime', Priimek='$priimek', Email='$email' WHERE ID = $userId AND Vloga != 'Administrator'";
         }
     else
         {
-            $sql = "UPDATE uporabniki SET Ime='$ime', Priimek='$priimek', Email='$email', Geslo='$hash' WHERE ID = $userId";
+            $sql = "UPDATE uporabniki SET Ime='$ime', Priimek='$priimek', Email='$email', Geslo='$hash' WHERE ID = $userId AND Vloga != 'Administrator'";
         }
     
     if ($link->query($sql) === true) {
