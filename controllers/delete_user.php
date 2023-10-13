@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userId = $_POST['userId'];
 
     // Perform deletion operation in the database (Example query, update with your query)
-    $sql = "DELETE FROM Uporabniki WHERE ID = $userId";
+    $sql = "DELETE FROM uporabniki WHERE ID = $userId";
 
     if ($link->query($sql) === true) {
         echo "Record inserted successfully";

@@ -29,7 +29,7 @@
         <?php
             $user_id = $_SESSION['user_id'];
             $i = 1;
-            $query = "SELECT * FROM Uporabniki WHERE  vloga = 'dijak'";
+            $query = "SELECT * FROM uporabniki WHERE  vloga = 'dijak'";
             $result = mysqli_query($link, $query);   
             while ($row = mysqli_fetch_assoc($result)) {
                 echo '

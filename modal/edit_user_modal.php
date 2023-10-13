@@ -4,7 +4,7 @@
     include '../functions/check_if_admin.php';
     $userId = $_POST['userId'];
 
-    $sql = "SELECT Vloga FROM Uporabniki WHERE ID = $userId";
+    $sql = "SELECT Vloga FROM uporabniki WHERE ID = $userId";
     $result = $link->query($sql);
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
@@ -14,16 +14,16 @@
 
     if($vloga == "Dijak")
     {
-        $sql = "SELECT * FROM Uporabniki 
-        LEFT JOIN uporabniki_razredi ON Uporabniki.ID = uporabniki_razredi.Uporabnik_ID 
-        WHERE Uporabniki.ID = $userId";
+        $sql = "SELECT * FROM uporabniki 
+        LEFT JOIN uporabniki_razredi ON uporabniki.ID = uporabniki_razredi.Uporabnik_ID 
+        WHERE uporabniki.ID = $userId";
         $controller = '../controllers/edit_student.php';
     }
     else if($vloga == "Profesor")
     {
-        $sql = "SELECT * FROM Uporabniki 
-        LEFT JOIN ucitelji_razredi ON Uporabniki.ID = ucitelji_razredi.Ucitelj_ID 
-        WHERE Uporabniki.ID = $userId";
+        $sql = "SELECT * FROM uporabniki 
+        LEFT JOIN ucitelji_razredi ON uporabniki.ID = ucitelji_razredi.Ucitelj_ID 
+        WHERE uporabniki.ID = $userId";
         $controller = '../controllers/edit_teacher.php';
     }
     else
