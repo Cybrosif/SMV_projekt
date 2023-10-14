@@ -29,8 +29,9 @@
 
 <script>
     $(document).ready(function(){
-        loadClasses();
         var classesArray;
+        loadClasses();
+        
         function loadClasses() {
             $.ajax({
                 type: 'POST',

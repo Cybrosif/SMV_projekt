@@ -55,14 +55,46 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function(){
+        var usersArray;
         loadUsers();
-
         
-        $('#filter, #search').on('input', function(){
-            loadUsers(); 
-        });
+        function loadUsers() {
+            $.ajax({
+                type: 'POST',
+                url: '../controllers/load_users.php',
+                success: function(response){
+                    usersArray = response;
+                    //console.log(response);
+                    loadTable(usersArray);
+                }
+            });
+        };
+    
+        function loadTable(usersArray){
 
-        
+            var tbody = $('table tbody');
+            tbody.empty();
+            var i = 1;
+            usersArray.forEach(function(userItem) {
+                    // Assuming classItem has properties like 'className', 'classDescription', etc.
+                    // Create a table row and append it to the table body
+                    var row = $('<tr>');
+                    row.append($('<td>').text(i));
+                    row.append($('<td>').text(userItem.Ime));
+                    row.append($('<td>').text(userItem.Priimek));
+                    row.append($('<td>').text(userItem.Email));
+                    row.append($('<td>').text(userItem.Vloga));
+                    // Add more columns as needed
+                    var editButton = $('<button>').addClass('btn btn-primary edit-btn').attr('data-userid', userItem.ID).text('Uredi');
+                    var deleteButton = $('<button>').addClass('btn btn-primary btn-danger delete-btn').attr('data-userid', userItem.ID).text('Izbriši');
+
+
+                    // Append buttons to the row
+                    row.append($('<td>').append(editButton).append(deleteButton));
+                    tbody.append(row); // Append the row to the table body
+                    i++;
+            });
+        };
         $('table').on('click', '.delete-btn', function(){
             var userId = $(this).data('userid');     
             $.ajax({
@@ -92,19 +124,41 @@
             });
         });
 
-        function loadUsers() {
-            var filterValue = $('#filter').val();
-            var searchQuery = $('#search').val();
+        $('#search').on('input', function() {
+            var searchTerm = $(this).val().toLowerCase();
+            var selectedRole = $('#filter').val().toLowerCase();
 
-            $.ajax({
-                type: 'POST',
-                url: '../controllers/load_users.php',
-                data: { filter: filterValue, search: searchQuery },
-                success: function(response){
-                    $('table tbody').html(response); 
-                }
+            var filteredUsers = usersArray.filter(function(userItem) {
+                // Check if the search term is present in Ime, Priimek, or Email
+                var nameMatches = userItem.Ime.toLowerCase().includes(searchTerm) ||
+                                userItem.Priimek.toLowerCase().includes(searchTerm) ||
+                                userItem.Email.toLowerCase().includes(searchTerm);
+                // Check if the selected role matches or if "Vsi uporabniki" is selected
+                var roleMatches = selectedRole === 'all' || userItem.Vloga.toLowerCase() === selectedRole;
+                
+                return nameMatches && roleMatches;
             });
-        }
+
+            loadTable(filteredUsers); // Update the table with filtered results
+        });
+
+        $('#filter').on('change', function() {
+            var searchTerm = $('#search').val().toLowerCase();
+            var selectedRole = $(this).val().toLowerCase();
+
+            var filteredUsers = usersArray.filter(function(userItem) {
+                // Check if the search term is present in Ime, Priimek, or Email
+                var nameMatches = userItem.Ime.toLowerCase().includes(searchTerm) ||
+                                userItem.Priimek.toLowerCase().includes(searchTerm) ||
+                                userItem.Email.toLowerCase().includes(searchTerm);
+                // Check if the selected role matches or if "Vsi uporabniki" is selected
+                var roleMatches = selectedRole === 'all' || userItem.Vloga.toLowerCase() === selectedRole;
+
+                return nameMatches && roleMatches;
+            });
+
+            loadTable(filteredUsers); // Update the table with filtered results
+        });
     });
 
 </script>
