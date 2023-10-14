@@ -41,6 +41,14 @@ include '../controllers/classes_add.php';
             padding: 0.5rem 1.25rem;
             margin-bottom: 5px;
         }
+        .action-buttons .btn-sm {
+            margin-right: 5px; /* This adds a gap between the buttons */
+        }
+
+        .btn-dark-blue {
+            background-color: #0d6efd; /* This is a dark blue color */
+            color: #fff; /* white text color for readability */
+        }
     </style>
 
     <div class="box-background shadow">
@@ -64,7 +72,7 @@ include '../controllers/classes_add.php';
                     echo "<div class='action-buttons'>";
 
                     // "Naloge" button
-                    echo "<a href='../views/home.php?page=specific_class&Razred_ID={$classes[$i]['Razred_ID']}' class='btn btn-info btn-sm mr-2'>Naloge</a>";
+                    echo "<a href='../views/home.php?page=specific_class&Razred_ID={$classes[$i]['Razred_ID']}' class='btn btn-dark-blue btn-sm mr-2'>Naloge</a>";
 
                     // "Odstrani" button
                     echo "<form method='post' class='d-inline-block'>";

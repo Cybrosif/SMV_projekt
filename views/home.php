@@ -370,16 +370,21 @@
 
                 
                     <?php
-                        if (isset($_SESSION['user_vloga']) && ($_SESSION['user_vloga'] == "Administrator" || $_SESSION['user_vloga'] == "administrator")) {
+                        if (isset($_SESSION['user_vloga']) && 
+                            ($_SESSION['user_vloga'] == "Administrator" || 
+                            $_SESSION['user_vloga'] == "administrator" || 
+                            $_SESSION['user_vloga'] == "Profesor" || 
+                            $_SESSION['user_vloga'] == "profesor")) 
+                        {
                             $pages = array(
-                                
                                 "user-management" => "Upravljanje uporabnikov",
                                 "classes-management" => "Upravljanje predmetov",
                                 /*
                                 "teacher-management" => "Upravljanje profesorjev",
                                 "student_administration" => "Upravljanje dijakov"
                                 */
-                            );
+                        );
+                        
 
                             foreach ($pages as $page => $label) {
                                 $isActive = ($currentPage == $page) ? 'active' : '';
@@ -388,7 +393,7 @@
                             }
                         }
                     ?>
-            <a href="home.php?page=settings" data-page="settings" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php if($currentPage == 'settings') echo 'active';?>">
+                <a href="home.php?page=settings" data-page="settings" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php if($currentPage == 'settings') echo 'active';?>">
                     <i class="fas fa-cogs me-2"></i>Nastavitve</a>
                 <a href="home.php?page=logout" data-page="logout" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                     <i class="fas fa-sign-out-alt me-2"></i>Odjava</a>
