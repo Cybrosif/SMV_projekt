@@ -27,6 +27,10 @@
                 include '../content/user-management.php';
                 break;
 
+            case 'classes-management':
+                include '../content/classes-management.php';
+                break;
+
             case 'specific_class':
                 include '../content/specific_class.php';
                 break;

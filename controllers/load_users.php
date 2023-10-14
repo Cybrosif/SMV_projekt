@@ -1,6 +1,6 @@
 <?php
 include '../../db.php';
-
+include '../functions/check_if_admin.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve filter and search values sent from AJAX request
     $filterValue = $_POST['filter'];

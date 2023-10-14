@@ -13,6 +13,7 @@
 </style>
 <div class="container">
     <h1 class='text-center primary-text'>Upravljanje uporabnikov</h1>
+    
         <div class="modal fade" id="editUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog ">
                 <div class="modal-content">
@@ -39,13 +40,12 @@
         <table class="table">
         <thead>
             <tr>
-            <th scope="col">#</th>
-            <th scope="col">Ime</th>
-            <th scope="col">Priimek</th>
-            <th scope="col">E-mail</th>
-            <th scope="col">Vloga</th>
-            <th scope="col"></th>
-            
+                <th scope="col">#</th>
+                <th scope="col">Ime</th>
+                <th scope="col">Priimek</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Vloga</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
