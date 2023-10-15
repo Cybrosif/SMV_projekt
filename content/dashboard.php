@@ -29,7 +29,9 @@
         .container{
           font-size: 19px;
         }
-
+        .table{
+            border-bottom: solid 1px gray 0.8;
+        }
     </style>
 </head>
 <body>
