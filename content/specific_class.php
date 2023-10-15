@@ -39,8 +39,6 @@ $nalogeResult = mysqli_query($link, $nalogeQuery);
     </style>
 </head>
 
-<body>
-
 
     <div class="container mt-5">
         <h1 class="text-center mb-5"><?php echo $className; ?></h1>
@@ -88,7 +86,39 @@ $nalogeResult = mysqli_query($link, $nalogeQuery);
     </div>
 
     <!-- Bootstrap 5 JS and Popper.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>-->
 
-</body>
+
+<!-- Inside the <head> tag -->
+<script>
+    $(document).ready(function() {
+        
+        $('form').submit(function(event) {
+            
+            event.preventDefault();
+
+            
+            var formData = new FormData(this);
+
+            
+            $.ajax({
+                type: 'POST',
+                url: '../controllers/upload_naloga.php',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    
+                    //console.log(response);
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    
+                    //console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+
