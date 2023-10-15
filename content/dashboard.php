@@ -67,10 +67,11 @@
         
     </style>
 </head>
-<div class="container">
-    <h1 class='text-center primary-text'>Nadzorna plošča</h1>
+
+    <!--<h1 class='text-center primary-text'>Nadzorna plošča</h1>-->
     <div class="row">
         <div class="col1">
+        <div class="container">
             <p class="nsl">Moji predmeti</p>
             <?php
                 include("../../db.php"); 
@@ -99,6 +100,7 @@
 
                 $link->close(); 
             ?>
+        </div>
         </div>
         <div class="col">
             <div class="container">
@@ -161,5 +163,4 @@
         </div>
        </div>
     </div>
-</div>
 </html>
