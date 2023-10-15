@@ -64,7 +64,7 @@
                     <div class="my-4"></div>
                     <div class="text-center mt-1">
                         <button class="btn btn-primary " type="submit" name='login' >Prijava</button>
-                        <a href="registration_page.php" class="nav-link">Še nimate profila?</a>
+                        <a href="registration_page.php" class="nav-link my-2">Še nimate profila?</a>
                     </div>
                     </form>
                 </div>

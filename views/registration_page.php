@@ -67,7 +67,7 @@
                         <div class="my-4"></div>
                         <div class="text-center mt-1">
                             <button class="btn btn-primary" name="registration">Registracija</button>
-                            <a href="login_page.php" class="nav-link">Že imate profil?</a>
+                            <a href="login_page.php" class="nav-link my-2">Že imate profil?</a>
                         </div>
                     </form>
                 </div>
