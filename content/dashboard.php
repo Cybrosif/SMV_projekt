@@ -8,12 +8,17 @@
             border-radius: 5px;*/
             margin: 5px;
         }
+        .col1{
+            margin:5px;
+            font-size: 22px;
+        }
         .nsl {
-            font-size: 15px;
+            font-size: 20px;
             font-weight: bold;
             margin-bottom: 1px;
             padding-top: 5px;
-            padding-bottom: 10px;
+            padding-bottom: 20px;
+            padding-top: 30px;
         }
         .rok-potekel {
             color: red;
@@ -31,13 +36,41 @@
         }
         .table{
             border-bottom: solid 1px gray 0.8;
+            border-collapse: collapse;
         }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: none;
+        }
+        th {
+            background-color: black;
+            color: black;
+        }
+        .gumb-container {
+            text-align: right; 
+        }
+        .gumb {
+            background-color: #007bff;
+            border: 1px solid #ededed;
+            background-color: #ededed;
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            white-space: nowrap;
+            transition: background-color 0.5s;
+        }
+
+        .gumb:hover {
+            background-color: white;
+        }
+        
     </style>
 </head>
 <div class="container">
     <h1 class='text-center primary-text'>Nadzorna plošča</h1>
-        <div class="row">
-            <div class="col">
+    <div class="row">
+        <div class="col1">
             <p class="nsl">Moji predmeti</p>
             <?php
                 include("../../db.php"); 
@@ -65,67 +98,68 @@
                 }
 
                 $link->close(); 
-                ?>
-            </div>
-            <div class="col">
-                <p class="nsl">Dodeljene naloge</p>
-                <?php
-                  include("../../db.php");
-
-                  if (isset($_SESSION['user_id'])) {
-                      $uporabnik_id = $_SESSION['user_id'];
-                  
-                      $sql = "SELECT n.Naslov, n.Opis, n.Rok
-                              FROM naloge AS n
-                              INNER JOIN uporabniki_razredi AS ur ON n.Razred_ID = ur.Razred_ID
-                              WHERE ur.Uporabnik_ID = $uporabnik_id
-                              AND n.Rok <= DATE_ADD(CURDATE(), INTERVAL 1 WEEK)
-                              ORDER BY n.Rok ASC";
-                      $result = $link->query($sql);
-                  
-                      if ($result->num_rows > 0) {
-                          echo '<table class="table">';
-                          echo '<thead>';
-                          echo '<tr>';
-                          echo '<th scope="col">#</th>';
-                          echo '<th scope="col">Naslov</th>';
-                          echo '<th scope="col">Opis</th>';
-                          echo '<th scope="col">Rok</th>';
-                          echo '</tr>';
-                          echo '</thead>';
-                          echo '<tbody>';
-                          $stevilcenje = 1;
-                          while ($row = $result->fetch_assoc()) {
-                              $rok = $row["Rok"];
-                              $naslov = $row["Naslov"];
-                              $opis = $row["Opis"];
-                              $datum_roka = strtotime($rok);
-                          
-                              if ($datum_roka < strtotime("today")) {
-                                  echo '<tr class="rok-potekel">';
-                              } else {
-                                  echo '<tr>';
-                              }
-                              echo '<th scope="row">' . $stevilcenje . '</th>';
-                              echo '<td><a href="#">' . $naslov . '</a></td>';
-                              echo '<td>' . $opis . '</td>';
-                              echo '<td>' . $rok . '</td>';
-                              echo '</tr>';
-                              $stevilcenje++;
-                          }
-                          echo '</tbody>';
-                          echo '</table>';
-                      } else {
-                          echo "<br>Ni rezultatov.";
-                      }
-                  } else {
-                      echo "Uporabnik ni prijavljen.";
-                  }
-
-                  $link->close();
-                ?>
-
-            </div>
+            ?>
         </div>
+        <div class="col">
+            <div class="container">
+            <p class="nsl">Dodeljene naloge</p>
+            <?php
+                include("../../db.php");
+
+                if (isset($_SESSION['user_id'])) {
+                    $uporabnik_id = $_SESSION['user_id'];
+
+                    $sql = "SELECT n.Naslov, n.Opis, n.Rok FROM naloge AS n
+                            INNER JOIN uporabniki_razredi AS ur ON n.Razred_ID = ur.Razred_ID
+                            WHERE ur.Uporabnik_ID = $uporabnik_id
+                            AND n.Rok <= DATE_ADD(CURDATE(), INTERVAL 1 WEEK)
+                            ORDER BY n.Rok ASC";
+
+                    $result = $link->query($sql);
+
+                    if ($result->num_rows > 0) {
+                        echo '<table class="table">';
+                        echo '<thead>';
+                        echo '<tr>';
+                        echo '<th scope="col"></th>';
+                        echo '<th scope="col">Naslov</th>';
+                        echo '<th scope="col">Opis</th>';
+                        echo '<th scope="col">Rok oddaje</th>';
+                        echo '<th scope="col"></th>'; // Dodajte stolpec za gumb
+                        echo '</tr>';
+                        echo '</thead>';
+                        echo '<tbody>';
+                        while ($row = $result->fetch_assoc()) {
+                            $rok = $row["Rok"];
+                            $naslov = $row["Naslov"];
+                            $opis = $row["Opis"];
+                            $datum_roka = strtotime($rok);
+
+                            if ($datum_roka < strtotime("today")) {
+                                echo '<tr class="rok-potekel">';
+                            } else {
+                                echo '<tr>';
+                            }
+                            echo '<th scope="row"></th>';
+                            echo '<td><a href="#">' . $naslov . '</a></td>';
+                            echo '<td>' . $opis . '</td>';
+                            echo '<td>' . date('d.m.Y', $datum_roka) . '</td>';
+                            echo '<td class="gumb-container"><a class="gumb" href="#">Oddaj nalogo</a></td>'; // Dodajte gumb za oddajo naloge
+                            echo '</tr>';
+                        }
+                        echo '</tbody>';
+                        echo '</table>';
+                    } else {
+                        echo "<br>Ni rezultatov.";
+                    }
+                } else {
+                    echo "Uporabnik ni prijavljen.";
+                }
+
+                $link->close();
+            ?>
+        </div>
+       </div>
     </div>
+</div>
 </html>
