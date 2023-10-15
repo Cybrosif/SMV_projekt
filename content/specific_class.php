@@ -1,9 +1,6 @@
 <?php
 include '../../db.php';
-
-if(!isset($_SESSION)) {
-    session_start();
-}
+include '../session_start.php';
 
 $classId = $_GET['Razred_ID'];
 
@@ -50,30 +47,42 @@ $nalogeResult = mysqli_query($link, $nalogeQuery);
 
         <div class="row">
             <?php
-            while ($nalogeData = mysqli_fetch_assoc($nalogeResult)) {
-                echo '<div class="col-md-6 col-lg-4 mb-4">';
-                echo '<div class="card assignment-card">';
-                echo '<div class="assignment-header">' . $nalogeData['Naslov'] . '</div>';
-                echo '<div class="assignment-body">';
-                echo '<p>' . $nalogeData['Opis'] . '</p>';
-                echo '<p><small class="text-muted">Rok: ' . $nalogeData['Rok'] . '</small></p>';
-                
-                echo '<form action="../controllers/upload_naloga.php" method="post" enctype="multipart/form-data">';
-                echo '<input type="hidden" name="Naloga_ID" value="' . $nalogeData['Naloga_ID'] . '">';
-                echo '<div class="mb-3">';
-                echo '<input class="form-control" type="file" name="fileToUpload" id="fileToUpload">';
-                echo '</div>';
-                echo '<input class="btn btn-primary mb-2" type="submit" value="Naloži nalogo" name="submit">';
-
-                if (isset($nalogeData['stored_filename']) && isset($nalogeData['original_filename'])) {
-                    echo '<a class="btn btn-secondary mt-2" href="../uploads/' . $nalogeData['stored_filename'] . '" download="' . $nalogeData['original_filename'] . '">Download: ' . $nalogeData['original_filename'] . '</a>';
+            /*if (!$nalogeResult) {
+                die('Error in SQL query: ' . mysqli_error($link));
+            }*/
+            if (mysqli_num_rows($nalogeResult) > 0)
+            {
+                while ($nalogeData = mysqli_fetch_assoc($nalogeResult)) {
+                    echo '<div class="col-md-6 col-lg-4 mb-4">';
+                    echo '<div class="card assignment-card">';
+                    echo '<div class="assignment-header">' . $nalogeData['Naslov'] . '</div>';
+                    echo '<div class="assignment-body">';
+                    echo '<p>' . $nalogeData['Opis'] . '</p>';
+                    echo '<p><small class="text-muted">Rok: ' . $nalogeData['Rok'] . '</small></p>';
+                    
+                    echo '<form action="../controllers/upload_naloga.php" method="post" enctype="multipart/form-data">';
+                    echo '<input type="hidden" name="Naloga_ID" value="' . $nalogeData['Naloga_ID'] . '">';
+                    echo '<div class="mb-3">';
+                    echo '<input class="form-control" type="file" name="fileToUpload" id="fileToUpload">';
+                    echo '</div>';
+                    echo '<input class="btn btn-primary mb-2" type="submit" value="Naloži nalogo" name="submit">';
+    
+                    if (isset($nalogeData['stored_filename']) && isset($nalogeData['original_filename'])) {
+                        echo '<a class="btn btn-secondary mt-2" href="../uploads/' . $nalogeData['stored_filename'] . '" download="' . $nalogeData['original_filename'] . '">Download: ' . $nalogeData['original_filename'] . '</a>';
+                    }
+    
+                    echo '</form>';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</div>';
                 }
-
-                echo '</form>';
-                echo '</div>';
-                echo '</div>';
+            }
+            else {
+                echo '<div class="col-12 text-center">';
+                echo '<p>No results found.</p>';
                 echo '</div>';
             }
+            
             ?>
         </div>
     </div>
