@@ -5,15 +5,22 @@ include '../functions/check_if_admin.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $classId = $_POST['classId'];
-    $name = $_POST['name'];
-    $key = $_POST['key'];
+    $name = mysqli_real_escape_string($link, $_POST['name']);
+    $key = mysqli_real_escape_string($link, $_POST['key']);
+    $teachers = isset($_POST['teachers']) ? $_POST['teachers'] : array();
 
-    // Perform necessary validation on $name and $key if needed
+    // Update class information
+    $updateClassSql = "UPDATE razredi SET Ime_razreda = '$name', Kljuc_Vpisa = '$key' WHERE Razred_ID = $classId";
+    if ($link->query($updateClassSql) === TRUE) {
+        // Update teachers for the class
+        $deleteTeachersSql = "DELETE FROM ucitelji_razredi WHERE Razred_ID = $classId";
+        $link->query($deleteTeachersSql);
+        
+        foreach ($teachers as $teacherId) {
+            $insertTeacherSql = "INSERT INTO ucitelji_razredi (Razred_ID, Ucitelj_ID) VALUES ($classId, $teacherId)";
+            $link->query($insertTeacherSql);
+        }
 
-    // Update the class information in the database
-    $sql = "UPDATE razredi SET Ime_razreda = '$name', Kljuc_Vpisa = '$key' WHERE Razred_ID = $classId";
-
-    if ($link->query($sql) === TRUE) {
         echo 'Class information updated successfully!';
     } else {
         echo 'Error updating class information: ' . $link->error;
@@ -22,8 +29,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo 'Invalid request';
 }
 ?>
-
-
-
-
-

@@ -22,6 +22,9 @@
             </div>
         </div>
         
+        <div class="mb-3">
+            <button class="btn btn-primary create-user">Ustvari uporabnika</button>
+        </div>
 
         <div class="mb-3">
             <label for="filter">Filtriraj po vlogi:</label>
@@ -123,6 +126,20 @@
                 }
             });
         });
+
+        $('.create-user').click(function() {
+           $.ajax({
+                type: 'POST',
+                url: '../modal/create_user_modal.php', 
+                success: function(response){
+                    $('#editUserModal .modal-content').html(response);
+                    $('#editUserModal').modal('show');
+                    $('#editUserModal .modal-dialog').addClass('modal-xl'); 
+                }
+            });
+        });
+
+
 
         $('#search').on('input', function() {
             var searchTerm = $(this).val().toLowerCase();

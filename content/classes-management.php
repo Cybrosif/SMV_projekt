@@ -1,7 +1,7 @@
-<?php
-    include '../functions/check_if_admin.php';
+<?php 
     include '../session_start.php';
     include '../../db.php';
+    include '../functions/check_if_admin.php';
 ?>
 
 
@@ -15,7 +15,9 @@
                 </div>
             </div>
         </div>
-
+    <div class="mb-3">
+            <button class="btn btn-primary create-class">Ustvari predmet</button>
+        </div>
     <div class="mb-3">
             <label for="search">Išči:</label>
             <input type="text" class="form-control" id="search" placeholder="Vpišite pojem za iskanje...">
@@ -90,6 +92,18 @@
 
             // Update the table with filtered results
             loadTable(filteredClasses);
+        });
+
+        $('.create-class').click(function() {
+           $.ajax({
+                type: 'POST',
+                url: '../modal/create_class_modal.php', 
+                success: function(response){
+                    $('#editUserModal .modal-content').html(response);
+                    $('#editUserModal').modal('show');
+                    $('#editUserModal .modal-dialog').addClass('modal-xl'); 
+                }
+            });
         });
 
         $('table').on('click', '.delete-btn', function(){
