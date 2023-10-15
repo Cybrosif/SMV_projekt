@@ -13,7 +13,7 @@
         header("Location: ../index.php");
 
     }
-    $stmt = $link->prepare("SELECT * FROM Uporabniki WHERE Email = ?");
+    $stmt = $link->prepare("SELECT * FROM uporabniki WHERE Email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->store_result(); 
@@ -39,12 +39,12 @@
         $hash = password_hash($password, PASSWORD_BCRYPT);
 
 
-        $stmt = $link->prepare("INSERT INTO Uporabniki (Ime, Priimek, Email, Geslo) VALUES (?, ?, ?, ?)");
+        $stmt = $link->prepare("INSERT INTO uporabniki (Ime, Priimek, Email, Geslo) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("ssss", $name, $surname, $email, $hash);
         $stmt->execute();
 
 
-        $stmt = $link->prepare("SELECT id, ime, priimek, geslo, vloga  FROM Uporabniki WHERE Email = ?");
+        $stmt = $link->prepare("SELECT id, ime, priimek, geslo, vloga  FROM uporabniki WHERE Email = ?");
         $stmt->bind_param("s", $email,);
         $stmt->execute();
         $stmt->bind_result($id, $ime, $priimek, $geslo, $vloga);
@@ -58,7 +58,7 @@
         $_SESSION['user_email'] = $email;
         $_SESSION['user_vloga'] = $vloga;
 
-        header("Location: ../views/home.php");
+        header("Location: ../views/home.php?page=dashboard");
         exit();
 
     }

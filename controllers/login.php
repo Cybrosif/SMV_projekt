@@ -14,7 +14,7 @@
 
         $hash = password_hash($password, PASSWORD_BCRYPT);
 
-        $stmt = $link->prepare("SELECT id, ime, priimek, geslo, vloga FROM Uporabniki WHERE Email = ?");
+        $stmt = $link->prepare("SELECT id, ime, priimek, geslo, vloga FROM uporabniki WHERE Email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $stmt->bind_result($id, $ime, $priimek, $hashedPassword, $vloga);
@@ -29,7 +29,7 @@
             $_SESSION['user_email'] = $email;
             $_SESSION['user_vloga'] = $vloga;
 
-            header("Location: ../views/home.php");
+            header("Location: ../views/home.php?page=dashboard");
           }
           else{
             $_SESSION['prijavljen'] = false;

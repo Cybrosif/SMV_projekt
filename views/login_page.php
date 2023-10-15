@@ -1,8 +1,8 @@
 <?php
   include '../session_start.php';
-  include '../functions/status_check_false.php';
+  //include '../functions/status_check_false.php';
   if(!empty($_SESSION['prijavljen']) && $_SESSION['prijavljen'] == true){
-    header("Location: home.php");
+    header("Location: home.php?page=dashboard");
 }
 ?>
 <!doctype html>
@@ -14,6 +14,9 @@
   </head>
 
   <style>
+         body {
+            background-color: #f5f5f5;
+        }
         .card {
             width: 500px;
             height: 400px;
@@ -27,7 +30,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            
+            background-color: white;
             width: 1200px;
             height: 600px;
         }

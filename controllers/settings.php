@@ -17,7 +17,7 @@ try {
 
         $password_hash = password_hash($password, PASSWORD_BCRYPT);
 
-        $sql = "UPDATE Uporabniki SET Ime = ?, Geslo = ? WHERE ID = ?";
+        $sql = "UPDATE uporabniki SET Ime = ?, Geslo = ? WHERE ID = ?";
         $stmt = $link->prepare($sql);
         $stmt->bind_param('ssi', $username, $password_hash, $user_id);
         $stmt->execute();

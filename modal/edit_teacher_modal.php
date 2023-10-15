@@ -3,9 +3,9 @@
     include '../../db.php';
     $userId = $_POST['userId'];
 
-    $sql = "SELECT * FROM Uporabniki 
-    LEFT JOIN ucitelji_razredi ON Uporabniki.ID = ucitelji_razredi.Ucitelj_ID 
-    WHERE Uporabniki.ID = $userId";
+    $sql = "SELECT * FROM uporabniki 
+    LEFT JOIN ucitelji_razredi ON uporabniki.ID = ucitelji_razredi.Ucitelj_ID 
+    WHERE uporabniki.ID = $userId";
 
     $result = $link->query($sql);
 
