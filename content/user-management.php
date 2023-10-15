@@ -12,7 +12,7 @@
     }
 </style>
 <div class="container">
-    <h1 class='text-center primary-text'>Upravljanje uporabnikov</h1>
+    <h1 class='text-center primary-text text1'>Upravljanje uporabnikov</h1>
     
         <div class="modal fade" id="editUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog ">
@@ -43,12 +43,12 @@
         <table class="table">
         <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Ime</th>
-                <th scope="col">Priimek</th>
-                <th scope="col">E-mail</th>
-                <th scope="col">Vloga</th>
-                <th scope="col"></th>
+                <th scope="col" class="text2">#</th>
+                <th scope="col" class="text2">Ime</th>
+                <th scope="col" class="text2">Priimek</th>
+                <th scope="col" class="text2">E-mail</th>
+                <th scope="col" class="text2">Vloga</th>
+                <th scope="col" class="text2"></th>
             </tr>
         </thead>
         <tbody>
@@ -82,18 +82,18 @@
                     // Assuming classItem has properties like 'className', 'classDescription', etc.
                     // Create a table row and append it to the table body
                     var row = $('<tr>');
-                    row.append($('<td>').text(i));
-                    row.append($('<td>').text(userItem.Ime));
-                    row.append($('<td>').text(userItem.Priimek));
-                    row.append($('<td>').text(userItem.Email));
-                    row.append($('<td>').text(userItem.Vloga));
+                    row.append($('<td class="text3">').text(i));
+                    row.append($('<td class="text3">').text(userItem.Ime));
+                    row.append($('<td class="text3">').text(userItem.Priimek));
+                    row.append($('<td class="text3">').text(userItem.Email));
+                    row.append($('<td class="text3">').text(userItem.Vloga));
                     // Add more columns as needed
                     var editButton = $('<button>').addClass('btn btn-primary edit-btn').attr('data-userid', userItem.ID).text('Uredi');
                     var deleteButton = $('<button>').addClass('btn btn-primary btn-danger delete-btn').attr('data-userid', userItem.ID).text('Izbriši');
 
 
                     // Append buttons to the row
-                    row.append($('<td>').append(editButton).append(deleteButton));
+                    row.append($('<td class="text3">').append(editButton).append(deleteButton));
                     tbody.append(row); // Append the row to the table body
                     i++;
             });

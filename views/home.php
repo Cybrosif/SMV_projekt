@@ -304,6 +304,16 @@
             border-radius: 5px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
+
+        .text1{
+            color: #2E2E2E;
+        }
+        .text2{
+            color: #4E4E4E;
+        }
+        .text3{
+            color: #6E6E6E;
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>

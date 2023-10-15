@@ -3,6 +3,7 @@
 <head>
     <title>Nadzorna plošča</title>
     <style>
+        
         .col {
             /*border: 1px solid black;
             border-radius: 5px;*/
@@ -64,7 +65,6 @@
         .gumb:hover {
             background-color: white;
         }
-        
     </style>
 </head>
 
@@ -72,7 +72,7 @@
     <div class="row">
         <div class="col1">
         <div class="container">
-            <p class="nsl">Moji predmeti</p>
+            <p class="nsl text1">Moji predmeti</p>
             <?php
                 include("../../db.php"); 
 
@@ -88,7 +88,7 @@
                         echo '<ul>';
                         while($row = $result->fetch_assoc()) {
                             $ime_razreda = $row["Ime_razreda"];
-                            echo '<li><a href="#">' . $ime_razreda . '</a></li>';
+                            echo '<li class="text2"><a href="#">' . $ime_razreda . '</a></li>';
                         }
                         echo '</ul>';
                     } else {
@@ -124,10 +124,10 @@
                         echo '<thead>';
                         echo '<tr>';
                         echo '<th scope="col"></th>';
-                        echo '<th scope="col">Naslov</th>';
-                        echo '<th scope="col">Opis</th>';
-                        echo '<th scope="col">Rok oddaje</th>';
-                        echo '<th scope="col"></th>'; // Dodajte stolpec za gumb
+                        echo '<th scope="col" class="text2">Naslov</th>';
+                        echo '<th scope="col" class="text2">Opis</th>';
+                        echo '<th scope="col" class="text2">Rok oddaje</th>';
+                        echo '<th scope="col" class="text2"></th>'; // Dodajte stolpec za gumb
                         echo '</tr>';
                         echo '</thead>';
                         echo '<tbody>';
@@ -142,11 +142,11 @@
                             } else {
                                 echo '<tr>';
                             }
-                            echo '<th scope="row"></th>';
-                            echo '<td><a href="#">' . $naslov . '</a></td>';
-                            echo '<td>' . $opis . '</td>';
-                            echo '<td>' . date('d.m.Y', $datum_roka) . '</td>';
-                            echo '<td class="gumb-container"><a class="gumb" href="#">Oddaj nalogo</a></td>'; // Dodajte gumb za oddajo naloge
+                            echo '<th scope="row" ></th>';
+                            echo '<td class="text3"><a href="#">' . $naslov . '</a></td>';
+                            echo '<td class="text3">' . $opis . '</td>';
+                            echo '<td class="text3">' . date('d.m.Y', $datum_roka) . '</td>';
+                            echo '<td class="gumb-container text3"><a class="gumb" href="#">Oddaj nalogo</a></td>'; // Dodajte gumb za oddajo naloge
                             echo '</tr>';
                         }
                         echo '</tbody>';
