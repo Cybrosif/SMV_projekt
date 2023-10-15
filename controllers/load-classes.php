@@ -4,7 +4,7 @@ include '../functions/check_if_admin.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $classes = array();
 
-    $sql = "SELECT Kljuc_Vpisa, Ime_Razreda FROM razredi";
+    $sql = "SELECT Razred_ID, Kljuc_Vpisa, Ime_Razreda FROM razredi";
     $result = $link->query($sql);
 
     if ($result->num_rows > 0) {

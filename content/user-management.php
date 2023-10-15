@@ -99,7 +99,7 @@
             var userId = $(this).data('userid');     
             $.ajax({
                 type: 'POST',
-                url: '../modal/delete_modal.php', 
+                url: '../modal/delete_user_modal.php', 
                 data: { userId: userId },
                 success: function(response){
                     $('#editUserModal .modal-content').html(response);
