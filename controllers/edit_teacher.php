@@ -1,7 +1,7 @@
 <?php
 include '../session_start.php';
 include '../../db.php';
-echo '';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if($_SESSION['user_vloga'] != 'Administrator' && $_SESSION['user_vloga'] != 'administrator')
     {
