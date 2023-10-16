@@ -372,7 +372,7 @@
                     class="fas"></i>CLASSORBIT</div>
 
             <div class="list-group list-group-flush my-3">
-                <a href="home.php?page=dashboard" data-page="dashboard" class="list-group-item list-group-item-action bg-transparent second-text fw-bold if($currentPage == 'dashboard') echo 'active';"><i
+                <a href="home.php?page=dashboard" data-page="dashboard" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php if($currentPage == 'dashboard') echo 'active';?>"><i
                         class="fas fa-tachometer-alt me-2"></i>Nadzorna plošča</a>
 
                 <a href="home.php?page=classes" data-page="classes" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php if($currentPage == 'classes') echo 'active';?>">
