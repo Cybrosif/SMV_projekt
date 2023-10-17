@@ -8,11 +8,12 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  </head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 
+
+</head>
   <style>
          body {
             background-color: #f5f5f5;
@@ -60,7 +61,8 @@
                         </svg>
                         <input type="text" name="name" id="" class="form-control my-1 py-2" placeholder="Ime" />
                         <input type="text" name="surname" id="" class="form-control my-1 py-2" placeholder="Priimek" />
-                        <input type="text" name="email" id="" class="form-control my-3 py-2" placeholder="Email" />
+                        <input type="text" name="email" id="email" class="form-control my-3 py-2" placeholder="Email" />
+                        <div id="email-error" class="text-danger"></div>
                         <input type="password" name="password" id="password" class="form-control my-1 py-2" placeholder="Geslo" />
                         <input type="password" name="confirmPassword" id="confirmPassword" class="form-control my-1 py-2" placeholder="Ponovite geslo" />
                         <span id="passwordWarning" class="text-danger" style="margin-bottom: 215px;"></span>
@@ -77,8 +79,34 @@
               <img src="../imgs/logo.png" alt="" class="logo">
           </div>
       </div>   
-
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <script src="../js/input_check_reg.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
   </body>
 </html>
+
+<script>
+ $(document).ready(function() {
+    // Add event listener to the email input field
+    $('#email').on('input', function() {
+        var email = $(this).val();
+        // Send AJAX request to check if the email is in use
+        $.ajax({
+            url: '../controllers/check_email.php', // Path to your PHP script for email checking
+            method: 'POST',
+            data: { email: email },
+            success: function(response) {
+                console.log(response);
+                if (response.status === 'exists') {
+                    //$('#email').addClass('is-invalid'); // Add a CSS class to indicate the email is in use
+                   $('#email-error').text('Email je že v uporabi.'); // Display error message
+                } else {
+                    //$('#email').removeClass('is-invalid'); // Remove the CSS class if the email is not in use
+                    $('#email-error').text('');// Hide error message
+                }
+            }
+        });
+    });
+});
+
+
+</script>
