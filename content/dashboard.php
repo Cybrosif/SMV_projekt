@@ -102,7 +102,7 @@
             ?>
         </div>
         </div>
-        <div class="col">
+        <div class="col1">
             <div class="container">
             <p class="nsl">Dodeljene naloge</p>
             <?php
