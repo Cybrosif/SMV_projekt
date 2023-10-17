@@ -28,6 +28,7 @@
         <div class="mb-3">     
             <label for='email' class='form-label'>Email:</label>              
             <input type='text' class='form-control' id='email' name='email' value='' placeholder="Vnesite email">
+            <div id="email-error" class="text-danger"></div>
         </div> 
 
         <div class="mb-3">     
@@ -78,6 +79,26 @@
                     $('#editUserModal').modal('hide');
                     //console.log(response);
                     location.reload();
+                }
+            });
+        });
+
+        $('#email').on('input', function() {
+            var email = $(this).val();
+            
+            $.ajax({
+                url: '../controllers/check_email.php', 
+                method: 'POST',
+                data: { email: email },
+                success: function(response) {
+                    console.log(response);
+                    if (response === 'exists') {
+                        
+                    $('#email-error').text('Email je že v uporabi.'); 
+                    } else {
+                        
+                        $('#email-error').text('');
+                    }
                 }
             });
         });

@@ -18,6 +18,7 @@
         <div class="mb-3">
             <label for='name' class='form-label'>Ime:</label>
             <input type='text' class='form-control' id='name' name='name' value='' placeholder="Vnesite ime">
+            <div id="name-error" class="text-danger"></div>
         </div>  
                             
         <div class="mb-3">
@@ -57,6 +58,27 @@
                 }
             });
         });
+
+        $('#name').on('input', function() {
+            var email = $(this).val();
+            
+            $.ajax({
+                url: '../controllers/check_classname.php', 
+                method: 'POST',
+                data: { name: email },
+                success: function(response) {
+                    console.log(response);
+                    if (response === 'exists') {
+                        
+                    $('#name-error').text('Ime je zasedeno.'); 
+                    } else {
+                        
+                        $('#name-error').text('');
+                    }
+                }
+            });
+        });
+
     });
 
 </script>

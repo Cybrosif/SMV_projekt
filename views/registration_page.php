@@ -87,25 +87,26 @@
 <script>
  $(document).ready(function() {
     // Add event listener to the email input field
+    
     $('#email').on('input', function() {
-        var email = $(this).val();
-        // Send AJAX request to check if the email is in use
-        $.ajax({
-            url: '../controllers/check_email.php', // Path to your PHP script for email checking
-            method: 'POST',
-            data: { email: email },
-            success: function(response) {
-                console.log(response);
-                if (response.status === 'exists') {
-                    //$('#email').addClass('is-invalid'); // Add a CSS class to indicate the email is in use
-                   $('#email-error').text('Email je že v uporabi.'); // Display error message
-                } else {
-                    //$('#email').removeClass('is-invalid'); // Remove the CSS class if the email is not in use
-                    $('#email-error').text('');// Hide error message
+            var email = $(this).val();
+            
+            $.ajax({
+                url: '../controllers/check_email.php', 
+                method: 'POST',
+                data: { email: email },
+                success: function(response) {
+                    console.log(response);
+                    if (response === 'exists') {
+                        
+                    $('#email-error').text('Email je že v uporabi.'); 
+                    } else {
+                        
+                        $('#email-error').text('');
+                    }
                 }
-            }
+            });
         });
-    });
 });
 
 

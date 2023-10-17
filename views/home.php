@@ -382,27 +382,31 @@
                     <?php
                         if (isset($_SESSION['user_vloga']) && 
                             ($_SESSION['user_vloga'] == "Administrator" || 
-                            $_SESSION['user_vloga'] == "administrator" || 
-                            $_SESSION['user_vloga'] == "Profesor" || 
+                            $_SESSION['user_vloga'] == "administrator")) 
+                        {
+                    ?>
+                        <a href="home.php?page=user-management" data-page="user-management" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php if($currentPage == 'user-management') echo 'active';?>">
+                            <i class="fas fa-pen me-2"></i>Upravljanje uporabnikov</a>
+                        <a href="home.php?page=classes-management" data-page="classes-management" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php if($currentPage == 'classes-management') echo 'active';?>">
+                            <i class="fas fa-pen me-2"></i>Upravljanje dijakov</a>
+                    <?php
+                        }
+
+
+                        if (isset($_SESSION['user_vloga']) && 
+                            ($_SESSION['user_vloga'] == "Administrator" || 
+                            $_SESSION['user_vloga'] == "administrator" ||
+                            $_SESSION['user_vloga'] == "Profesor" ||
                             $_SESSION['user_vloga'] == "profesor")) 
                         {
-                            $pages = array(
-                                "user-management" => "Upravljanje uporabnikov",
-                                "classes-management" => "Upravljanje predmetov",
-                                /*
-                                "teacher-management" => "Upravljanje profesorjev",
-                                "student_administration" => "Upravljanje dijakov"
-                                */
-                        );
-                        
-
-                            foreach ($pages as $page => $label) {
-                                $isActive = ($currentPage == $page) ? 'active' : '';
-                                echo '<a href="home.php?page=' . $page . '" data-page="' . $page . '" class="list-group-item list-group-item-action bg-transparent second-text fw-bold ' . $isActive . '">';
-                                echo '<i class="fas fa-pen me-2"></i>' . $label . '</a>';
-                            }
+                    ?>
+                            <a href="home.php?page=classes-teacher" data-page="classes-teacher" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php if($currentPage == 'classes-teacher') echo 'active';?>">
+                                <i class="fas fa-list me-2"></i>Predmeti</a>
+                    <?php
                         }
                     ?>
+
+
                 <a href="home.php?page=settings" data-page="settings" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php if($currentPage == 'settings') echo 'active';?>">
                     <i class="fas fa-cogs me-2"></i>Nastavitve</a>
                 <a href="home.php?page=logout" data-page="logout" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">

@@ -11,7 +11,7 @@ $classNameResult = mysqli_query($link, $query);
 $classNameData = mysqli_fetch_assoc($classNameResult);
 $className = $classNameData['Ime_razreda'];
 
-$nalogeQuery = "SELECT n.Naloga_ID, n.Naslov, n.Opis, n.Rok, s.Pot_Do_Datoteke AS stored_filename, s.Original_Filename AS original_filename FROM naloge n LEFT JOIN Student_Naloge s ON n.Naloga_ID = s.Naloga_ID AND s.Student_ID = '{$_SESSION['user_id']}' WHERE n.Razred_ID = $classId";
+$nalogeQuery = "SELECT n.Naloga_ID, n.Naslov, n.Opis, n.Rok, s.Pot_Do_Datoteke AS stored_filename, s.Original_Filename AS original_filename FROM naloge n LEFT JOIN student_naloge s ON n.Naloga_ID = s.Naloga_ID AND s.Student_ID = '{$_SESSION['user_id']}' WHERE n.Razred_ID = $classId";
 $nalogeResult = mysqli_query($link, $nalogeQuery);
 
 ?>
@@ -66,7 +66,7 @@ $nalogeResult = mysqli_query($link, $nalogeQuery);
                         echo '<p>' . $nalogeData['Opis'] . '</p>';
                         echo '<p><small class="text-muted">Rok: ' . $nalogeData['Rok'] . '</small></p>';
                         
-                        echo '<form action="../controllers/upload_naloga.php" method="post" enctype="multipart/form-data">';
+                        echo '<form id="uploadForm" action="../controllers/upload_naloga.php" method="post" enctype="multipart/form-data">';
                         echo '<input type="hidden" name="Naloga_ID" value="' . $nalogeData['Naloga_ID'] . '">';
                         echo '<div class="mb-3">';
                         echo '<input class="form-control" type="file" name="fileToUpload" id="fileToUpload">';
@@ -98,34 +98,7 @@ $nalogeResult = mysqli_query($link, $nalogeQuery);
 
 
 <script>
-    $(document).ready(function() {
-        
-        $('form').submit(function(event) {
-            
-            event.preventDefault();
-
-            
-            var formData = new FormData(this);
-
-            
-            $.ajax({
-                type: 'POST',
-                url: '../controllers/upload_naloga.php',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    
-                    //console.log(response);
-                    location.reload();
-                },
-                error: function(xhr, status, error) {
-                    
-                    //console.error(xhr.responseText);
-                }
-            });
-        });     
-    $(document).ready(function() {
+   $(document).ready(function() {
     // Initially, disable all submit buttons
     $('input[type="submit"]').prop('disabled', true);
 
@@ -141,7 +114,33 @@ $nalogeResult = mysqli_query($link, $nalogeQuery);
             submitButton.prop('disabled', true);
         }
     });
+
+    // Add event listener for form submission using AJAX
+    $('#uploadForm').submit(function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        
+        var formData = new FormData($(this)[0]); // Get form data
+        $.ajax({
+            url: $(this).attr('action'), // Form action URL
+            type: 'POST', // Form submission method
+            data: formData, // Form data
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                // Handle success response here, if needed
+                location.reload();
+                console.log(response);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Handle error here, if needed
+                console.error('AJAX error: ' + textStatus + ' - ' + errorThrown);
+            }
+        });
+    });
 });
+
 
 </script>
 

@@ -1,33 +1,6 @@
 <?php
 include '../controllers/classes_add.php';
 ?>
-
-<div class="container mt-3">
-    <button class="btn btn-primary mb-3" type="button" id="toggleButton">Vsi predmeti</button>
-
-    <div class="class-selection box-background shadow" id="classSelection" style="display:none;">
-        <h3 class="mb-3">Izberite Predmet</h3>
-        <form method="post">
-            <div class="row mb-3">
-                <?php
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo "<div class='col-md-4 mb-3'>";
-                    echo "<div class='form-check'>";
-                    echo "<input type='radio' class='form-check-input' name='razred' value='{$row['Razred_ID']}' id='razred-{$row['Razred_ID']}'>";
-                    echo "<label class='form-check-label' for='razred-{$row['Razred_ID']}'>{$row['Ime_razreda']}</label>";
-                    echo "</div>";
-                    echo "</div>";
-                }
-                ?>
-                <div class="col-md-12 mb-3">
-                    <label for="kljuc_vpisa">Vnesite ključ vpisa:</label>
-                    <input type="text" name="kljuc_vpisa" id="kljuc_vpisa" class="form-control" required>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Shrani</button>
-        </form>
-    </div>
-
     <style>
         .box-background {
             background-color: #f7f8fa;
@@ -50,8 +23,32 @@ include '../controllers/classes_add.php';
             color: #fff; /* white text color for readability */
         }
     </style>
+<button class="btn btn-primary mb-3" type="button" id="toggleButton">Vsi predmeti</button>
 
-    <div class="box-background shadow">
+    <div class="class-selection container mb-3" id="classSelection" style="display:none;">
+        <h3 class="mb-3">Izberite Predmet</h3>
+        <form method="post">
+            <div class="row mb-3">
+                <?php
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<div class='col-md-4 mb-3'>";
+                    echo "<div class='form-check'>";
+                    echo "<input type='radio' class='form-check-input' name='razred' value='{$row['Razred_ID']}' id='razred-{$row['Razred_ID']}'>";
+                    echo "<label class='form-check-label' for='razred-{$row['Razred_ID']}'>{$row['Ime_razreda']}</label>";
+                    echo "</div>";
+                    echo "</div>";
+                }
+                ?>
+                <div class="col-md-12 mb-3">
+                    <label for="kljuc_vpisa">Vnesite ključ vpisa:</label>
+                    <input type="text" name="kljuc_vpisa" id="kljuc_vpisa" class="form-control" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Shrani</button>
+        </form>
+    </div>
+
+    <div class="container">
         <h3 class="mb-4">Moji predmeti</h3>
         <div class="row">
             <?php
@@ -89,7 +86,6 @@ include '../controllers/classes_add.php';
             ?>
         </div>
     </div>
-</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>

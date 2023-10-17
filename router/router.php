@@ -35,6 +35,13 @@
                 include '../content/specific_class.php';
                 break;
 
+            case 'classes-teacher':
+                include '../content/classes-teacher.php';
+                break;
+            case 'classes-specific-teacher.php':
+                include '../content/classes-specific-teacher.php';
+                 break;
+
             case 'logout':
                 echo '<script type="text/javascript">window.location.href = "../functions/logout.php";</script>';
                 break;

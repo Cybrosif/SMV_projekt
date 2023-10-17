@@ -13,6 +13,7 @@ $student_id = $_SESSION['user_id'];
 
 // Handle the file upload when the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+   
     // Check if the naloga_id is set in the POST request
     if (isset($_POST['Naloga_ID'])) {
         $naloga_id = mysqli_real_escape_string($link, $_POST['Naloga_ID']);
@@ -21,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Check if a file has already been uploaded for this assignment by this user
-    $checkQuery = "SELECT Pot_Do_Datoteke FROM Student_Naloge WHERE Student_ID = '$student_id' AND Naloga_ID = '$naloga_id'";
+    $checkQuery = "SELECT Pot_Do_Datoteke FROM student_naloge WHERE Student_ID = '$student_id' AND Naloga_ID = '$naloga_id'";
     $checkResult = mysqli_query($link, $checkQuery);
     if(mysqli_num_rows($checkResult) > 0) {
         $oldFileData = mysqli_fetch_assoc($checkResult);
@@ -30,10 +31,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             unlink($oldFilePath);  // Delete the old file
         }
         // Now delete the old record from the database
-        $deleteOldRecord = "DELETE FROM Student_Naloge WHERE Student_ID = '$student_id' AND Naloga_ID = '$naloga_id'";
+        $deleteOldRecord = "DELETE FROM student_naloge WHERE Student_ID = '$student_id' AND Naloga_ID = '$naloga_id'";
         mysqli_query($link, $deleteOldRecord);
+        
     }
-
+    
     // Extract file details
     $original_filename = basename($_FILES["fileToUpload"]["name"]);
     $fileType = strtolower(pathinfo($original_filename, PATHINFO_EXTENSION));
@@ -42,7 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Try to move the uploaded file to the target directory
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-        $insertQuery = "INSERT INTO Student_Naloge (Student_ID, Naloga_ID, Datum_Oddaje, Pot_Do_Datoteke, Original_Filename) VALUES ('$student_id', '$naloga_id', NOW(), '$newFileName', '$original_filename')";
+        
+        $insertQuery = "INSERT INTO student_naloge (Student_ID, Naloga_ID, Datum_Oddaje, Pot_Do_Datoteke, Original_Filename) VALUES ('$student_id', '$naloga_id', NOW(), '$newFileName', '$original_filename')";
 
         if (!mysqli_query($link, $insertQuery)) {
             die("Error inserting into database: " . mysqli_error($link));
@@ -53,5 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "Sorry, there was an error uploading your file.";
     }
+
+
 }
 ?>
