@@ -7,24 +7,31 @@ $(document).ready(function() {
     const submitButton = $(".btn.btn-primary");
 
     emailInput.blur(function() {
-        console.log("Blur event triggered");  // Add this
         const email = $(this).val();
-        $.post("../controllers/check_email.php", { email: email })
-        .done(function(response) {
-            console.log("Response received: " + response);  // Add this
-            if (response.trim() === "exists") {
-                passwordWarning.text("Email already exists.");
-                submitButton.prop("disabled", true);
-            } else {
-                passwordWarning.text("");
-                checkInputs();
+    
+        if (!email) {
+            console.log("Email input is empty.");
+            return;
+        }
+    
+        $.ajax({
+            type: "POST",
+            url: "../controllers/check_email.php",
+            data: { email: email },
+            success: function(response) {
+                console.log("Response from server:", response.trim());
+                if (response.trim() === "exists") {
+                    passwordWarning.text("Email already exists.");
+                    submitButton.prop("disabled", true);
+                } else {
+                    checkInputs();
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log("AJAX error:", textStatus, errorThrown);
             }
-        })
-        .fail(function() {
-            console.log("Error in AJAX call");
         });
     });
-    
     
 
     function checkInputs() {

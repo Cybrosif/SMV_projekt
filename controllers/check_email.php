@@ -10,7 +10,6 @@ if (isset($_POST['email'])) {
     
     if ($stmt->num_rows > 0) {
         echo "exists";
-        console.log("exists");
     } else {
         echo "not_exists";
     }
