@@ -1,40 +1,61 @@
-const passwordInput = document.getElementById("password");
-const confirmPasswordInput = document.getElementById("confirmPassword");
-const passwordWarning = document.getElementById("passwordWarning");
-const registrationForm = document.getElementById("registrationForm");
-const submitButton = document.querySelector(".btn.btn-primary");
+$(document).ready(function() {
+    const emailInput = $("#email");
+    const passwordInput = $("#password");
+    const confirmPasswordInput = $("#confirmPassword");
+    const passwordWarning = $("#passwordWarning");
+    const registrationForm = $("#registrationForm");
+    const submitButton = $(".btn.btn-primary");
 
-passwordInput.addEventListener("input", checkInputs);
-confirmPasswordInput.addEventListener("input", checkInputs);
-registrationForm.addEventListener("input", checkInputs);
-
-function checkInputs() {
-    const inputs = registrationForm.querySelectorAll('input');
-    let allFilled = true;
-
-    inputs.forEach(input => {
-        if (input.value === '') {
-            allFilled = false;
-        }
+    emailInput.blur(function() {
+        console.log("Blur event triggered");  // Add this
+        const email = $(this).val();
+        $.post("../controllers/check_email.php", { email: email })
+        .done(function(response) {
+            console.log("Response received: " + response);  // Add this
+            if (response.trim() === "exists") {
+                passwordWarning.text("Email already exists.");
+                submitButton.prop("disabled", true);
+            } else {
+                passwordWarning.text("");
+                checkInputs();
+            }
+        })
+        .fail(function() {
+            console.log("Error in AJAX call");
+        });
     });
+    
+    
 
-    if (!allFilled) {
-        passwordWarning.textContent = 'Vsa polja morajo biti izpolnjena!';
-        submitButton.disabled = true;
-        return;
+    function checkInputs() {
+        const inputs = registrationForm.find('input');
+        let allFilled = true;
+
+        inputs.each(function() {
+            if ($(this).val() === '') {
+                allFilled = false;
+            }
+        });
+
+        if (!allFilled) {
+            passwordWarning.text('Vsa polja morajo biti izpolnjena!');
+            submitButton.prop("disabled", true);
+            return;
+        }
+
+        passwordWarning.text('');
+
+        if (passwordInput.val() !== confirmPasswordInput.val()) {
+            passwordWarning.text("Gesla se ne ujemata.");
+            submitButton.prop("disabled", true);
+        } else {
+            passwordWarning.text("");
+            submitButton.prop("disabled", false);
+        }
     }
 
-    passwordWarning.textContent = '';
+    registrationForm.on("input", checkInputs);
 
-    if (passwordInput.value !== confirmPasswordInput.value) {
-        passwordWarning.textContent = "Gesla se ne ujemata.";
-        submitButton.disabled = true;
-    } else {
-        passwordWarning.textContent = "";
-        submitButton.disabled = false;
-    }
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-  submitButton.disabled = true;
+    // Disable the submit button initially
+    submitButton.prop("disabled", true);
 });

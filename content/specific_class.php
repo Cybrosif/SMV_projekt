@@ -36,6 +36,13 @@ $nalogeResult = mysqli_query($link, $nalogeQuery);
         .assignment-body {
             padding: 20px;
         }
+
+        /* Scrollable container styles */
+        .scrollable-container {
+            max-height: 500px;  /* Adjust this height as per your design requirements */
+            overflow-y: auto;
+            padding: 1rem;  /* Optional, to give some space */
+        }
     </style>
 </head>
 
@@ -43,54 +50,53 @@ $nalogeResult = mysqli_query($link, $nalogeQuery);
     <div class="container mt-5">
         <h1 class="text-center mb-5"><?php echo $className; ?></h1>
 
-        <div class="row">
-            <?php
-            /*if (!$nalogeResult) {
-                die('Error in SQL query: ' . mysqli_error($link));
-            }*/
-            if (mysqli_num_rows($nalogeResult) > 0)
-            {
-                while ($nalogeData = mysqli_fetch_assoc($nalogeResult)) {
-                    echo '<div class="col-md-6 col-lg-4 mb-4">';
-                    echo '<div class="card assignment-card">';
-                    echo '<div class="assignment-header">' . $nalogeData['Naslov'] . '</div>';
-                    echo '<div class="assignment-body">';
-                    echo '<p>' . $nalogeData['Opis'] . '</p>';
-                    echo '<p><small class="text-muted">Rok: ' . $nalogeData['Rok'] . '</small></p>';
-                    
-                    echo '<form action="../controllers/upload_naloga.php" method="post" enctype="multipart/form-data">';
-                    echo '<input type="hidden" name="Naloga_ID" value="' . $nalogeData['Naloga_ID'] . '">';
-                    echo '<div class="mb-3">';
-                    echo '<input class="form-control" type="file" name="fileToUpload" id="fileToUpload">';
-                    echo '</div>';
-                    echo '<input class="btn btn-primary mb-2" type="submit" value="Naloži nalogo" name="submit">';
-    
-                    if (isset($nalogeData['stored_filename']) && isset($nalogeData['original_filename'])) {
-                        echo '<a class="btn btn-secondary mt-2" href="../uploads/' . $nalogeData['stored_filename'] . '" download="' . $nalogeData['original_filename'] . '">Download: ' . $nalogeData['original_filename'] . '</a>';
+        <div class="scrollable-container">
+            <div class="row">
+                <?php
+                /*if (!$nalogeResult) {
+                    die('Error in SQL query: ' . mysqli_error($link));
+                }*/
+                if (mysqli_num_rows($nalogeResult) > 0)
+                {
+                    while ($nalogeData = mysqli_fetch_assoc($nalogeResult)) {
+                        echo '<div class="col-md-6 col-lg-4 mb-4" data-naloga-id="' . $nalogeData['Naloga_ID'] . '">';
+                        echo '<div class="card assignment-card">';
+                        echo '<div class="assignment-header">' . $nalogeData['Naslov'] . '</div>';
+                        echo '<div class="assignment-body">';
+                        echo '<p>' . $nalogeData['Opis'] . '</p>';
+                        echo '<p><small class="text-muted">Rok: ' . $nalogeData['Rok'] . '</small></p>';
+                        
+                        echo '<form action="../controllers/upload_naloga.php" method="post" enctype="multipart/form-data">';
+                        echo '<input type="hidden" name="Naloga_ID" value="' . $nalogeData['Naloga_ID'] . '">';
+                        echo '<div class="mb-3">';
+                        echo '<input class="form-control" type="file" name="fileToUpload" id="fileToUpload">';
+                        echo '</div>';
+                        echo '<input class="btn btn-primary mb-2" type="submit" value="Naloži nalogo" name="submit">';
+        
+                        if (isset($nalogeData['stored_filename']) && isset($nalogeData['original_filename'])) {
+                            echo '<a class="btn btn-secondary mt-2 d-block" href="../uploads/' . $nalogeData['stored_filename'] . '" download="' . $nalogeData['original_filename'] . '">Download: ' . $nalogeData['original_filename'] . '</a>';
+                        }
+        
+                        echo '</form>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
                     }
-    
-                    echo '</form>';
-                    echo '</div>';
-                    echo '</div>';
+                }
+                else {
+                    echo '<div class="col-12 text-center">';
+                    echo '<p>No results found.</p>';
                     echo '</div>';
                 }
-            }
-            else {
-                echo '<div class="col-12 text-center">';
-                echo '<p>No results found.</p>';
-                echo '</div>';
-            }
-            
-            ?>
+                
+                ?>
+            </div>
         </div>
     </div>
 
-    <!-- Bootstrap 5 JS and Popper.js -->
-    <!--<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>-->
 
 
-<!-- Inside the <head> tag -->
+
 <script>
     $(document).ready(function() {
         
@@ -118,7 +124,24 @@ $nalogeResult = mysqli_query($link, $nalogeQuery);
                     //console.error(xhr.responseText);
                 }
             });
-        });
+        });     
+    $(document).ready(function() {
+    // Initially, disable all submit buttons
+    $('input[type="submit"]').prop('disabled', true);
+
+    // Add event listener for file input change
+    $('input[type="file"]').on('change', function() {
+        // Get the container div for the current file input
+        var container = $(this).closest('div[data-naloga-id]');
+        var submitButton = container.find('input[type="submit"]');
+
+        if ($(this).val()) {
+            submitButton.prop('disabled', false);
+        } else {
+            submitButton.prop('disabled', true);
+        }
     });
+});
+
 </script>
 

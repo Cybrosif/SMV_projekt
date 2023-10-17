@@ -29,7 +29,6 @@
                 data: { classId: classid },
                 success: function(response){
                     $('#editUserModal').modal('hide');
-                    //console.log(response);
                     location.reload();
                 }
             });
