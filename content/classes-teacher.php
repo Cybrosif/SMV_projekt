@@ -1,7 +1,7 @@
 <?php
 include '../session_start.php';
 include '../../db.php';
-
+include '../functions/check_if_teacher.php';
 $sql = "SELECT * FROM razredi JOIN ucitelji_razredi ON razredi.Razred_ID = ucitelji_razredi.Razred_ID WHERE ucitelji_razredi.Ucitelj_ID = {$_SESSION['user_id']}";
 $result = mysqli_query($link, $sql);
  
@@ -10,6 +10,7 @@ $result = mysqli_query($link, $sql);
 <style>
       .hover:hover {
         transform: scale(1.05);
+        cursor: pointer;
     }
 </style>
 
