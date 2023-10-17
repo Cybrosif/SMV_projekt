@@ -5,33 +5,6 @@ $(document).ready(function() {
     const passwordWarning = $("#passwordWarning");
     const registrationForm = $("#registrationForm");
     const submitButton = $(".btn.btn-primary");
-
-    emailInput.blur(function() {
-        const email = $(this).val();
-    
-        if (!email) {
-            console.log("Email input is empty.");
-            return;
-        }
-    
-        $.ajax({
-            type: "POST",
-            url: "../controllers/check_email.php",
-            data: { email: email },
-            success: function(response) {
-                console.log("Response from server:", response.trim());
-                if (response.trim() === "exists") {
-                    passwordWarning.text("Email already exists.");
-                    submitButton.prop("disabled", true);
-                } else {
-                    checkInputs();
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log("AJAX error:", textStatus, errorThrown);
-            }
-        });
-    });
     
 
     function checkInputs() {
