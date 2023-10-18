@@ -318,41 +318,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        function fetchRazredDetails(razredId) {
-            $.ajax({
-                url: '../controllers/content.php',
-                type: 'GET',
-                data: { page: 'specific_razred', razred_id: razredId },
-                success: function(response) {
-                    // Assuming you have a content div where you want to display the response
-                    $('#content').html(response);
-                },
-                error: function() {
-                    alert('Failed to fetch razred details.');
-                }
-            });
-        }
-    </script>
-    
-    <script>
-        function verifyKljucVpisa(razredId) {
-            var kljucVpisa = $('#kljucVpisaInput').val();
-            $.ajax({
-                url: '../controllers/content.php',
-                type: 'GET',
-                data: { page: 'verify_kljuc', razred_id: razredId, kljucVpisa: kljucVpisa },
-                success: function(response) {
-                    $('#verificationMessage').html(response);
-                },
-                error: function() {
-                    alert('Failed to verify Kljuc Vpisa.');
-                }
-            });
-        }
-
-    </script>
-
 </head>
 
 <body>
@@ -388,7 +353,7 @@
                         <a href="home.php?page=user-management" data-page="user-management" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php if($currentPage == 'user-management') echo 'active';?>">
                             <i class="fas fa-pen me-2"></i>Upravljanje uporabnikov</a>
                         <a href="home.php?page=classes-management" data-page="classes-management" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php if($currentPage == 'classes-management') echo 'active';?>">
-                            <i class="fas fa-pen me-2"></i>Upravljanje dijakov</a>
+                            <i class="fas fa-pen me-2"></i>Upravljanje razredov</a>
                     <?php
                         }
                         if (isset($_SESSION['user_vloga']) && 
