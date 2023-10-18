@@ -391,8 +391,6 @@
                             <i class="fas fa-pen me-2"></i>Upravljanje dijakov</a>
                     <?php
                         }
-
-
                         if (isset($_SESSION['user_vloga']) && 
                             ($_SESSION['user_vloga'] == "Administrator" || 
                             $_SESSION['user_vloga'] == "administrator" ||
@@ -400,8 +398,8 @@
                             $_SESSION['user_vloga'] == "profesor")) 
                         {
                     ?>
-                            <a href="home.php?page=classes-teacher" data-page="classes-teacher" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php if($currentPage == 'classes-teacher') echo 'active';?>">
-                                <i class="fas fa-list me-2"></i>Predmeti</a>
+                            <!--<a href="home.php?page=classes-teacher" data-page="classes-teacher" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php if($currentPage == 'classes-teacher') echo 'active';?>">
+                                <i class="fas fa-list me-2"></i>Predmeti</a>-->
                     <?php
                         }
                     ?>
