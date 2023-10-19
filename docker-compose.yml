@@ -1,0 +1,31 @@
+version: '3'
+services:
+  # PHP Application
+  www:
+    build:
+      context: .
+      dockerfile: dockerfile
+    image: php:7.4-apache
+    volumes:
+      - "/var/www/html:/var/www/html"
+    ports:
+      - 80:80
+      - 443:443 # for future SSL traffic
+  db:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=Deda2013$
+      - MYSQL_DATABASE=classorbit
+      - MYSQL_USER=anej
+      - MYSQL_PASSWORD=anej
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+    volumes:
+      - "./db.sql:/docker-entrypoint-initdb.d/db.sql"
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8001:80
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+     
