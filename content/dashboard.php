@@ -68,7 +68,8 @@
     </style>
 </head>
 
-    <!--<h1 class='text-center primary-text'>Nadzorna plošča</h1>-->
+<h1 class='text-center primary-text my-4'>Nadzorna plošča</h1>
+
     <div class="row">
         <div class="col1">
         <div class="container">
