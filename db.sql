@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.5deb2
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Oct 19, 2023 at 07:46 PM
--- Server version: 8.0.34-0ubuntu0.20.04.1
--- PHP Version: 7.4.3-4ubuntu2.19
+-- Host: db:3306
+-- Generation Time: Oct 20, 2023 at 08:39 PM
+-- Server version: 8.1.0
+-- PHP Version: 8.2.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -21,7 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `classorbit`
 --
-CREATE DATABASE IF NOT EXISTS `classorbit` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE DATABASE IF NOT EXISTS `classorbit` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 USE `classorbit`;
 
 -- --------------------------------------------------------
@@ -33,10 +32,18 @@ USE `classorbit`;
 CREATE TABLE `gradiva` (
   `Gradivo_ID` int NOT NULL,
   `Razred_ID` int DEFAULT NULL,
+  `Naloga_ID` int DEFAULT NULL,
   `Naslov` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `Opis` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `Pot_Do_Datoteke` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `gradiva`
+--
+
+INSERT INTO `gradiva` (`Gradivo_ID`, `Razred_ID`, `Naloga_ID`, `Naslov`, `Pot_Do_Datoteke`) VALUES
+(1, 1, NULL, 'test', 'test'),
+(3, 1, 3, 'test', 'test');
 
 -- --------------------------------------------------------
 
@@ -48,7 +55,6 @@ CREATE TABLE `naloge` (
   `Naloga_ID` int NOT NULL,
   `Razred_ID` int DEFAULT NULL,
   `Naslov` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `Opis` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `Rok` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -56,10 +62,11 @@ CREATE TABLE `naloge` (
 -- Dumping data for table `naloge`
 --
 
-INSERT INTO `naloge` (`Naloga_ID`, `Razred_ID`, `Naslov`, `Opis`, `Rok`) VALUES
-(1, 2, 'Testna naloga', 'Test', '2023-10-13'),
-(2, 2, 'testna naloga 2', 'testna naloga 2', '2023-10-28'),
-(3, 1, 'testna naloga 3', 'testna naloga 3', '2023-10-16');
+INSERT INTO `naloge` (`Naloga_ID`, `Razred_ID`, `Naslov`, `Rok`) VALUES
+(1, 2, 'Testna naloga', '2023-10-13'),
+(2, 2, 'testna naloga 2', '2023-10-28'),
+(3, 1, 'testna naloga 3', '2023-10-16'),
+(4, 1, 'hizuet5rqhzurtzh', '2023-10-21');
 
 -- --------------------------------------------------------
 
@@ -97,7 +104,7 @@ CREATE TABLE `student_naloge` (
   `Naloga_ID` int DEFAULT NULL,
   `Datum_Oddaje` date DEFAULT NULL,
   `Pot_Do_Datoteke` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `Original_Filename` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `Original_Filename` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -294,7 +301,8 @@ INSERT INTO `uporabniki_razredi` (`Uporabnik_ID`, `Razred_ID`) VALUES
 --
 ALTER TABLE `gradiva`
   ADD PRIMARY KEY (`Gradivo_ID`),
-  ADD KEY `Razred_ID` (`Razred_ID`);
+  ADD KEY `Razred_ID` (`Razred_ID`),
+  ADD KEY `naloga_ibfk_1` (`Naloga_ID`);
 
 --
 -- Indexes for table `naloge`
@@ -346,13 +354,13 @@ ALTER TABLE `uporabniki_razredi`
 -- AUTO_INCREMENT for table `gradiva`
 --
 ALTER TABLE `gradiva`
-  MODIFY `Gradivo_ID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `Gradivo_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `naloge`
 --
 ALTER TABLE `naloge`
-  MODIFY `Naloga_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Naloga_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `razredi`
@@ -380,7 +388,8 @@ ALTER TABLE `uporabniki`
 -- Constraints for table `gradiva`
 --
 ALTER TABLE `gradiva`
-  ADD CONSTRAINT `gradiva_ibfk_1` FOREIGN KEY (`Razred_ID`) REFERENCES `razredi` (`Razred_ID`);
+  ADD CONSTRAINT `gradiva_ibfk_1` FOREIGN KEY (`Razred_ID`) REFERENCES `razredi` (`Razred_ID`),
+  ADD CONSTRAINT `naloga_ibfk_1` FOREIGN KEY (`Naloga_ID`) REFERENCES `naloge` (`Naloga_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `naloge`
