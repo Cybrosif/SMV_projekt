@@ -2,9 +2,6 @@ version: '3'
 services:
   # PHP Application
   www:
-    build:
-      context: .
-      dockerfile: dockerfile
     image: php:7.4-apache
     volumes:
       - "/var/www/html:/var/www/html"
