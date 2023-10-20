@@ -119,7 +119,7 @@
 
                     $result = $link->query($sql);
 
-                    if ($result->num_rows > 0) {
+                    if ($result && $result->num_rows > 0) {
                         echo '<table class="table">';
                         echo '<thead>';
                         echo '<tr>';
