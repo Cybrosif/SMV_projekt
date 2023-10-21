@@ -1,8 +1,12 @@
 <?php
     if (isset($_GET['page'])) {
         $data = $_GET['page'];
-
-        switch ($data) {
+        if($data == 'logout')
+            //include '../functions/'.$data.'.php';
+            echo '<script type="text/javascript">window.location.href = "../functions/logout.php";</script>';
+        else 
+            include '../content/'.$data.'.php';  
+        /*switch ($data) {
             case 'dashboard':
                 include '../content/dashboard.php';     
                 break;
@@ -38,15 +42,16 @@
             case 'classes-teacher':
                 include '../content/classes-teacher.php';
                 break;
-            case 'classes-specific-teacher.php':
-                include '../content/classes-specific-teacher.php';
+            case 'classes-specific-student.php':
+                include '../content/classes-specific-student.php';
                  break;
 
             case 'logout':
                 echo '<script type="text/javascript">window.location.href = "../functions/logout.php";</script>';
                 break;
-            }
-    } else {
+            }*/
+    } 
+    else {
         include '../content/dashboard.php';
     }
   

@@ -22,9 +22,8 @@ $result = mysqli_query($link, $sql);
         cursor: pointer;
     }
 </style>
-
+<h1 class='text-center primary-text my-4'>Moji predmeti</h1>
 <div class="container text-center">
-    <h3 class="mb-4 text-1">Moji predmeti</h3>
     <div class="row row-cols-3">
     <?php
        
@@ -41,7 +40,14 @@ $result = mysqli_query($link, $sql);
             }
         } else {
             
-            echo "Ne učite nobenega razreda :(";
+            if(!isset($_SESSION['user_vloga']))
+                echo '<script type="text/javascript">window.location.href = "../functions/logout.php";</script>';
+            else if($_SESSION['user_vloga'] == 'Administrator' || $_SESSION['user_vloga'] == 'administrator')
+                echo "Ne učite nobenega predmeta.";
+            else if($_SESSION['user_vloga'] == 'Profesor' || $_SESSION['user_vloga'] == 'profesor')
+                echo "Ne učite nobenega predmeta.";
+            else if($_SESSION['user_vloga'] == 'Dijak' || $_SESSION['user_vloga'] == 'dijak')
+                echo "Niste prijavljeni v noben predmet.";
         }
 
         mysqli_close($link);
@@ -55,7 +61,8 @@ $result = mysqli_query($link, $sql);
 
         $('.container.hover').on('click', function() {
             var razredID = $(this).data('razredid');
-            var redirectURL = '../views/home.php?page=classes-specific-teacher.php&razredID=' + razredID;
+            var redirectURL = '../views/home.php?page=classes-specific-student&razredID=' + razredID;
+
 
             window.location.href = redirectURL;
             

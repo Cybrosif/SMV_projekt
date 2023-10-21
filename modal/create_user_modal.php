@@ -77,6 +77,7 @@
                 data: formData,
                 success: function(response){
                     $('#editUserModal').modal('hide');
+                    //console.log(formData);
                     //console.log(response);
                     location.reload();
                 }

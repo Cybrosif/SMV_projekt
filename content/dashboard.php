@@ -68,7 +68,7 @@
     </style>
 </head>
 
-    <!--<h1 class='text-center primary-text'>Nadzorna plošča</h1>-->
+    <h1 class='text-center primary-text'>Nadzorna plošča</h1>
     <div class="row">
         <div class="col1">
         <div class="container">
@@ -119,7 +119,7 @@
 
                     $result = $link->query($sql);
 
-                    if ($result->num_rows > 0) {
+                    if ($result && $result->num_rows > 0) {
                         echo '<table class="table">';
                         echo '<thead>';
                         echo '<tr>';
