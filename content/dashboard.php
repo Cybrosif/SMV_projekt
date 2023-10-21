@@ -68,7 +68,7 @@
     </style>
 </head>
 
-    <!--<h1 class='text-center primary-text'>Nadzorna plošča</h1>-->
+    <h1 class='text-center primary-text'>Nadzorna plošča</h1>
     <div class="row">
         <div class="col1">
         <div class="container">
@@ -107,18 +107,34 @@
             <p class="nsl">Dodeljene naloge</p>
             <?php
                 include("../../db.php");
-
+                            
                 if (isset($_SESSION['user_id'])) {
                     $uporabnik_id = $_SESSION['user_id'];
-
-                    $sql = "SELECT n.Naslov, n.Opis, n.Rok FROM naloge AS n
-                            INNER JOIN uporabniki_razredi AS ur ON n.Razred_ID = ur.Razred_ID
-                            WHERE ur.Uporabnik_ID = $uporabnik_id
-                            AND n.Rok <= DATE_ADD(CURDATE(), INTERVAL 1 WEEK)
+                
+                    $sql_razredi = "SELECT Razred_ID FROM uporabniki_razredi WHERE Uporabnik_ID = $uporabnik_id";
+                    $result_razredi = $link->query($sql_razredi);
+                    $razredi = array();
+                
+                    if ($result_razredi->num_rows > 0) {
+                        while ($row_razredi = $result_razredi->fetch_assoc()) {
+                            $razredi[] = $row_razredi["Razred_ID"];
+                        }
+                    } else {
+                        echo "Uporabnik ni vpisan v noben razred.";
+                    }
+                
+                    $razredi_string = implode(",", $razredi);
+                
+                    $sql = "SELECT n.Naslov, n.Opis, n.Rok, sn.Student_Naloga_ID
+                            FROM naloge AS n
+                            LEFT JOIN student_naloge AS sn ON n.Naloga_ID = sn.Naloga_ID AND sn.Student_ID = $uporabnik_id
+                            WHERE n.Razred_ID IN ($razredi_string) 
+                            AND n.Rok > CURDATE() 
+                            AND sn.Student_Naloga_ID IS NULL
                             ORDER BY n.Rok ASC";
-
+                
                     $result = $link->query($sql);
-
+                
                     if ($result->num_rows > 0) {
                         echo '<table class="table">';
                         echo '<thead>';
@@ -127,7 +143,7 @@
                         echo '<th scope="col" class="text2">Naslov</th>';
                         echo '<th scope="col" class="text2">Opis</th>';
                         echo '<th scope="col" class="text2">Rok oddaje</th>';
-                        echo '<th scope="col" class="text2"></th>'; // Dodajte stolpec za gumb
+                        echo '<th scope="col" class="text2">Oddano</th>';
                         echo '</tr>';
                         echo '</thead>';
                         echo '<tbody>';
@@ -136,7 +152,9 @@
                             $naslov = $row["Naslov"];
                             $opis = $row["Opis"];
                             $datum_roka = strtotime($rok);
-
+                            $student_naloga_id = $row["Student_Naloga_ID"];
+                            $oddano_text = ($student_naloga_id !== null) ? "Da" : "Ne";
+                        
                             if ($datum_roka < strtotime("today")) {
                                 echo '<tr class="rok-potekel">';
                             } else {
@@ -146,20 +164,23 @@
                             echo '<td class="text3"><a href="#">' . $naslov . '</a></td>';
                             echo '<td class="text3">' . $opis . '</td>';
                             echo '<td class="text3">' . date('d.m.Y', $datum_roka) . '</td>';
-                            echo '<td class="gumb-container text3"><a class="gumb" href="#">Oddaj nalogo</a></td>'; // Dodajte gumb za oddajo naloge
+                            echo '<td class="text3">' . $oddano_text . '</td>';
                             echo '</tr>';
                         }
                         echo '</tbody>';
                         echo '</table>';
                     } else {
-                        echo "<br>Ni rezultatov.";
+                        echo "Ni rezultatov.";
                     }
                 } else {
                     echo "Uporabnik ni prijavljen.";
                 }
-
+                
                 $link->close();
             ?>
+
+
+
         </div>
        </div>
     </div>
