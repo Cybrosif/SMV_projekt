@@ -61,7 +61,7 @@ $result = mysqli_query($link, $sql);
 
         $('.container.hover').on('click', function() {
             var razredID = $(this).data('razredid');
-            var redirectURL = '../views/home.php?page=classes-specific-student.php&razredID=' + razredID;
+            var redirectURL = '../views/home.php?page=classes-specific-student&razredID=' + razredID;
 
 
             window.location.href = redirectURL;

@@ -1,8 +1,12 @@
 <?php
     if (isset($_GET['page'])) {
         $data = $_GET['page'];
-
-        switch ($data) {
+        if($data == 'logout')
+            //include '../functions/'.$data.'.php';
+            echo '<script type="text/javascript">window.location.href = "../functions/logout.php";</script>';
+        else 
+            include '../content/'.$data.'.php';  
+        /*switch ($data) {
             case 'dashboard':
                 include '../content/dashboard.php';     
                 break;
@@ -45,8 +49,9 @@
             case 'logout':
                 echo '<script type="text/javascript">window.location.href = "../functions/logout.php";</script>';
                 break;
-            }
-    } else {
+            }*/
+    } 
+    else {
         include '../content/dashboard.php';
     }
   

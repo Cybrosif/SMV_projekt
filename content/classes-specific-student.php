@@ -7,10 +7,8 @@
     if(isset($_GET['razredID']))
     {
         $razredID = $_GET['razredID'];
-        $sql = "SELECT razredi.Ime_razreda FROM razredi 
-                    JOIN uporabniki_razredi ON razredi.Razred_ID = uporabniki_razredi.Razred_ID 
-                    WHERE uporabniki_razredi.Uporabnik_ID = {$_SESSION['user_id']} 
-                    AND razredi.Razred_ID = $razredID";
+        $sql = "SELECT Ime_razreda FROM razredi 
+                WHERE Razred_ID = $razredID";
 
     $result = mysqli_query($link, $sql);
 
