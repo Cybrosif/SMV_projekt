@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo 'Passwords do not match';
         exit();
     }
-    if ($vloga != 'Profesor' || $vloga != 'Dijak')
+    if ($vloga != 'Profesor' && $vloga != 'Dijak')
     {
         echo 'Nebo šlo :(';
         exit();
