@@ -143,7 +143,7 @@
                         echo '<th scope="col" class="text2">Naslov</th>';
                         echo '<th scope="col" class="text2">Opis</th>';
                         echo '<th scope="col" class="text2">Rok oddaje</th>';
-                        echo '<th scope="col" class="text2">Oddano</th>';
+                        
                         echo '</tr>';
                         echo '</thead>';
                         echo '<tbody>';
@@ -153,7 +153,7 @@
                             $opis = $row["Opis"];
                             $datum_roka = strtotime($rok);
                             $student_naloga_id = $row["Student_Naloga_ID"];
-                            $oddano_text = ($student_naloga_id !== null) ? "Da" : "Ne";
+                            
                         
                             if ($datum_roka < strtotime("today")) {
                                 echo '<tr class="rok-potekel">';
@@ -164,7 +164,7 @@
                             echo '<td class="text3"><a href="#">' . $naslov . '</a></td>';
                             echo '<td class="text3">' . $opis . '</td>';
                             echo '<td class="text3">' . date('d.m.Y', $datum_roka) . '</td>';
-                            echo '<td class="text3">' . $oddano_text . '</td>';
+                           
                             echo '</tr>';
                         }
                         echo '</tbody>';
