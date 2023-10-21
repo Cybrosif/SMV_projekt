@@ -41,6 +41,14 @@
         margin-bottom: 5px;
     }
 </style>
+    <div class="modal fade" id="editUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <!-- Modal content goes here -->
+            </div>
+        </div>
+    </div>
+
 <h1 class='text-center primary-text my-4'><?php echo $ime_razreda; ?></h1>
 <div class="container" style="box-shadow: none; background-color: transparent;">
     <div class="row">
@@ -57,17 +65,25 @@
                 </thead>
                 <tbody>
                     <?php
-                        $sql = "SELECT * FROM gradiva WHERE Razred_ID = $razredID AND Naloga_ID IS NULL";
+                        $sql = "SELECT * FROM gradiva
+                        WHERE Razred_ID = $razredID 
+                        AND NOT EXISTS (
+                            SELECT 1 FROM naloge 
+                            WHERE naloge.Gradiva_ID = gradiva.Gradivo_ID
+                        )";
+                
                         $result = mysqli_query($link, $sql);
                         $i = 1;
                         if ($result) {
                             
                             while ($row = mysqli_fetch_assoc($result)) {
+                                $fileExtension = pathinfo($row['Pot_Do_Datoteke'], PATHINFO_EXTENSION);
+                                $downloadFileName = $row['Naslov'] . '.' . $fileExtension;
                                 echo "<tr>";
                                 echo "<td>" . $i . "</td>"; 
-                                echo "<td>" . $row['Naslov'] . "</td>"; 
-                                //echo "<td>" . $row['Opis'] . "</td>"; 
-                                echo "<td>" . $row['Pot_Do_Datoteke'] . "</td>"; 
+                                echo "<td><a href='../uploads/" . $row['Pot_Do_Datoteke'] . "' download='" . $downloadFileName . "'>" . $row['Naslov'] . "</a></td>"; 
+                                echo "<td></td>"; 
+                                echo "<td></td>"; 
                                 echo "</tr>";
                             }
                         
@@ -96,21 +112,25 @@
                 </thead>
                 <tbody>
                 <?php
-                    $sql = "SELECT naloge.Naslov AS naloge_Naslov, naloge.Rok, gradiva.Pot_Do_Datoteke, gradiva.Naslov AS gradiva_Naslov
-                    FROM naloge 
-                    LEFT JOIN gradiva ON naloge.Naloga_ID = gradiva.Naloga_ID 
-                    WHERE naloge.Razred_ID = $razredID";
+                   $sql = "SELECT naloge.Naslov AS naloge_Naslov, naloge.Naloga_ID, naloge.Rok, 
+                   COALESCE(gradiva.Pot_Do_Datoteke, 'N/A') AS Pot_Do_Datoteke, 
+                   gradiva.Naslov AS gradiva_Naslov
+                   FROM naloge 
+                   LEFT JOIN gradiva ON naloge.Gradiva_ID = gradiva.Gradivo_ID
+                   WHERE naloge.Razred_ID = $razredID";           
                     $result = mysqli_query($link, $sql);
                     $i = 1;
                     if ($result) {
                         
-                        while ($row = mysqli_fetch_assoc($result)) {
+                        while ($row = mysqli_fetch_assoc($result)) {           
+                            $fileExtension = pathinfo($row['Pot_Do_Datoteke'], PATHINFO_EXTENSION);
+                            $downloadFileName = $row['gradiva_Naslov'] . '.' . $fileExtension;
                             echo "<tr>";
                             echo "<td>" . $i . "</td>"; 
                             echo "<td>" . $row['naloge_Naslov'] . "</td>";
-                            echo "<td>" . $row['gradiva_Naslov'] . "</td>"; 
+                            echo "<td><a href='../uploads/" . $row['Pot_Do_Datoteke'] . "' download='" . $downloadFileName . "'>" . $row['gradiva_Naslov'] . "</a></td>"; 
                             echo "<td>" . $row['Rok'] . "</td>"; 
-                            echo "<td><button class='btn btn-primary'>Oddaj</button></td>";
+                            echo "<td><button class='btn btn-primary submit' data-nalogaid='" . $row['Naloga_ID'] . "'>Naloži datoteko</button></td>";
                             echo "</tr>";
                         }
                     
@@ -128,5 +148,21 @@
     </div>
 </div>
 
-
-
+<script>
+    $(document).ready(function() {
+        $('table').on('click', '.submit', function(){
+            var nalogaId = $(this).data('nalogaid');     
+            $.ajax({
+                type: 'POST',
+                url: '../modal/upload-file-student.php', 
+                data: { nalogaId: nalogaId },
+                success: function(response){
+                    $('#editUserModal .modal-content').html(response);
+                    $('#editUserModal').modal('show');
+                    console.log(nalogaId);
+                    //$('#editUserModal .modal-dialog').removeClass('modal-xl');
+                }
+            });
+        });
+    });
+</script>
