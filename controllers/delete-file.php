@@ -6,8 +6,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the file ID from the POST data
     $fileId = $_POST['fileId'];
 
-    // Check if the user has permission to delete this file
-    $sql = "SELECT * FROM student_naloge WHERE Student_Naloga_ID = $fileId AND Student_ID = {$_SESSION['user_id']}";
+    // Check if the user is a teacher or student
+    $role = $_SESSION['user_vloga']; // Assuming 'role' is the session variable indicating user role (teacher or student)
+
+    // Define appropriate SQL query based on user role
+    if ($role === 'Profesor' || $role === 'Administrator') {
+        $sql = "SELECT * FROM gradiva WHERE Gradivo_ID = $fileId";
+    } else if ($role === 'Dijak'){
+        $sql = "SELECT * FROM student_naloge WHERE Student_Naloga_ID = $fileId AND Student_ID = {$_SESSION['user_id']}";
+    }
+    
+
     $result = mysqli_query($link, $sql);
 
     if ($result && mysqli_num_rows($result) > 0) {
@@ -19,7 +28,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $file_path = '../uploads/' . $filename; // Update this with the actual file path
         if (unlink($file_path)) {
             // File deleted successfully, now delete the record from the database
-            $delete_sql = "DELETE FROM student_naloge WHERE Student_Naloga_ID = $fileId";
+            if ($role === 'Profesor' || $role === 'Administrator') {
+                $delete_sql = "DELETE FROM gradiva WHERE Gradivo_ID = $fileId";
+            } else if ($role === 'Dijak'){
+                $delete_sql = "DELETE FROM student_naloge WHERE Student_Naloga_ID = $fileId";
+            }
+
             $delete_result = mysqli_query($link, $delete_sql);
 
             if ($delete_result) {

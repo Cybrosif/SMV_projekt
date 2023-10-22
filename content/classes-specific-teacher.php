@@ -30,12 +30,28 @@
 
     }
 ?>
-
+<style>
+    .delete{
+        height: 20px;
+        width: 20px;
+        padding: 0;
+    text-align: center;
+    line-height: 15px;
+    }
+</style>
+<div class="modal fade" id="editUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <!-- Modal content goes here -->
+        </div>
+     </div>
+</div>
 <h1 class='text-center primary-text my-4'><?php echo $ime_razreda;?></h1>
 <div class="container" style="box-shadow: none; background-color: transparent;">
     <div class="row">
         <div class="col-md-12 mb-3 container">
         <h4 class="text1">Gradiva</h4>
+        <button class="btn btn-primary" id="addFile" data-classid="<?php echo $razredID; ?>">Dodaj gradivo</button>
             <table class="table">
                 <thead>
                     <tr>
@@ -61,12 +77,13 @@
                             while ($row = mysqli_fetch_assoc($result)) {
                                 $fileExtension = pathinfo($row['Pot_Do_Datoteke'], PATHINFO_EXTENSION);
                                 $downloadFileName = $row['Naslov'] . '.' . $fileExtension;
-                                echo "<tr>";
+                                echo "<tr >";
                                 echo "<td>" . $i . "</td>"; 
                                 echo "<td><a href='../uploads/" . $row['Pot_Do_Datoteke'] . "' download='" . $downloadFileName . "'>" . $row['Naslov'] . "</a></td>"; 
                                 echo "<td></td>"; 
-                                echo "<td></td>"; 
+                                echo "<td><button data-gradivoid='" . $row['Gradivo_ID'] . "' class='btn btn-danger btn-sm delete delete-file'><i class='fas fa-times'></i></button></td>"; 
                                 echo "</tr>";
+                                $i++;
                             }
                         
                             
@@ -82,7 +99,136 @@
     </div>
     <div class="row">
         <div class="col-md-12 mb-3 container">
-            Naloge
+        <h4 class="text1">Naloge</h4>
+        <button class="btn btn-primary" id="addTask" data-classid="<?php echo $razredID; ?>">Dodaj nalogo</button>
+        <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text2">#</th>
+                        <th scope="col" class="text2">Naslov naloge</th>
+                        <th scope="col" class="text2">Navodila</th>
+                        <th scope="col" class="text2">Rok oddaje</th>
+                        <th scope="col" class="text2"></th>
+                        <th scope="col" class="text2"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                   $sql = "SELECT naloge.Naslov AS naloge_Naslov, naloge.Naloga_ID, naloge.Rok, 
+                   COALESCE(gradiva.Pot_Do_Datoteke, 'N/A') AS Pot_Do_Datoteke, 
+                   gradiva.Naslov AS gradiva_Naslov
+                   FROM naloge 
+                   LEFT JOIN gradiva ON naloge.Gradiva_ID = gradiva.Gradivo_ID
+                   WHERE naloge.Razred_ID = $razredID";           
+                    $result = mysqli_query($link, $sql);
+                    $i = 1;
+                    if ($result) {
+                        
+                        while ($row = mysqli_fetch_assoc($result)) {           
+                            $fileExtension = pathinfo($row['Pot_Do_Datoteke'], PATHINFO_EXTENSION);
+                            $downloadFileName = $row['gradiva_Naslov'] . '.' . $fileExtension;
+                            echo "<tr>";
+                            echo "<td>" . $i . "</td>"; 
+                            echo "<td>" . $row['naloge_Naslov'] . "</td>";
+                            echo "<td><a href='../uploads/" . $row['Pot_Do_Datoteke'] . "' download='" . $downloadFileName . "'>" . $row['gradiva_Naslov'] . "</a></td>"; 
+                            echo "<td>" . $row['Rok'] . "</td>"; 
+                            echo "<td><button class='btn btn-sm btn-warning editTask'  data-nalogaid='" . $row['Naloga_ID'] . "'>Uredi nalogo</button></td>";
+                            echo "<td><button data-nalogaid='" . $row['Naloga_ID'] . "' class='btn btn-danger btn-sm delete delete-task'><i class='fas fa-times'></i></button></td>"; 
+                            echo "</tr>";
+                        }
+                    
+                        // Free the result set
+                        mysqli_free_result($result);
+                    } else {
+                        // Handle query error
+                        echo "Error: " . mysqli_error($link);
+                    }
+                ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
+
+
+<script>
+   $(document).ready(function() {
+        
+        $(".delete-file").on("click", function() {
+            var gradivoID = $(this).data("gradivoid");
+
+            $.ajax({
+                type: "POST",
+                url: "../controllers/delete-file.php", 
+                data: { fileId: gradivoID },
+                success: function(response) {
+                    console.log(response); 
+                        location.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText); 
+                }
+            });
+        });
+
+        $('table').on('click', '.editTask', function(){
+            var taskId = $(this).data('nalogaid');
+            var classId = <?php echo $razredID; ?>;
+
+            $.ajax({
+                type: 'POST',
+                url: '../modal/edit_task_modal.php', 
+                data: { taskId: taskId, classId: classId }, // Include both taskId and classId
+                success: function(response){
+                    $('#editUserModal .modal-content').html(response);
+                    $('#editUserModal').modal('show');
+                }
+            });
+        });
+
+        $('table').on('click', '.delete-task', function(){
+            var taskId = $(this).data('nalogaid');
+
+            $.ajax({
+                type: 'POST',
+                url: '../modal/delete_task_modal.php', 
+                data: { taskId: taskId },
+                success: function(response){
+                    $('#editUserModal .modal-content').html(response);
+                    $('#editUserModal').modal('show');
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText); // Log errors if any
+                }
+            });
+        });
+
+        
+        $("#addFile").click(function(){
+         var classId = $(this).data("classid");
+        $.ajax({
+                type: 'POST',
+                url: '../modal/add_material.php', 
+                data: { classId: classId },
+                success: function(response){
+                    $('#editUserModal .modal-content').html(response);
+                    $('#editUserModal').modal('show');
+                }
+            });
+        });
+
+        $("#addTask").click(function(){
+         var classId = $(this).data("classid");
+        $.ajax({
+                type: 'POST',
+                url: '../modal/add_task.php', 
+                data: { classId: classId },
+                success: function(response){
+                    $('#editUserModal .modal-content').html(response);
+                    $('#editUserModal').modal('show');
+                }
+            });
+        });
+
+    });
+</script>

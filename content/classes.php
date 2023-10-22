@@ -61,11 +61,19 @@ $result = mysqli_query($link, $sql);
 
         $('.container.hover').on('click', function() {
             var razredID = $(this).data('razredid');
+            var userRole = "<?php echo $_SESSION['user_vloga']; ?>"; // Assuming you have a PHP variable for user role
+            console.log(userRole);
+        if (userRole === "Dijak") {
             var redirectURL = '../views/home.php?page=classes-specific-student&razredID=' + razredID;
-
-
             window.location.href = redirectURL;
-            
-        });
+        } else if (userRole === "Profesor") {
+            var redirectURL = '../views/home.php?page=classes-specific-teacher&razredID=' + razredID;
+            window.location.href = redirectURL;
+        } else if (userRole === "Administrator"){
+            var redirectURL = '../views/home.php?page=classes-specific-teacher&razredID=' + razredID;
+            window.location.href = redirectURL;
+        }
+    });
+
     });
 </script>
