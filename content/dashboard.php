@@ -111,7 +111,7 @@
                 if (isset($_SESSION['user_id'])) {
                     $uporabnik_id = $_SESSION['user_id'];
 
-                    $sql = "SELECT n.Naslov, n.Opis, n.Rok FROM naloge AS n
+                    $sql = "SELECT n.Naslov, n.Rok FROM naloge AS n
                             INNER JOIN uporabniki_razredi AS ur ON n.Razred_ID = ur.Razred_ID
                             WHERE ur.Uporabnik_ID = $uporabnik_id
                             AND n.Rok <= DATE_ADD(CURDATE(), INTERVAL 1 WEEK)

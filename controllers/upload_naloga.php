@@ -41,4 +41,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Redirect back to the specific_class page after processing all files
     header('Location: ../views/home.php?page=classes');
 }
+if(isset($_POST['uredi'])){
+    $id = $_POST['id'];
+    $ime = $_POST['ime'];
+    $prezime = $_POST['prezime'];
+
+    // File upload logic
+    $target_dir = "../uploads/";
+    $target_file = $target_dir . basename($_FILES["gradivoFile"]["name"]);
+    $uploadOk = 1;
+
+    // Check if file already exists
+    if (file_exists($target_file)) {
+        echo "Sorry, file already exists.";
+        $uploadOk = 0;
+    }
+
+    // Additional checks like file size, type, etc. can be added here
+
+    // Try to upload the file if no errors
+    if ($uploadOk) {
+        if (move_uploaded_file($_FILES["gradivoFile"]["tmp_name"], $target_file)) {
+            echo "The file ". basename( $_FILES["gradivoFile"]["name"]). " has been uploaded.";
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+        }
+    }
+
+    // Update the gradiva table with the new file path.
+    // Assuming you have a column named 'file_path' in 'gradiva' table to store the path of uploaded files.
+    $sql = "UPDATE gradiva SET ime='$ime', prezime='$prezime', file_path='$target_file' WHERE id=$id";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Record updated successfully";
+    } else {
+        echo "Error updating record: " . $conn->error;
+    }
+}
+
 ?>
