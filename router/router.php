@@ -38,8 +38,8 @@
             case 'classes-teacher':
                 include '../content/classes-teacher.php';
                 break;
-            case 'classes-specific-teacher.php':
-                include '../content/classes-specific-teacher.php';
+            case 'classes-specific-student.php':
+                include '../content/classes-specific-student.php';
                  break;
 
             case 'logout':
