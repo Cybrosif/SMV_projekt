@@ -57,7 +57,7 @@
             processData: false,
             success: function(response) {
                 console.log(response);
-                //location.reload();
+                location.reload();
             },
             error: function(xhr, status, error) {
                 console.error(xhr.responseText); // Handle errors
