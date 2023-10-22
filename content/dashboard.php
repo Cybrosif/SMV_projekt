@@ -125,7 +125,6 @@
                         echo '<tr>';
                         echo '<th scope="col"></th>';
                         echo '<th scope="col" class="text2">Naslov</th>';
-                        echo '<th scope="col" class="text2">Opis</th>';
                         echo '<th scope="col" class="text2">Rok oddaje</th>';
                         echo '<th scope="col" class="text2"></th>'; // Dodajte stolpec za gumb
                         echo '</tr>';
@@ -134,7 +133,6 @@
                         while ($row = $result->fetch_assoc()) {
                             $rok = $row["Rok"];
                             $naslov = $row["Naslov"];
-                            $opis = $row["Opis"];
                             $datum_roka = strtotime($rok);
 
                             if ($datum_roka < strtotime("today")) {
@@ -144,7 +142,6 @@
                             }
                             echo '<th scope="row" ></th>';
                             echo '<td class="text3"><a href="#">' . $naslov . '</a></td>';
-                            echo '<td class="text3">' . $opis . '</td>';
                             echo '<td class="text3">' . date('d.m.Y', $datum_roka) . '</td>';
                             echo '<td class="gumb-container text3"><a class="gumb" href="#">Oddaj nalogo</a></td>'; // Dodajte gumb za oddajo naloge
                             echo '</tr>';

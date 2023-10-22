@@ -86,7 +86,6 @@
                                 ?>
                         </div>
                     </div>                    
-                    <input type="file" name="gradivoFile" id="gradivoFile">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Prekliči</button>
                         <button type="submit" class="btn btn-primary">Shrani</button>
