@@ -110,6 +110,7 @@
                         <th scope="col" class="text2">Rok oddaje</th>
                         <th scope="col" class="text2"></th>
                         <th scope="col" class="text2"></th>
+                        <th scope="col" class="text2"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -133,6 +134,7 @@
                             echo "<td><a href='../uploads/" . $row['Pot_Do_Datoteke'] . "' download='" . $downloadFileName . "'>" . $row['gradiva_Naslov'] . "</a></td>"; 
                             echo "<td>" . $row['Rok'] . "</td>"; 
                             echo "<td><button class='btn btn-sm btn-warning editTask'  data-nalogaid='" . $row['Naloga_ID'] . "'>Uredi nalogo</button></td>";
+                            echo "<td><button data-nalogaid='" . $row['Naloga_ID'] . "' class='btn btn-secondary btn-sm redirect'>oddaje</button></td>";
                             echo "<td><button data-nalogaid='" . $row['Naloga_ID'] . "' class='btn btn-danger btn-sm delete delete-task'><i class='fas fa-times'></i></button></td>"; 
                             echo "</tr>";
                         }
@@ -169,6 +171,14 @@
                     console.error(xhr.responseText); 
                 }
             });
+        });
+
+        $('table').on('click', '.redirect', function(){
+            var taskId = $(this).data('nalogaid');
+            var redirectUrl = '../views/home.php?page=submits&Naloga_ID=' + taskId;
+
+            window.location.href = redirectUrl;
+
         });
 
         $('table').on('click', '.editTask', function(){

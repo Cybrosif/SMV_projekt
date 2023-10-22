@@ -33,7 +33,7 @@
                 success: function(response){
                     $('#editUserModal').modal('hide');
                     console.log(response);
-                    //location.reload();
+                    location.reload();
                 }
             });
         });
