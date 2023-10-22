@@ -24,6 +24,7 @@ $result = mysqli_query($link, $sql);
 </style>
 <h1 class='text-center primary-text my-4'>Moji predmeti</h1>
 <div class="container text-center">
+    
     <div class="row row-cols-3">
     <?php
        
@@ -50,7 +51,6 @@ $result = mysqli_query($link, $sql);
                 echo "Niste prijavljeni v noben predmet.";
         }
 
-        mysqli_close($link);
         ?>
     </div>
 </div>

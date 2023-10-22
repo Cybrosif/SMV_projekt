@@ -11,7 +11,7 @@ services:
   db:
     image: mysql:latest
     environment:
-      - MYSQL_ROOT_PASSWORD=Deda2013$
+      - MYSQL_ROOT_PASSWORD=anej
       - MYSQL_DATABASE=classorbit
       - MYSQL_USER=anej
       - MYSQL_PASSWORD=anej

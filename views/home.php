@@ -342,6 +342,8 @@
 
                 <a href="home.php?page=classes" data-page="classes" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php if($currentPage == 'classes') echo 'active';?>">
                     <i class="fas fa-list me-2"></i>Predmeti</a>
+                <a href="home.php?page=join-class" data-page="join-class" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php if($currentPage == 'join-class') echo 'active';?>">
+                    <i class="fas fa-list me-2"></i>Vpis v predmet</a>
 
                 
                     <?php
