@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Oct 20, 2023 at 08:39 PM
+-- Generation Time: Oct 22, 2023 at 05:30 PM
 -- Server version: 8.1.0
 -- PHP Version: 8.2.8
 
@@ -32,7 +32,6 @@ USE `classorbit`;
 CREATE TABLE `gradiva` (
   `Gradivo_ID` int NOT NULL,
   `Razred_ID` int DEFAULT NULL,
-  `Naloga_ID` int DEFAULT NULL,
   `Naslov` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `Pot_Do_Datoteke` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -41,9 +40,20 @@ CREATE TABLE `gradiva` (
 -- Dumping data for table `gradiva`
 --
 
-INSERT INTO `gradiva` (`Gradivo_ID`, `Razred_ID`, `Naloga_ID`, `Naslov`, `Pot_Do_Datoteke`) VALUES
-(1, 1, NULL, 'test', 'test'),
-(3, 1, 3, 'test', 'test');
+INSERT INTO `gradiva` (`Gradivo_ID`, `Razred_ID`, `Naslov`, `Pot_Do_Datoteke`) VALUES
+(1, 1, 'test', 'klbuzmvw_1.sql'),
+(5, 1, 'test', 'ahbnysrw_1.odt'),
+(6, 1, 'test2', 'lmnehakf_1.odt'),
+(7, 1, 'test.odt', 'xgcfkbvs_1.odt'),
+(8, 1, 'test.odt', 'loydxqfa_1.odt'),
+(9, 1, 'classorbit_porocilo (1).odt', 'mphzrikn_1.odt'),
+(10, 1, 'classorbit_porocilo (1) (1).odt', 'manrgjkq_1.odt'),
+(11, 1, 'klbuzmvw_1.sql', 'fvbugwme_1.sql'),
+(12, 1, 'klbuzmvw_1.sql', 'muzsedfb_1.sql'),
+(13, 1, 'test.odt', 'wsnyxgtl_1.odt'),
+(15, 1, 'classorbit_porocilo (1) (1).odt', 'wncsdgki_1.odt'),
+(16, 1, 'test.sql', 'kbuhlcvj_1.sql'),
+(17, 1, 'test.odt', 'rsgzkfoa_1.odt');
 
 -- --------------------------------------------------------
 
@@ -54,19 +64,35 @@ INSERT INTO `gradiva` (`Gradivo_ID`, `Razred_ID`, `Naloga_ID`, `Naslov`, `Pot_Do
 CREATE TABLE `naloge` (
   `Naloga_ID` int NOT NULL,
   `Razred_ID` int DEFAULT NULL,
+  `Gradiva_ID` int DEFAULT NULL,
   `Naslov` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `Rok` date DEFAULT NULL
+  `Rok` date DEFAULT NULL,
+  `Visible` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `naloge`
 --
 
-INSERT INTO `naloge` (`Naloga_ID`, `Razred_ID`, `Naslov`, `Rok`) VALUES
-(1, 2, 'Testna naloga', '2023-10-13'),
-(2, 2, 'testna naloga 2', '2023-10-28'),
-(3, 1, 'testna naloga 3', '2023-10-16'),
-(4, 1, 'hizuet5rqhzurtzh', '2023-10-21');
+INSERT INTO `naloge` (`Naloga_ID`, `Razred_ID`, `Gradiva_ID`, `Naslov`, `Rok`, `Visible`) VALUES
+(2, 2, NULL, 'testna naloga 2', '2023-10-28', NULL),
+(5, 2, 1, 'test', '2023-10-27', NULL),
+(13, 1, NULL, '3trw5t', '2023-10-20', 1),
+(14, 1, NULL, '3trw5t', '2023-10-20', 1),
+(15, 1, NULL, '3trw5t', '2023-10-20', 1),
+(16, 1, NULL, '3trw5t', '2023-10-20', 1),
+(17, 1, NULL, '3trw5t', '2023-10-20', 1),
+(18, 1, NULL, '123213', '2023-10-28', 1),
+(19, 1, NULL, '123213', '2023-10-28', 1),
+(20, 1, NULL, 'test', '2023-10-28', 1),
+(21, 1, NULL, 'test', '2023-10-28', 1),
+(22, 1, NULL, 'we3214', '2023-10-27', 1),
+(23, 1, NULL, 'we3214', '2023-10-27', 1),
+(28, 1, NULL, 'test', NULL, 0),
+(29, 1, NULL, 'test', NULL, 0),
+(30, 1, NULL, 'test', NULL, 0),
+(31, 1, NULL, 'test', NULL, 0),
+(32, 1, NULL, 'test', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -112,7 +138,8 @@ CREATE TABLE `student_naloge` (
 --
 
 INSERT INTO `student_naloge` (`Student_Naloga_ID`, `Student_ID`, `Naloga_ID`, `Datum_Oddaje`, `Pot_Do_Datoteke`, `Original_Filename`) VALUES
-(16, 1, 3, '2023-10-17', 'rnxjctqp_1.doc', 'NRPA_Vaja03_OOP_kapsulacija_moduli_knjižnice_static_const_readonly_.doc');
+(37, 1, NULL, '2023-10-22', 'crgiodqh_1.sql', 'test.sql'),
+(39, 1, NULL, '2023-10-22', 'vseoylhq_1.odt', 'classorbit_porocilo (1) (1).odt');
 
 -- --------------------------------------------------------
 
@@ -301,15 +328,15 @@ INSERT INTO `uporabniki_razredi` (`Uporabnik_ID`, `Razred_ID`) VALUES
 --
 ALTER TABLE `gradiva`
   ADD PRIMARY KEY (`Gradivo_ID`),
-  ADD KEY `Razred_ID` (`Razred_ID`),
-  ADD KEY `naloga_ibfk_1` (`Naloga_ID`);
+  ADD KEY `Razred_ID` (`Razred_ID`);
 
 --
 -- Indexes for table `naloge`
 --
 ALTER TABLE `naloge`
   ADD PRIMARY KEY (`Naloga_ID`),
-  ADD KEY `Razred_ID` (`Razred_ID`);
+  ADD KEY `Razred_ID` (`Razred_ID`),
+  ADD KEY `gradivo_ibfk_1` (`Gradiva_ID`);
 
 --
 -- Indexes for table `razredi`
@@ -354,13 +381,13 @@ ALTER TABLE `uporabniki_razredi`
 -- AUTO_INCREMENT for table `gradiva`
 --
 ALTER TABLE `gradiva`
-  MODIFY `Gradivo_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Gradivo_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `naloge`
 --
 ALTER TABLE `naloge`
-  MODIFY `Naloga_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Naloga_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `razredi`
@@ -372,7 +399,7 @@ ALTER TABLE `razredi`
 -- AUTO_INCREMENT for table `student_naloge`
 --
 ALTER TABLE `student_naloge`
-  MODIFY `Student_Naloga_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `Student_Naloga_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `uporabniki`
@@ -388,21 +415,21 @@ ALTER TABLE `uporabniki`
 -- Constraints for table `gradiva`
 --
 ALTER TABLE `gradiva`
-  ADD CONSTRAINT `gradiva_ibfk_1` FOREIGN KEY (`Razred_ID`) REFERENCES `razredi` (`Razred_ID`),
-  ADD CONSTRAINT `naloga_ibfk_1` FOREIGN KEY (`Naloga_ID`) REFERENCES `naloge` (`Naloga_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `gradiva_ibfk_1` FOREIGN KEY (`Razred_ID`) REFERENCES `razredi` (`Razred_ID`);
 
 --
 -- Constraints for table `naloge`
 --
 ALTER TABLE `naloge`
-  ADD CONSTRAINT `naloge_ibfk_1` FOREIGN KEY (`Razred_ID`) REFERENCES `razredi` (`Razred_ID`);
+  ADD CONSTRAINT `gradivo_ibfk_1` FOREIGN KEY (`Gradiva_ID`) REFERENCES `gradiva` (`Gradivo_ID`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `naloge_ibfk_1` FOREIGN KEY (`Razred_ID`) REFERENCES `razredi` (`Razred_ID`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --
 -- Constraints for table `student_naloge`
 --
 ALTER TABLE `student_naloge`
-  ADD CONSTRAINT `student_naloge_ibfk_1` FOREIGN KEY (`Student_ID`) REFERENCES `uporabniki` (`ID`),
-  ADD CONSTRAINT `student_naloge_ibfk_2` FOREIGN KEY (`Naloga_ID`) REFERENCES `naloge` (`Naloga_ID`);
+  ADD CONSTRAINT `student_naloge_ibfk_1` FOREIGN KEY (`Student_ID`) REFERENCES `uporabniki` (`ID`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `student_naloge_ibfk_2` FOREIGN KEY (`Naloga_ID`) REFERENCES `naloge` (`Naloga_ID`) ON DELETE SET NULL ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `ucitelji_razredi`

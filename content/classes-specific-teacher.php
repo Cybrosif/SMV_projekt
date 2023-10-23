@@ -115,7 +115,7 @@
                 </thead>
                 <tbody>
                 <?php
-                   $sql = "SELECT naloge.Naslov AS naloge_Naslov, naloge.Naloga_ID, naloge.Rok, 
+                   $sql = "SELECT naloge.Visible, naloge.Naslov AS naloge_Naslov, naloge.Naloga_ID, naloge.Rok, 
                    COALESCE(gradiva.Pot_Do_Datoteke, 'N/A') AS Pot_Do_Datoteke, 
                    gradiva.Naslov AS gradiva_Naslov
                    FROM naloge 
@@ -128,9 +128,10 @@
                         while ($row = mysqli_fetch_assoc($result)) {           
                             $fileExtension = pathinfo($row['Pot_Do_Datoteke'], PATHINFO_EXTENSION);
                             $downloadFileName = $row['gradiva_Naslov'] . '.' . $fileExtension;
+                            $visibilityClass = $row['Visible'] ? 'text-success' : 'text-danger';
                             echo "<tr>";
                             echo "<td>" . $i . "</td>"; 
-                            echo "<td>" . $row['naloge_Naslov'] . "</td>";
+                            echo "<td class='$visibilityClass'>" . $row['naloge_Naslov'] . "</td>";
                             echo "<td><a href='../uploads/" . $row['Pot_Do_Datoteke'] . "' download='" . $downloadFileName . "'>" . $row['gradiva_Naslov'] . "</a></td>"; 
                             echo "<td>" . $row['Rok'] . "</td>"; 
                             echo "<td><button class='btn btn-sm btn-warning editTask'  data-nalogaid='" . $row['Naloga_ID'] . "'>Uredi nalogo</button></td>";
