@@ -1,12 +1,8 @@
 <?php
-<<<<<<< Updated upstream
-include '../../db.php';
-=======
     include '../../db.php';
     include '../session_start.php';
     include '../functions/check_student.php';
 
->>>>>>> Stashed changes
 
 $ime_razreda = null;
 $userRole = $_SESSION['user_vloga'];
@@ -119,7 +115,6 @@ if ($razredID) {
                         ?>
                 </tbody>
             </table>
-<<<<<<< Updated upstream
         </div>
         <div class="col-md-12 container">
         <h4 class="text1">Naloge</h4>
@@ -156,34 +151,6 @@ if ($razredID) {
                             echo "<td><button class='btn btn-primary submit' data-nalogaid='" . $row['Naloga_ID'] . "'>Naloži datoteko</button></td>";
                             echo "</tr>";
                         }
-=======
-
-
-        </div>
-        <div class="col-md-12 container">
-        <h4 class="text1">Naloge</h4>
-        <table class="table table-bordered table-hover table-responsive">
-            <thead class="bg-light">
-                <tr>
-                    <th scope="col" class="text2">#</th>
-                    <th scope="col" class="text2">Naslov naloge</th>
-                    <th scope="col" class="text2">Navodila</th>
-                    <th scope="col" class="text2">Rok oddaje</th>
-                    <th scope="col" class="text2"></th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php
-            $sql = "SELECT naloge.Naslov AS naloge_Naslov, naloge.Naloga_ID, naloge.Rok, 
-            COALESCE(gradiva.Pot_Do_Datoteke, 'N/A') AS Pot_Do_Datoteke, 
-            gradiva.Naslov AS gradiva_Naslov
-            FROM naloge 
-            LEFT JOIN gradiva ON naloge.Gradiva_ID = gradiva.Gradivo_ID
-            WHERE naloge.Razred_ID = $razredID";           
-                $result = mysqli_query($link, $sql);
-                $i = 1;
-                if ($result) {
->>>>>>> Stashed changes
                     
                     while ($row = mysqli_fetch_assoc($result)) {           
                         $fileExtension = pathinfo($row['Pot_Do_Datoteke'], PATHINFO_EXTENSION);
@@ -197,10 +164,6 @@ if ($razredID) {
                         echo "</tr>";
                         $i++;
                     }
-<<<<<<< Updated upstream
-                ?>
-                </tbody>
-=======
                 
                     // Free the result set
                     mysqli_free_result($result);
@@ -212,7 +175,6 @@ if ($razredID) {
             </tbody>
         </table>
 
->>>>>>> Stashed changes
         </div>
     </div>
 </div>
