@@ -11,7 +11,6 @@ else if($_SESSION['user_vloga'] == 'Profesor' || $_SESSION['user_vloga'] == 'pro
 else if($_SESSION['user_vloga'] == 'Dijak' || $_SESSION['user_vloga'] == 'dijak')
     $sql = "SELECT razredi.* FROM razredi JOIN uporabniki_razredi ON razredi.Razred_ID = uporabniki_razredi.Razred_ID WHERE uporabniki_razredi.Uporabnik_ID = {$_SESSION['user_id']}";
 
-
 $result = mysqli_query($link, $sql);
  
 ?>

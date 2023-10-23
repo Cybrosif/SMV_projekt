@@ -67,7 +67,7 @@ CREATE TABLE `razredi` (
 -- Dumping data for table `razredi`
 --
 
-INSERT INTO `razredi` (`Razred_ID`, `Kljuc_Vpisa`, `Ime_razreda`) VALUES
+INSERT INTO `razredi` (`Razred_ID`, `Ime_razreda`, `Kljuc_Vpisa`) VALUES
 (7, 'Predmet1', 'KljucVpisa1'),
 (8, 'Predmet2', 'KljucVpisa2'),
 (9, 'Predmet3', 'KljucVpisa3'),
