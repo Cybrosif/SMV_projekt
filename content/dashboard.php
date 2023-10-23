@@ -103,7 +103,7 @@
         </div>
         </div>
         <div class="col1">
-            <div class="container">
+        <div class="container">
             <p class="nsl">Dodeljene naloge</p>
             <?php
                 include("../../db.php");
@@ -120,13 +120,13 @@
                     $result = $link->query($sql);
 
                     if ($result && $result->num_rows > 0) {
-                        echo '<table class="table">';
-                        echo '<thead>';
+                        echo '<table class="table table-bordered table-hover table-responsive">';
+                        echo '<thead class="bg-light">';
                         echo '<tr>';
                         echo '<th scope="col"></th>';
                         echo '<th scope="col" class="text2">Naslov</th>';
                         echo '<th scope="col" class="text2">Rok oddaje</th>';
-                        echo '<th scope="col" class="text2"></th>'; // Dodajte stolpec za gumb
+                        echo '<th scope="col" class="text2"></th>'; // Column for the button
                         echo '</tr>';
                         echo '</thead>';
                         echo '<tbody>';
@@ -136,14 +136,14 @@
                             $datum_roka = strtotime($rok);
 
                             if ($datum_roka < strtotime("today")) {
-                                echo '<tr class="rok-potekel">';
+                                echo '<tr class="rok-potekel table-danger">'; // Added Bootstrap class for rows with expired dates
                             } else {
                                 echo '<tr>';
                             }
                             echo '<th scope="row" ></th>';
                             echo '<td class="text3"><a href="#">' . $naslov . '</a></td>';
                             echo '<td class="text3">' . date('d.m.Y', $datum_roka) . '</td>';
-                            echo '<td class="gumb-container text3"><a class="gumb" href="#">Oddaj nalogo</a></td>'; // Dodajte gumb za oddajo naloge
+                            echo '<td class="gumb-container text3"><a class="btn btn-primary" href="#">Oddaj nalogo</a></td>'; // Converted the button to a Bootstrap styled button
                             echo '</tr>';
                         }
                         echo '</tbody>';
@@ -158,6 +158,7 @@
                 $link->close();
             ?>
         </div>
+
        </div>
     </div>
 </html>
