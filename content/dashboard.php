@@ -110,27 +110,11 @@
                             
                 if (isset($_SESSION['user_id'])) {
                     $uporabnik_id = $_SESSION['user_id'];
-                
-                    $sql_razredi = "SELECT Razred_ID FROM uporabniki_razredi WHERE Uporabnik_ID = $uporabnik_id";
-                    $result_razredi = $link->query($sql_razredi);
-                    $razredi = array();
-                
-                    if ($result_razredi->num_rows > 0) {
-                        while ($row_razredi = $result_razredi->fetch_assoc()) {
-                            $razredi[] = $row_razredi["Razred_ID"];
-                        }
-                    } else {
-                        echo "Uporabnik ni vpisan v noben razred.";
-                    }
-                
-                    $razredi_string = implode(",", $razredi);
-                
-                    $sql = "SELECT n.Naslov, n.Opis, n.Rok, sn.Student_Naloga_ID
-                            FROM naloge AS n
-                            LEFT JOIN student_naloge AS sn ON n.Naloga_ID = sn.Naloga_ID AND sn.Student_ID = $uporabnik_id
-                            WHERE n.Razred_ID IN ($razredi_string) 
-                            AND n.Rok > CURDATE() 
-                            AND sn.Student_Naloga_ID IS NULL
+
+                    $sql = "SELECT n.Naslov, n.Rok FROM naloge AS n
+                            INNER JOIN uporabniki_razredi AS ur ON n.Razred_ID = ur.Razred_ID
+                            WHERE ur.Uporabnik_ID = $uporabnik_id
+                            AND n.Rok <= DATE_ADD(CURDATE(), INTERVAL 1 WEEK)
                             ORDER BY n.Rok ASC";
                 
                     $result = $link->query($sql);
@@ -141,7 +125,6 @@
                         echo '<tr>';
                         echo '<th scope="col"></th>';
                         echo '<th scope="col" class="text2">Naslov</th>';
-                        echo '<th scope="col" class="text2">Opis</th>';
                         echo '<th scope="col" class="text2">Rok oddaje</th>';
                         
                         echo '</tr>';
@@ -150,7 +133,6 @@
                         while ($row = $result->fetch_assoc()) {
                             $rok = $row["Rok"];
                             $naslov = $row["Naslov"];
-                            $opis = $row["Opis"];
                             $datum_roka = strtotime($rok);
                             $student_naloga_id = $row["Student_Naloga_ID"];
                             
@@ -162,7 +144,6 @@
                             }
                             echo '<th scope="row" ></th>';
                             echo '<td class="text3"><a href="#">' . $naslov . '</a></td>';
-                            echo '<td class="text3">' . $opis . '</td>';
                             echo '<td class="text3">' . date('d.m.Y', $datum_roka) . '</td>';
                            
                             echo '</tr>';
