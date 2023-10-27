@@ -2,7 +2,9 @@ version: '3'
 services:
   # PHP Application
   www:
-    image: php:7.4-apache
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - "/var/www/html:/var/www/html"
     ports:
@@ -11,7 +13,7 @@ services:
   db:
     image: mysql:latest
     environment:
-      - MYSQL_ROOT_PASSWORD=Deda2013$
+      - MYSQL_ROOT_PASSWORD=anej
       - MYSQL_DATABASE=classorbit
       - MYSQL_USER=anej
       - MYSQL_PASSWORD=anej
@@ -25,4 +27,3 @@ services:
     environment:
       - PMA_HOST=db
       - PMA_PORT=3306
-     

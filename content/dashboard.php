@@ -107,26 +107,26 @@
             <p class="nsl">Dodeljene naloge</p>
             <?php
                 include("../../db.php");
-
+                            
                 if (isset($_SESSION['user_id'])) {
                     $uporabnik_id = $_SESSION['user_id'];
 
-                    $sql = "SELECT n.Naslov, n.Rok FROM naloge AS n
+                    $sql = "SELECT n.Naslov, n.Rok, Student_naloga_ID, FROM naloge AS n
                             INNER JOIN uporabniki_razredi AS ur ON n.Razred_ID = ur.Razred_ID
                             WHERE ur.Uporabnik_ID = $uporabnik_id
                             AND n.Rok <= DATE_ADD(CURDATE(), INTERVAL 1 WEEK)
                             ORDER BY n.Rok ASC";
-
+                
                     $result = $link->query($sql);
-
-                    if ($result && $result->num_rows > 0) {
-                        echo '<table class="table table-bordered table-hover table-responsive">';
-                        echo '<thead class="bg-light">';
+                
+                    if ($result->num_rows > 0) {
+                        echo '<table class="table">';
+                        echo '<thead>';
                         echo '<tr>';
                         echo '<th scope="col"></th>';
                         echo '<th scope="col" class="text2">Naslov</th>';
                         echo '<th scope="col" class="text2">Rok oddaje</th>';
-                        echo '<th scope="col" class="text2"></th>'; // Column for the button
+                        
                         echo '</tr>';
                         echo '</thead>';
                         echo '<tbody>';
@@ -134,7 +134,9 @@
                             $rok = $row["Rok"];
                             $naslov = $row["Naslov"];
                             $datum_roka = strtotime($rok);
-
+                            $student_naloga_id = $row["Student_Naloga_ID"];
+                            
+                        
                             if ($datum_roka < strtotime("today")) {
                                 echo '<tr class="rok-potekel table-danger">'; // Added Bootstrap class for rows with expired dates
                             } else {
@@ -143,20 +145,23 @@
                             echo '<th scope="row" ></th>';
                             echo '<td class="text3"><a href="#">' . $naslov . '</a></td>';
                             echo '<td class="text3">' . date('d.m.Y', $datum_roka) . '</td>';
-                            echo '<td class="gumb-container text3"><a class="btn btn-primary" href="#">Oddaj nalogo</a></td>'; // Converted the button to a Bootstrap styled button
+                           
                             echo '</tr>';
                         }
                         echo '</tbody>';
                         echo '</table>';
                     } else {
-                        echo "<br>Ni rezultatov.";
+                        echo "Ni rezultatov.";
                     }
                 } else {
                     echo "Uporabnik ni prijavljen.";
                 }
-
+                
                 $link->close();
             ?>
+
+
+
         </div>
 
        </div>
