@@ -106,78 +106,80 @@
             <div class="container">
             <p class="nsl">Dodeljene naloge</p>
             <?php
-                include("../../db.php");
-                            
-                if (isset($_SESSION['user_id'])) {
-                    $uporabnik_id = $_SESSION['user_id'];
-                
-                    $sql_razredi = "SELECT Razred_ID FROM uporabniki_razredi WHERE Uporabnik_ID = $uporabnik_id";
-                    $result_razredi = $link->query($sql_razredi);
-                    $razredi = array();
-                
-                    if ($result_razredi->num_rows > 0) {
-                        while ($row_razredi = $result_razredi->fetch_assoc()) {
-                            $razredi[] = $row_razredi["Razred_ID"];
-                        }
-                    } else {
-                        echo "Uporabnik ni vpisan v noben razred.";
-                    }
-                
-                    $razredi_string = implode(",", $razredi);
-                
-                    $sql = "SELECT n.Naslov, n.Opis, n.Rok, sn.Student_Naloga_ID
-                            FROM naloge AS n
-                            LEFT JOIN student_naloge AS sn ON n.Naloga_ID = sn.Naloga_ID AND sn.Student_ID = $uporabnik_id
-                            WHERE n.Razred_ID IN ($razredi_string) 
-                            AND n.Rok > CURDATE() 
-                            AND sn.Student_Naloga_ID IS NULL
-                            ORDER BY n.Rok ASC";
-                
-                    $result = $link->query($sql);
-                
-                    if ($result->num_rows > 0) {
-                        echo '<table class="table">';
-                        echo '<thead>';
-                        echo '<tr>';
-                        echo '<th scope="col"></th>';
-                        echo '<th scope="col" class="text2">Naslov</th>';
-                        echo '<th scope="col" class="text2">Opis</th>';
-                        echo '<th scope="col" class="text2">Rok oddaje</th>';
-                        
-                        echo '</tr>';
-                        echo '</thead>';
-                        echo '<tbody>';
-                        while ($row = $result->fetch_assoc()) {
-                            $rok = $row["Rok"];
-                            $naslov = $row["Naslov"];
-                            $opis = $row["Opis"];
-                            $datum_roka = strtotime($rok);
-                            $student_naloga_id = $row["Student_Naloga_ID"];
-                            
-                        
-                            if ($datum_roka < strtotime("today")) {
-                                echo '<tr class="rok-potekel">';
-                            } else {
-                                echo '<tr>';
-                            }
-                            echo '<th scope="row" ></th>';
-                            echo '<td class="text3"><a href="#">' . $naslov . '</a></td>';
-                            echo '<td class="text3">' . $opis . '</td>';
-                            echo '<td class="text3">' . date('d.m.Y', $datum_roka) . '</td>';
-                           
-                            echo '</tr>';
-                        }
-                        echo '</tbody>';
-                        echo '</table>';
-                    } else {
-                        echo "Ni rezultatov.";
-                    }
+include("../../db.php");
+
+if (isset($_SESSION['user_id'])) {
+    $uporabnik_id = $_SESSION['user_id'];
+
+    // Pridobite razrede, v katere je uporabnik vpisan
+    $sql_razredi = "SELECT Razred_ID FROM uporabniki_razredi WHERE Uporabnik_ID = $uporabnik_id";
+    $result_razredi = $link->query($sql_razredi);
+    $razredi = array();
+
+    if ($result_razredi->num_rows > 0) {
+        while ($row_razredi = $result_razredi->fetch_assoc()) {
+            $razredi[] = $row_razredi["Razred_ID"];
+        }
+
+        // Pretvori razrede v niz
+        $razredi_string = implode(",", $razredi);
+
+        // Pridobite naloge za te razrede
+        $sql = "SELECT n.Naslov, n.Opis, n.Rok, sn.Student_Naloga_ID
+                FROM naloge AS n
+                LEFT JOIN student_naloge AS sn ON n.Naloga_ID = sn.Naloga_ID AND sn.Student_ID = $uporabnik_id
+                WHERE n.Razred_ID IN ($razredi_string) 
+                AND n.Rok > CURDATE() 
+                AND sn.Student_Naloga_ID IS NULL
+                ORDER BY n.Rok ASC";
+
+        $result = $link->query($sql);
+
+        if ($result->num_rows > 0) {
+            echo '<table class="table">';
+            echo '<thead>';
+            echo '<tr>';
+            echo '<th scope="col"></th>';
+            echo '<th scope="col" class="text2">Naslov</th>';
+            echo '<th scope="col" class="text2">Opis</th>';
+            echo '<th scope="col" class="text2">Rok oddaje</th>';
+
+            echo '</tr>';
+            echo '</thead>';
+            echo '<tbody>';
+            while ($row = $result->fetch_assoc()) {
+                $rok = $row["Rok"];
+                $naslov = $row["Naslov"];
+                $opis = $row["Opis"];
+                $datum_roka = strtotime($rok);
+                $student_naloga_id = $row["Student_Naloga_ID"];
+
+                if ($datum_roka < strtotime("today")) {
+                    echo '<tr class="rok-potekel">';
                 } else {
-                    echo "Uporabnik ni prijavljen.";
+                    echo '<tr>';
                 }
-                
-                $link->close();
-            ?>
+                echo '<th scope="row" ></th>';
+                echo '<td class="text3"><a href="#">' . $naslov . '</a></td>';
+                echo '<td class="text3">' . $opis . '</td>';
+                echo '<td class="text3">' . date('d.m.Y', $datum_roka) . '</td>';
+
+                echo '</tr>';
+            }
+            echo '</tbody>';
+            echo '</table>';
+        } else {
+            echo "Ni rezultatov.";
+        }
+    } else {
+        echo "Uporabnik ni vpisan v noben razred.";
+    }
+} else {
+    echo "Uporabnik ni prijavljen.";
+}
+
+$link->close();
+?>
 
 
 
