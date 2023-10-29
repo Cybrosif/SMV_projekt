@@ -11,7 +11,6 @@ else if($_SESSION['user_vloga'] == 'Profesor' || $_SESSION['user_vloga'] == 'pro
 else if($_SESSION['user_vloga'] == 'Dijak' || $_SESSION['user_vloga'] == 'dijak')
     $sql = "SELECT razredi.* FROM razredi JOIN uporabniki_razredi ON razredi.Razred_ID = uporabniki_razredi.Razred_ID WHERE uporabniki_razredi.Uporabnik_ID = {$_SESSION['user_id']}";
 
-
 $result = mysqli_query($link, $sql);
  
 ?>
@@ -24,6 +23,7 @@ $result = mysqli_query($link, $sql);
 </style>
 <h1 class='text-center primary-text my-4'>Moji predmeti</h1>
 <div class="container text-center">
+    
     <div class="row row-cols-3">
     <?php
        
@@ -50,7 +50,6 @@ $result = mysqli_query($link, $sql);
                 echo "Niste prijavljeni v noben predmet.";
         }
 
-        mysqli_close($link);
         ?>
     </div>
 </div>
@@ -61,11 +60,19 @@ $result = mysqli_query($link, $sql);
 
         $('.container.hover').on('click', function() {
             var razredID = $(this).data('razredid');
-            var redirectURL = '../views/home.php?page=classes-specific-student.php&razredID=' + razredID;
-
-
+            var userRole = "<?php echo $_SESSION['user_vloga']; ?>"; // Assuming you have a PHP variable for user role
+            console.log(userRole);
+        if (userRole === "Dijak") {
+            var redirectURL = '../views/home.php?page=classes-specific-student&razredID=' + razredID;
             window.location.href = redirectURL;
-            
-        });
+        } else if (userRole === "Profesor") {
+            var redirectURL = '../views/home.php?page=classes-specific-teacher&razredID=' + razredID;
+            window.location.href = redirectURL;
+        } else if (userRole === "Administrator"){
+            var redirectURL = '../views/home.php?page=classes-specific-teacher&razredID=' + razredID;
+            window.location.href = redirectURL;
+        }
+    });
+
     });
 </script>

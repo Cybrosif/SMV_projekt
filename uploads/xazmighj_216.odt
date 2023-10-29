@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1deb5ubuntu1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Oct 16, 2023 at 07:28 PM
--- Server version: 8.0.34-0ubuntu0.22.04.1
--- PHP Version: 8.1.2-1ubuntu2.14
+-- Host: db:3306
+-- Generation Time: Oct 20, 2023 at 08:39 PM
+-- Server version: 8.1.0
+-- PHP Version: 8.2.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,7 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `classorbit`
 --
-CREATE DATABASE IF NOT EXISTS `classorbit` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE DATABASE IF NOT EXISTS `classorbit` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 USE `classorbit`;
 
 -- --------------------------------------------------------
@@ -32,10 +32,18 @@ USE `classorbit`;
 CREATE TABLE `gradiva` (
   `Gradivo_ID` int NOT NULL,
   `Razred_ID` int DEFAULT NULL,
-  `Naslov` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `Opis` text COLLATE utf8mb4_general_ci,
-  `Pot_Do_Datoteke` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `Naloga_ID` int DEFAULT NULL,
+  `Naslov` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `Pot_Do_Datoteke` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `gradiva`
+--
+
+INSERT INTO `gradiva` (`Gradivo_ID`, `Razred_ID`, `Naloga_ID`, `Naslov`, `Pot_Do_Datoteke`) VALUES
+(1, 1, NULL, 'test', 'test'),
+(3, 1, 3, 'test', 'test');
 
 -- --------------------------------------------------------
 
@@ -46,8 +54,7 @@ CREATE TABLE `gradiva` (
 CREATE TABLE `naloge` (
   `Naloga_ID` int NOT NULL,
   `Razred_ID` int DEFAULT NULL,
-  `Naslov` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `Opis` text COLLATE utf8mb4_general_ci,
+  `Naslov` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `Rok` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -55,10 +62,11 @@ CREATE TABLE `naloge` (
 -- Dumping data for table `naloge`
 --
 
-INSERT INTO `naloge` (`Naloga_ID`, `Razred_ID`, `Naslov`, `Opis`, `Rok`) VALUES
-(1, 2, 'Testna naloga', 'Test', '2023-10-13'),
-(2, 2, 'testna naloga 2', 'testna naloga 2', '2023-10-28'),
-(3, 1, 'testna naloga 3', 'testna naloga 3', '2023-10-16');
+INSERT INTO `naloge` (`Naloga_ID`, `Razred_ID`, `Naslov`, `Rok`) VALUES
+(1, 2, 'Testna naloga', '2023-10-13'),
+(2, 2, 'testna naloga 2', '2023-10-28'),
+(3, 1, 'testna naloga 3', '2023-10-16'),
+(4, 1, 'hizuet5rqhzurtzh', '2023-10-21');
 
 -- --------------------------------------------------------
 
@@ -68,8 +76,8 @@ INSERT INTO `naloge` (`Naloga_ID`, `Razred_ID`, `Naslov`, `Opis`, `Rok`) VALUES
 
 CREATE TABLE `razredi` (
   `Razred_ID` int NOT NULL,
-  `Kljuc_Vpisa` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `Ime_razreda` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `Kljuc_Vpisa` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `Ime_razreda` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -95,8 +103,16 @@ CREATE TABLE `student_naloge` (
   `Student_ID` int DEFAULT NULL,
   `Naloga_ID` int DEFAULT NULL,
   `Datum_Oddaje` date DEFAULT NULL,
-  `Pot_Do_Datoteke` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `Pot_Do_Datoteke` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `Original_Filename` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `student_naloge`
+--
+
+INSERT INTO `student_naloge` (`Student_Naloga_ID`, `Student_ID`, `Naloga_ID`, `Datum_Oddaje`, `Pot_Do_Datoteke`, `Original_Filename`) VALUES
+(16, 1, 3, '2023-10-17', 'rnxjctqp_1.doc', 'NRPA_Vaja03_OOP_kapsulacija_moduli_knjižnice_static_const_readonly_.doc');
 
 -- --------------------------------------------------------
 
@@ -109,6 +125,24 @@ CREATE TABLE `ucitelji_razredi` (
   `Razred_ID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `ucitelji_razredi`
+--
+
+INSERT INTO `ucitelji_razredi` (`Ucitelj_ID`, `Razred_ID`) VALUES
+(1, 1),
+(13, 1),
+(111, 1),
+(112, 1),
+(1, 2),
+(13, 2),
+(1, 3),
+(13, 3),
+(1, 4),
+(13, 4),
+(13, 5),
+(13, 6);
+
 -- --------------------------------------------------------
 
 --
@@ -117,11 +151,11 @@ CREATE TABLE `ucitelji_razredi` (
 
 CREATE TABLE `uporabniki` (
   `ID` int NOT NULL,
-  `Ime` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `Priimek` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `Vloga` enum('Administrator','Profesor','Dijak') COLLATE utf8mb4_general_ci DEFAULT 'Dijak',
-  `Geslo` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `Email` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `Ime` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `Priimek` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `Vloga` enum('Administrator','Profesor','Dijak') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'Dijak',
+  `Geslo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `Email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -130,8 +164,7 @@ CREATE TABLE `uporabniki` (
 
 INSERT INTO `uporabniki` (`ID`, `Ime`, `Priimek`, `Vloga`, `Geslo`, `Email`) VALUES
 (1, 'Anej', 'Doler Črep', 'Administrator', '$2y$10$ffrFwAQ8sxVsIDFjqrlFl.igjkp9L/UPb9Nbtqo8iccdfS0xfQ19G', 'anej@test.com'),
-(2, 'Ucenec123', 'Ucenec', '', '$2y$10$/ojcHg6aIKzhH0N6LJxO2OoNJLcN20kiZ.aM5hxJTHfKfTSoLoHJ6', 'ucenec@test.com'),
-(5, 'User2', 'Surname2', 'Profesor', 'password2', 'user2@example.com'),
+(5, 'User2test', 'Surname2test', 'Profesor', 'password2', 'user2@example.com'),
 (6, 'User3', 'Surname3', 'Administrator', 'password3', 'user3@example.com'),
 (7, 'User4', 'Surname4', 'Administrator', '$2y$10$yYwMsuWaVLrwB1icL/DMD.NHCKcQBPau42phqCxqFirUbljbL.7aq', 'user4@example.com'),
 (9, 'User100', 'Surname100', 'Administrator', 'password100', 'user100@example.com'),
@@ -233,7 +266,11 @@ INSERT INTO `uporabniki` (`ID`, `Ime`, `Priimek`, `Vloga`, `Geslo`, `Email`) VAL
 (106, 'Uporabnik97', 'Priimek97', 'Dijak', 'geslo97', 'uporabnik97@example.com'),
 (107, 'Uporabnik98', 'Priimek98', 'Profesor', 'geslo98', 'uporabnik98@example.com'),
 (108, 'Uporabnik99', 'Priimek99', 'Administrator', 'geslo99', 'uporabnik99@example.com'),
-(109, 'Uporabnik100', 'Priimek100', 'Profesor', 'geslo100', 'uporabnik100@example.com');
+(109, 'Uporabnik100', 'Priimek100', 'Profesor', 'geslo100', 'uporabnik100@example.com'),
+(110, 'test123', 'test123', 'Dijak', '$2y$10$GCrxcb/fWcevThvo/lEF8ObtSpHnrtM0Gl5MF6QVSs4IjPIdVo4BS', 'a@a.com'),
+(111, 'dijak', 'dijak', 'Dijak', '$2y$10$nUMq1FcAFlcLlecG1XoOBOgszv/H6sp4HqwH/bqaqHzYC.meYLI7q', 'dijak'),
+(112, 'profesor', 'profesor', 'Profesor', '$2y$10$pjNCI5A1vSgU2AUXgL6X9eHYN6mF3osiLJ4Z2DJRlcKpishjtq5EC', 'profesor'),
+(113, '123', '123', 'Profesor', '$2y$10$Tg9yqQX1mfZCtaIdw5rLjeLIRubZJg9pVNWv0bog3z9JiYV78tYLy', '123');
 
 -- --------------------------------------------------------
 
@@ -251,7 +288,9 @@ CREATE TABLE `uporabniki_razredi` (
 --
 
 INSERT INTO `uporabniki_razredi` (`Uporabnik_ID`, `Razred_ID`) VALUES
-(1, 1);
+(1, 1),
+(111, 1),
+(1, 2);
 
 --
 -- Indexes for dumped tables
@@ -262,7 +301,8 @@ INSERT INTO `uporabniki_razredi` (`Uporabnik_ID`, `Razred_ID`) VALUES
 --
 ALTER TABLE `gradiva`
   ADD PRIMARY KEY (`Gradivo_ID`),
-  ADD KEY `Razred_ID` (`Razred_ID`);
+  ADD KEY `Razred_ID` (`Razred_ID`),
+  ADD KEY `naloga_ibfk_1` (`Naloga_ID`);
 
 --
 -- Indexes for table `naloge`
@@ -314,13 +354,13 @@ ALTER TABLE `uporabniki_razredi`
 -- AUTO_INCREMENT for table `gradiva`
 --
 ALTER TABLE `gradiva`
-  MODIFY `Gradivo_ID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `Gradivo_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `naloge`
 --
 ALTER TABLE `naloge`
-  MODIFY `Naloga_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Naloga_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `razredi`
@@ -332,13 +372,13 @@ ALTER TABLE `razredi`
 -- AUTO_INCREMENT for table `student_naloge`
 --
 ALTER TABLE `student_naloge`
-  MODIFY `Student_Naloga_ID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `Student_Naloga_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `uporabniki`
 --
 ALTER TABLE `uporabniki`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
 -- Constraints for dumped tables
@@ -348,7 +388,8 @@ ALTER TABLE `uporabniki`
 -- Constraints for table `gradiva`
 --
 ALTER TABLE `gradiva`
-  ADD CONSTRAINT `gradiva_ibfk_1` FOREIGN KEY (`Razred_ID`) REFERENCES `razredi` (`Razred_ID`);
+  ADD CONSTRAINT `gradiva_ibfk_1` FOREIGN KEY (`Razred_ID`) REFERENCES `razredi` (`Razred_ID`),
+  ADD CONSTRAINT `naloga_ibfk_1` FOREIGN KEY (`Naloga_ID`) REFERENCES `naloge` (`Naloga_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `naloge`
