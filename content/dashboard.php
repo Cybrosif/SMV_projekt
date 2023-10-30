@@ -111,11 +111,12 @@
                 if (isset($_SESSION['user_id'])) {
                     $uporabnik_id = $_SESSION['user_id'];
 
-                    $sql = "SELECT n.Naslov, n.Rok, Student_naloga_ID, FROM naloge AS n
-                            INNER JOIN uporabniki_razredi AS ur ON n.Razred_ID = ur.Razred_ID
-                            WHERE ur.Uporabnik_ID = $uporabnik_id
-                            AND n.Rok <= DATE_ADD(CURDATE(), INTERVAL 1 WEEK)
-                            ORDER BY n.Rok ASC";
+                    $sql = "SELECT n.Naslov, n.Rok FROM naloge AS n
+                    INNER JOIN uporabniki_razredi AS ur ON n.Razred_ID = ur.Razred_ID
+                    WHERE ur.Uporabnik_ID = $uporabnik_id
+                    AND n.Rok <= DATE_ADD(CURDATE(), INTERVAL 1 WEEK)
+                    ORDER BY n.Rok ASC";                    
+            
                 
                     $result = $link->query($sql);
                 
@@ -134,7 +135,6 @@
                             $rok = $row["Rok"];
                             $naslov = $row["Naslov"];
                             $datum_roka = strtotime($rok);
-                            $student_naloga_id = $row["Student_Naloga_ID"];
                             
                         
                             if ($datum_roka < strtotime("today")) {
