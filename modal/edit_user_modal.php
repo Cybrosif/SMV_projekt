@@ -103,19 +103,39 @@
                         </div> 
                         
                         <div class="mb-3">
-                            <label class="btn btn-secondary" id="show-classes">Prikaži predmete:</label><br>
-                            <div style="display: none;" id="hidden-div">
-                                <?php
-                                    foreach ($allSubjects as $subject) {
-                                        $isChecked = in_array($subject['Razred_ID'], $subjects) ? 'checked' : '';
-                                        echo '<div class="form-check form-check-inline">';
-                                        echo '<input class="form-check-input" type="checkbox" name="subjects[]" value="' . $subject['Razred_ID'] . '" ' . $isChecked . '>';
-                                        echo '<label class="form-check-label">' . $subject['Ime_razreda'] . '</label>';
-                                        echo '</div>';
-                                    }
-                                ?>
+                            <label class="btn btn-secondary mb-1" id="show-classes">Prikaži predmete:</label><br>
+                            <div style="display: none;" id="hidden-div" class="overflow-auto" style="max-height: 200px;">
+                                <input type="text" id="subject-search" class="form-control mb-2" placeholder="Iskanje predmetov">
+                                <div style="max-height: 250px; overflow-y: auto;">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Razred ID</th>
+                                                <th>Ime razreda</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                                foreach ($allSubjects as $subject) {
+                                                    $isChecked = in_array($subject['Razred_ID'], $subjects) ? 'checked' : '';
+                                                    echo '<tr>';
+                                                    echo '<td>' . $subject['Razred_ID'] . '</td>';
+                                                    echo '<td>' . $subject['Ime_razreda'] . '</td>';
+                                                    echo '<td>';
+                                                    echo '<div class="form-check form-check-inline">';
+                                                    echo '<input class="form-check-input" type="checkbox" name="subjects[]" value="' . $subject['Razred_ID'] . '" ' . $isChecked . '>';
+                                                    echo '</div>';
+                                                    echo '</td>';
+                                                    echo '</tr>';
+                                                }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Prekliči</button>
@@ -160,6 +180,15 @@
                 }
             });
         });
+
+        $('#subject-search').on('input', function(){
+        var searchText = $(this).val().toLowerCase();
+        $('#hidden-div tbody tr').each(function(){
+            var subjectInfo = $(this).text().toLowerCase();
+            var isVisible = (subjectInfo.indexOf(searchText) !== -1);
+            $(this).toggle(isVisible);
+        });
+    });
     });
 
 </script>

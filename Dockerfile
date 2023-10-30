@@ -14,5 +14,8 @@ RUN docker-php-ext-install zip mysqli
 # Enable the PHP zip and mysqli extensions
 RUN docker-php-ext-enable zip mysqli
 
+# Change permissions for the HTML folder (chmod 777)
+RUN chmod -R 777 /var/www/html
+
 # Restart Apache
 RUN apachectl restart
