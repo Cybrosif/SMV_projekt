@@ -1,6 +1,7 @@
 <?php
     include '../session_start.php';
     include '../../db.php';
+    include '../functions/add_task_check.php'
 
     if(isset($_POST['classId'])) {
         $classId = $_POST['classId'];
