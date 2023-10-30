@@ -1,6 +1,7 @@
 <?php
     include '../session_start.php';
     include '../../db.php';
+    include '../functions/class_join_check.php'
     $classId = $_POST['razredId'];
 ?>
 
