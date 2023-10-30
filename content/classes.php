@@ -22,7 +22,7 @@ $result = mysqli_query($link, $sql);
     }
 </style>
 <h1 class='text-center primary-text my-4'>Moji predmeti</h1>
-<div class="container text-center">
+<div class="container text-center shadow-none bg-transparent" style="">
     
     <div class="row row-cols-3">
     <?php

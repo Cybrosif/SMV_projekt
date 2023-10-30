@@ -38,7 +38,7 @@
     echo "No results found";
     }
 
-    $sql = "SELECT ID, Ime, Priimek, Email FROM uporabniki WHERE Vloga = 'Profesor'";
+    $sql = "SELECT ID, Ime, Priimek, Email FROM uporabniki WHERE Vloga = 'Profesor' OR Vloga = 'Administrator'";
     $result3 = $link->query($sql);
         if ($result3->num_rows > 0) {   
             $allTeachers = array();
@@ -76,34 +76,35 @@
                         <div class="mb-3">
                             <label class="btn btn-secondary mb-1" id="show-teachers">Prikaži profesorje:</label><br>
                             <div style="display: none;" id="hidden-div">
-                            <input type="text" id="teacher-search" class="form-control" placeholder="Iskanje profesorjev">
-                            <div style="max-height: 400px; overflow-y: auto;">
-                                <table class="table">           
-                                    <thead>
-                                        <tr>
-                                            <th>Ime</th>
-                                            <th>Priimek</th>
-                                            <th>Email</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody >
-                                        <?php foreach ($allTeachers as $teacher): ?>
+                                <input type="text" id="teacher-search" class="form-control" placeholder="Iskanje profesorjev">
+                                <div style="max-height: 400px; overflow-y: auto;">
+                                    <table class="table">           
+                                        <thead>
                                             <tr>
-                                                <td><?php echo $teacher['Ime']; ?></td>
-                                                <td><?php echo $teacher['Priimek']; ?></td>
-                                                <td><?php echo $teacher['Email']; ?></td>
-                                                <td>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" name="teachers[]" value="<?php echo $teacher['ID']; ?>" <?php echo in_array($teacher['ID'], $teachers) ? 'checked' : ''; ?>>
-                                                    </div>
-                                                </td>
+                                                <th>Ime</th>
+                                                <th>Priimek</th>
+                                                <th>Email</th>
+                                                <th></th>
                                             </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
+                                        </thead>
+                                        <tbody >
+                                            <?php foreach ($allTeachers as $teacher): ?>
+                                                <tr>
+                                                    <td><?php echo $teacher['Ime']; ?></td>
+                                                    <td><?php echo $teacher['Priimek']; ?></td>
+                                                    <td><?php echo $teacher['Email']; ?></td>
+                                                    <td>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" name="teachers[]" value="<?php echo $teacher['ID']; ?>" <?php echo in_array($teacher['ID'], $teachers) ? 'checked' : ''; ?>>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                         </div>
+                    </div>
                     </div>                    
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Prekliči</button>
