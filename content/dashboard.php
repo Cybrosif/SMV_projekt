@@ -1,5 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
+<head>
+    <style>   
+        .col {
+            /*border: 1px solid black;
+            border-radius: 5px;*/
+            margin: 5px;
+        }
+        .col1{
+            margin:5px;
+            font-size: 22px;
+        }
+        .nsl {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 1px;
+            padding-top: 5px;
+            padding-bottom: 20px;
+            padding-top: 30px;
+        }
+        .rok-potekel {
+            color: red;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.2s ease;
+        }
+        a:hover {
+            color: #007bff;
+        }
+        .container{
+          font-size: 19px;
+        }
+        .table{
+            border-bottom: solid 1px gray 0.8;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: none;
+        }
+        th {
+            background-color: black;
+            color: black;
+        }
+        .gumb-container {
+            text-align: right; 
+        }
+        .gumb {
+            background-color: #007bff;
+            border: 1px solid #ededed;
+            background-color: #ededed;
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            white-space: nowrap;
+            transition: background-color 0.5s;
+        }
 
 <head>
     <meta charset="UTF-8">
@@ -93,10 +150,3 @@
             </div>
         </div>
     </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-
-</html>

@@ -21,8 +21,15 @@ $result = mysqli_query($link, $sql);
         cursor: pointer;
     }
 </style>
+<div class="modal fade" id="editUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+                    <!-- Modal content goes here -->
+        </div>
+    </div>
+</div>
 <h1 class='text-center primary-text my-4'>Moji predmeti</h1>
-<div class="container text-center">
+<div class="container text-center shadow-none bg-transparent" style="">
     
     <div class="row row-cols-3">
     <?php
@@ -31,11 +38,21 @@ $result = mysqli_query($link, $sql);
             
             while ($row = mysqli_fetch_assoc($result)) {
                 ?>
-                <div class="col mb-3">
-                    <div class="container hover" data-razredId="<?php echo $row['Razred_ID']?>">
-                        <?php echo $row['Ime_razreda']; ?>
-                    </div>
-                </div>
+                        <div class="col mb-3" style="position: relative;">
+                            <div class="container hover pointer" data-razredid="<?php echo htmlspecialchars($row['Razred_ID']); ?>">
+                                <?php echo htmlspecialchars($row['Ime_razreda']); ?>
+                            </div>
+                            <?php
+                            if ($_SESSION['user_vloga'] == 'Dijak') {
+                                echo '<span class="position-absolute top-0 end-0 translate-middle badge rounded-pill bg-danger hover pointer pointer-badge" data-razredid="' . htmlspecialchars($row['Razred_ID']) . '">
+                                        <i class="bi bi-trash"></i>
+                                        <span class="visually-hidden">unread messages</span>
+                                    </span>';
+                            }
+                            ?>
+                        </div>
+
+
                 <?php
             }
         } else {
@@ -53,8 +70,6 @@ $result = mysqli_query($link, $sql);
         ?>
     </div>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -73,6 +88,20 @@ $result = mysqli_query($link, $sql);
             window.location.href = redirectURL;
         }
     });
+
+        $('.pointer-badge').on('click', function() {
+            var classId = $(this).data('razredid');     
+            $.ajax({
+                type: 'POST',
+                url: '../modal/leave-class-modal.php', 
+                data: { classId: classId },
+                success: function(response){
+                    $('#editUserModal .modal-content').html(response);
+                    $('#editUserModal').modal('show');
+                    $('#editUserModal .modal-dialog').removeClass('modal');
+                }
+            });
+        });
 
     });
 </script>

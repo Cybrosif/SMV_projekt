@@ -387,7 +387,7 @@ ALTER TABLE `naloge`
 -- Constraints for table `student_naloge`
 --
 ALTER TABLE `student_naloge`
-  ADD CONSTRAINT `student_naloge_ibfk_1` FOREIGN KEY (`Student_ID`) REFERENCES `uporabniki` (`ID`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `student_naloge_ibfk_1` FOREIGN KEY (`Student_ID`) REFERENCES `uporabniki` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `student_naloge_ibfk_2` FOREIGN KEY (`Naloga_ID`) REFERENCES `naloge` (`Naloga_ID`) ON DELETE SET NULL ON UPDATE RESTRICT;
 
 --
