@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html>
 <head>
-    <title>Nadzorna plošča</title>
-    <style>
-        
+    <style>   
         .col {
             /*border: 1px solid black;
             border-radius: 5px;*/
@@ -165,4 +161,3 @@
         </div>
        </div>
     </div>
-</html>
