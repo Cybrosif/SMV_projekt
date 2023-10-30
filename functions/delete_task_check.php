@@ -4,8 +4,8 @@ if ($_SESSION['user_vloga'] != 'Profesor') {
 }
 
 // If user is a professor, check if they are associated with the class
-if ($_SESSION['role'] == 'Profesor') {
-    $classId = $_POST['classId'];
+if ($_SESSION['user_vloga'] == 'Profesor') {
+    $classId = $_POST['razredId'];
     $sql = "SELECT * FROM ucitelji_razredi WHERE Ucitelj_ID = $_SESSION['user_id'] AND Razred_ID = $classId";
     $result = $link->query($sql);
     if ($result->num_rows == 0) {

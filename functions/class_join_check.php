@@ -5,7 +5,7 @@ if ($_SESSION['user_vloga'] != 'Dijak') {
 }
 
 // Check if student is already enrolled in the class
-$classId = $_POST['classId'];
+$classId = $_POST['razredId'];
 $sql = "SELECT * FROM uporabniki_razredi WHERE Uporabnik_ID = $_SESSION['user_id'] AND Razred_ID = $classId";
 $result = $link->query($sql);
 if ($result->num_rows > 0) {
