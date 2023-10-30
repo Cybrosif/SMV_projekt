@@ -1,6 +1,7 @@
 <?php
     include '../session_start.php';
     include '../../db.php';
+    include '../functions/upload-file-check.php';
 
     // check if user is in that class
     $taskId = $_POST['nalogaId'];
