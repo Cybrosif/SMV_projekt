@@ -1,8 +1,6 @@
 <?php
     include '../session_start.php';
     include '../../db.php';
-    include '../functions/check_if_admin.php';
-
     if(isset($_POST['taskId'])) {
         $taskId = $_POST['taskId'];
     }

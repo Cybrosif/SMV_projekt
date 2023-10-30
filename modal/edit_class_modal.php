@@ -55,6 +55,7 @@
             }
 ?>
 
+
     <form id="editClassForm">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Uredi</h1>
@@ -73,17 +74,35 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="btn btn-secondary" id="show-teachers">Prikaži profesorje:</label><br>
+                            <label class="btn btn-secondary mb-1" id="show-teachers">Prikaži profesorje:</label><br>
                             <div style="display: none;" id="hidden-div">
-                                <?php
-                                    foreach ($allTeachers as $teacher) {
-                                        $isChecked = in_array($teacher['ID'], $teachers) ? 'checked' : '';
-                                        echo '<div class="form-check form-check-inline">';
-                                        echo '<input class="form-check-input" type="checkbox" name="teachers[]" value="' . $teacher['ID'] . '" ' . $isChecked . '>';
-                                        echo '<label class="form-check-label">' .'Ime: '. $teacher['Ime'] .'Priimek: '. $teacher['Priimek'] .'Email: '. $teacher['Email'].'</label>';
-                                        echo '</div>';
-                                    }
-                                ?>
+                            <input type="text" id="teacher-search" class="form-control" placeholder="Iskanje profesorjev">
+                            <div style="max-height: 400px; overflow-y: auto;">
+                                <table class="table">           
+                                    <thead>
+                                        <tr>
+                                            <th>Ime</th>
+                                            <th>Priimek</th>
+                                            <th>Email</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody >
+                                        <?php foreach ($allTeachers as $teacher): ?>
+                                            <tr>
+                                                <td><?php echo $teacher['Ime']; ?></td>
+                                                <td><?php echo $teacher['Priimek']; ?></td>
+                                                <td><?php echo $teacher['Email']; ?></td>
+                                                <td>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" name="teachers[]" value="<?php echo $teacher['ID']; ?>" <?php echo in_array($teacher['ID'], $teachers) ? 'checked' : ''; ?>>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>                    
                     <div class="modal-footer">
@@ -94,41 +113,40 @@
 
 <script>
     $(document).ready(function(){
-
-        $('#editClassForm').on('submit', function(event){
-            event.preventDefault();
-            var formData = $(this).serialize();
-            $.ajax({
-                type: 'POST',
-                url: '../controllers/edit_class.php', 
-                data: formData,
-                success: function(response){
-                    //console.log(formData);
-                    $('#editClassForm').modal('hide');
-                    //console.log(response);
-                    location.reload();
-                }
-            });
-        });
-
-        var originalText = $('#show-teachers').text();
-
-        $('#show-teachers').click(function(){
-            var currentText = $('#show-teachers').text();
-            var newText = '';
-
-            if (currentText === originalText) {
-                newText = 'Skrij profesorje:'; // Change text to this when button is clicked
-            } else {
-                newText = originalText; // Change text back to original when button is clicked again
+    $('#editClassForm').on('submit', function(event){
+        event.preventDefault();
+        var formData = $(this).serialize();
+        $.ajax({
+            type: 'POST',
+            url: '../controllers/edit_class.php', 
+            data: formData,
+            success: function(response){
+                $('#editClassForm').modal('hide');
+                location.reload();
             }
-            $('#show-teachers').text(newText);
-
-            // Toggle the arrow icon
-            $('#show-teachers').change
-            // Toggle the visibility of the previous div
-            $('#hidden-div').toggle();
         });
     });
+
+    var originalText = $('#show-teachers').text();
+
+    $('#show-teachers').click(function(){
+        var currentText = $('#show-teachers').text();
+        var newText = (currentText === originalText) ? 'Skrij profesorje:' : originalText;
+        $('#show-teachers').text(newText);
+        $('#hidden-div').toggle();
+    });
+
+
+    $('#teacher-search').on('input', function(){
+        var searchText = $(this).val().toLowerCase();
+        $('#hidden-div tbody tr').each(function(){
+            var teacherInfo = $(this).text().toLowerCase();
+            var isVisible = (teacherInfo.indexOf(searchText) !== -1);
+            $(this).toggle(isVisible);
+        });
+    });
+});
+
+
 
 </script>
