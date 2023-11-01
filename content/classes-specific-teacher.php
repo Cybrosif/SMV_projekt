@@ -10,7 +10,7 @@
     $belongsRazred = false;
     if ($userId && $razredID) {
 
-        $sql = "SELECT 1 FROM uporabniki_razredi WHERE Uporabnik_ID = $userId AND Razred_ID = $razredID LIMIT 1";
+        $sql = "SELECT 1 FROM ucitelji_razredi WHERE Ucitelj_ID = $userId AND Razred_ID = $razredID LIMIT 1";
 
         // Execute the query
         $result = mysqli_query($link, $sql);
