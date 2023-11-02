@@ -1,7 +1,9 @@
 <?php
 include '../session_start.php';
 include '../../db.php';
-include '../functions/upload-file-check.php'
+// include '../functions/upload-file-check.php';
+
+$taskId = $_POST['nalogaId'];
 ?>
 
 <style>
