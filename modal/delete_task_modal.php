@@ -2,7 +2,7 @@
     include '../session_start.php';
     include '../../db.php';
     include '../functions/check_if_admin.php';
-    // include '../functions/delete_task_check.php';
+    include '../functions/delete_task_check.php';
 
     if(isset($_POST['taskId'])) {
         $taskId = $_POST['taskId'];
