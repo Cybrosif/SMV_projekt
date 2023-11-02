@@ -24,7 +24,7 @@ $taskId = $_POST['nalogaId'];
 
 <form id="uploadForm" action="../controllers/upload_naloga.php" method="post" enctype="multipart/form-data">
     <div class="modal-body">
-        <input type="hidden" name="taskId" value="<?php echo $taskId; ?>">
+    <input type="hidden" name="Naloga_ID" value="<?php echo $taskId; ?>">
         <div class="mb-3">
             <input class="form-control" type="file" name="fileToUpload[]" id="fileToUpload" multiple>
         </div>
