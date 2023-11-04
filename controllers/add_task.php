@@ -1,7 +1,7 @@
 <?php
 include '../../db.php';
 include '../session_start.php';
-include '../functions/add_task_check.php'
+// include '../functions/add_task_check.php'
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
