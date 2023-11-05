@@ -1,5 +1,5 @@
 <?php 
-if ($_SESSION['user_vloga'] != 'Profesor' && $_SESSION['user_vloga'] != 'Admin') {
+if ($_SESSION['user_vloga'] != 'Profesor' && $_SESSION['user_vloga'] != 'Administrator') {
     die("Unauthorized access!");
 }
 
