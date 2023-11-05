@@ -1,5 +1,4 @@
 <?php
-
 $ime_razreda = null;
 $userRole = $_SESSION['user_vloga'];
 $userId = $_SESSION['user_id'];
@@ -27,7 +26,7 @@ if ($userId && $razredID) {
     mysqli_free_result($result);
 }
 
-// If the user is not a student or does not belong to the class, redirect them.
+
 if($userRole === "Administrator" || $userRole === "administrator"){
 
 }

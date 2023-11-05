@@ -1,9 +1,9 @@
 <?php
-    include '../session_start.php';
-    include '../../db.php';
+include '../session_start.php';
+include '../../db.php';
+include '../functions/upload-file-check.php';
 
-    // check if user is in that class
-    $taskId = $_POST['nalogaId'];
+$taskId = $_POST['nalogaId'];
 ?>
 
 <style>
@@ -15,40 +15,41 @@
     text-align: center;
     line-height: 15px;
 }
-
 </style>
+
 <div class="modal-header">
     <h1 class="modal-title fs-5" id="staticBackdropLabel">Naložite datoteko</h1>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
+
 <form id="uploadForm" action="../controllers/upload_naloga.php" method="post" enctype="multipart/form-data">
     <div class="modal-body">
-            <input type="hidden" name="Naloga_ID" value="<?php echo $taskId; ?>">
-            <div class="mb-3">
-                <input class="form-control" type="file" name="fileToUpload[]" id="fileToUpload" multiple>
-            </div>
-            <div class="mb-3">
-                <?php
-                    $sql = "SELECT * FROM student_naloge WHERE Student_ID = {$_SESSION['user_id']} AND Naloga_ID = $taskId";
-                    $result = mysqli_query($link, $sql);
-                    if (!$result) {
-                        die('Query Error: ' . mysqli_error($link));
-                    }
-                    if (mysqli_num_rows($result) > 0) {
-                        echo '<p class="text1">Naložene datoteke:</p>';
-                        while ($row = mysqli_fetch_assoc($result)) {
+    <input type="hidden" name="Naloga_ID" value="<?php echo $taskId; ?>">
+        <div class="mb-3">
+            <input class="form-control" type="file" name="fileToUpload[]" id="fileToUpload" multiple>
+        </div>
+        <div class="mb-3">
+            <?php
+                $sql = "SELECT * FROM student_naloge WHERE Student_ID = {$_SESSION['user_id']} AND Naloga_ID = $taskId";
+                $result = mysqli_query($link, $sql);
+                if (!$result) {
+                    die('Query Error: ' . mysqli_error($link));
+                }
+                if (mysqli_num_rows($result) > 0) {
+                    echo '<p class="text1">Naložene datoteke:</p>';
+                    while ($row = mysqli_fetch_assoc($result)) {
 
-                            $downloadFileName = $row['Original_Filename'];
-                            echo '<div class="d-flex" id="file-' . $row['Student_Naloga_ID'] . '">';
-                            echo "<td><div class='file-name'><a href='../uploads/" . $row['Pot_Do_Datoteke'] . "' download='" . $downloadFileName . "'>" .$downloadFileName . "</a></div></td>"; 
-                            echo '<button type="button" class="delete-button btn btn-danger custom-sm-button" data-fileid="' . $row['Student_Naloga_ID'] . '">-</button>';
-                            echo '</div>';
-                        }
-                    } else {
-                        echo '<p>Niste še oddali naloge.</p>';
+                        $downloadFileName = $row['Original_Filename'];
+                        echo '<div class="d-flex" id="file-' . $row['Student_Naloga_ID'] . '">';
+                        echo "<td><div class='file-name'><a href='../uploads/" . $row['Pot_Do_Datoteke'] . "' download='" . $downloadFileName . "'>" .$downloadFileName . "</a></div></td>"; 
+                        echo '<button type="button" class="delete-button btn btn-danger custom-sm-button" data-fileid="' . $row['Student_Naloga_ID'] . '">-</button>';
+                        echo '</div>';
                     }
-                ?>
-            </div>
+                } else {
+                    echo '<p>Niste še oddali naloge.</p>';
+                }
+            ?>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Prekliči</button>
@@ -60,8 +61,11 @@
     $(document).ready(function(){
         $('#uploadForm').submit(function(event) {
             event.preventDefault(); // Prevent the default form submission
-            
+            console.log('Form submitted'); // Debugging: Check if this message appears in the console
+            var taskId = $('[name="taskId"]').val(); // Get the taskId from the hidden input field
             var formData = new FormData($(this)[0]); // Get form data
+            formData.append('taskId', taskId); // Add taskId to the form data
+
             $.ajax({
                 url: $(this).attr('action'), // Form action URL
                 type: 'POST', // Form submission method
@@ -73,10 +77,13 @@
                 success: function(response) {
                     // Handle success response here, if needed
                     location.reload();
-                    //console.log(response);
                 },
+                error: function(xhr, status, error) {
+                    console.log('Error:', error); // Debugging: Check if there are any errors
+                }
             });
         });
+
         $(document).on('click', '.delete-button', function() {
             var fileId = $(this).data('fileid');
             var fileEntryId = '#file-' + fileId; // Create the ID of the wrapping div element
@@ -88,9 +95,10 @@
                 success: function(response) {
                     $(fileEntryId).remove();
                 },
+                error: function(xhr, status, error) {
+                    console.log('Error:', error); // Debugging: Check if there are any errors
+                }
             });
         });
-
     });
-
 </script>

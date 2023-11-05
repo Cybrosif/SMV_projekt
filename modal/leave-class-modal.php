@@ -1,18 +1,17 @@
 <?php
     include '../session_start.php';
     include '../../db.php';
-    // include '../functions/delete_task_check.php';
-
-    if(isset($_POST['taskId'])) {
-        $taskId = $_POST['taskId'];
+    if(isset($_POST['classId'])) {
+        $classId = $_POST['classId'];
     }
+
 ?>
      <div class="modal-header">
         <h1 class="modal-title fs-5" id="staticBackdropLabel">Pozor<i class="fas fa-exclamation-triangle"></i></h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-       Ste prepričani da želite izbrisati nalogo?
+        Ste prepričani da se želiti odjaviti iz predmeta?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ne</button>
@@ -25,11 +24,11 @@
 
         $('#deleteBtn').on('click', function(event){
             event.preventDefault();
-            var taskId = <?php echo $taskId ?>;
+            var classId = <?php echo $classId ?>;
             $.ajax({
                 type: 'POST',
-                url: '../controllers/delete_task.php', 
-                data: { taskId: taskId },
+                url: '../controllers/leave-class.php', 
+                data: { classId: classId },
                 success: function(response){
                     $('#editUserModal').modal('hide');
                     console.log(response);
