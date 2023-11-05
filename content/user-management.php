@@ -88,7 +88,7 @@
                     row.append($('<td class="text3">').text(userItem.Email));
                     row.append($('<td class="text3">').text(userItem.Vloga));
                     // Add more columns as needed
-                    var editButton = $('<button>').addClass('btn btn-primary edit-btn').attr('data-userid', userItem.ID).text('Uredi');
+                    var editButton = $('<button>').addClass('btn btn-primary edit-btn mx-2').attr('data-userid', userItem.ID).text('Uredi');
                     var deleteButton = $('<button>').addClass('btn btn-primary btn-danger delete-btn').attr('data-userid', userItem.ID).text('Izbriši');
 
 

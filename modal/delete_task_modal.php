@@ -1,6 +1,8 @@
 <?php
     include '../session_start.php';
     include '../../db.php';
+    // include '../functions/delete_task_check.php';
+
     if(isset($_POST['taskId'])) {
         $taskId = $_POST['taskId'];
     }

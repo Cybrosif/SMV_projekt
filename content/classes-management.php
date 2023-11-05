@@ -72,7 +72,7 @@
                     row.append($('<td class="text3">').text(classItem.Ime_Razreda));
                     row.append($('<td class="text3">').text(classItem.Kljuc_Vpisa));
 
-                    var editButton = $('<button>').addClass('btn btn-primary edit-btn').attr('data-classid', classItem.Razred_ID).text('Uredi');
+                    var editButton = $('<button>').addClass('btn btn-primary edit-btn mx-2').attr('data-classid', classItem.Razred_ID).text('Uredi');
                     var deleteButton = $('<button>').addClass('btn btn-primary btn-danger delete-btn').attr('data-classid', classItem.Razred_ID).text('Izbriši');
                     // Append buttons to the row
                     row.append($('<td class="text3">').append(editButton).append(deleteButton));

@@ -1,6 +1,7 @@
 <?php
 include '../session_start.php';
 include '../../db.php';
+include '../functions/check_if_admin.php';
 
 $userId = $_SESSION['user_id']; 
 
