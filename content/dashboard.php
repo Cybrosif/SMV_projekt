@@ -1,3 +1,9 @@
+<?php
+include '../session_start.php';
+    if(isset($_SESSION['user_vloga']))
+        if($_SESSION['user_vloga'] == 'Administrator' || $_SESSION['user_vloga'] == 'Profesor')
+            echo '<script>window.location.href = "../views/home.php?page=classes";</script>';
+ ?>
 <head>
     <style>   
         .col {
@@ -57,112 +63,111 @@
             white-space: nowrap;
             transition: background-color 0.5s;
         }
-    </style>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        .custom-date-color {
-            color: black !important;
+
+        .gumb:hover {
+            background-color: white;
         }
     </style>
 </head>
 
-<body class="bg-light">
+    <h1 class='text-center primary-text'>Nadzorna plošča</h1>
+    <div class="row">
+        <div class="col1">
+        <div class="container">
+            <p class="nsl text1">Moji predmeti</p>
+            <?php
+                include("../../db.php"); 
 
-    <div class="container mt-3">
-        <h1 class="text-center text-primary mb-4">Nadzorna plošča</h1>
+                if (isset($_SESSION['user_id'])) {
+                    $uporabnik_id = $_SESSION['user_id'];
+                    $sql = "SELECT r.Ime_razreda
+                            FROM uporabniki_razredi AS ur
+                            INNER JOIN razredi AS r ON ur.Razred_ID = r.Razred_ID
+                            WHERE ur.Uporabnik_ID = $uporabnik_id";
+                    $result = $link->query($sql); 
 
-        <div class="row mt-3">
-            <div class="col-lg-6 mb-4">
-                <div class="card shadow">
-                    <div class="card-header bg-primary text-white">
-                        <h4>Moji predmeti</h4>
-                    </div>
-                    <div class="card-body">
-                    <?php
-                        include("../../db.php"); 
-
-                        if (isset($_SESSION['user_id'])) {
-                            $uporabnik_id = $_SESSION['user_id'];
-                            $sql = "SELECT r.Ime_razreda, r.Razred_ID
-                                    FROM uporabniki_razredi AS ur
-                                    INNER JOIN razredi AS r ON ur.Razred_ID = r.Razred_ID
-                                    WHERE ur.Uporabnik_ID = $uporabnik_id";
-                            $result = $link->query($sql); 
-                        
-                            if ($result->num_rows > 0) {
-                                echo '<ul>';
-                                while($row = $result->fetch_assoc()) {
-                                    $ime_razreda = $row["Ime_razreda"];
-                                    $razred_id = $row["Razred_ID"];
-                                    echo '<li class="text2"><a href="http://localhost/SMV_projekt/views/home.php?page=classes-specific-student&razredID=' . $razred_id . '">' . $ime_razreda . '</a></li>';
-                                }
-                                echo '</ul>';
-                            } else {
-                                echo "<br>Ni rezultatov.";
-                            }
-                        } else {
-                            echo "Uporabnik ni prijavljen.";
+                    if ($result->num_rows > 0) {
+                        echo '<ul>';
+                        while($row = $result->fetch_assoc()) {
+                            $ime_razreda = $row["Ime_razreda"];
+                            echo '<li class="text2"><a href="#">' . $ime_razreda . '</a></li>';
                         }
-
-                        $link->close(); 
-                    ?>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="card shadow">
-                    <div class="card-header bg-primary text-white">
-                        <h4>Dodeljene naloge</h4>
-                    </div>
-                    <div class="card-body" style="max-height: 350px; overflow-y: auto;">
-                        <div class="list-group">
-                        <?php
-    include("../../db.php");
-    if (isset($_SESSION['user_id'])) {
-        $uporabnik_id = $_SESSION['user_id'];
-        $sql = "SELECT n.Naslov, n.Rok, r.Ime_razreda, sn.Student_Naloga_ID FROM naloge AS n
-                INNER JOIN uporabniki_razredi AS ur ON n.Razred_ID = ur.Razred_ID
-                LEFT JOIN student_naloge AS sn ON n.Naloga_ID = sn.Naloga_ID AND sn.Student_ID = $uporabnik_id
-                INNER JOIN razredi AS r ON n.Razred_ID = r.Razred_ID 
-                WHERE ur.Uporabnik_ID = $uporabnik_id
-                AND n.Rok >= CURDATE()  
-                ORDER BY n.Rok ASC";
-        $result = $link->query($sql);
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $rok = $row["Rok"];
-                $naslov = $row["Naslov"];
-                $ime_razreda = $row["Ime_razreda"];
-                $datum_roka = strtotime($rok);
-                $class = ($datum_roka < strtotime("today")) ? 'list-group-item-danger' : '';
-                $student_naloga_id = $row["Student_Naloga_ID"];
-
-                if ($student_naloga_id === null) {
-                    echo '<a href="#" class="list-group-item list-group-item-action ' . $class . ' d-flex justify-content-between align-items-center">';
-                    echo $naslov;
-                    echo '<span class="badge badge-primary badge-pill custom-date-color">' . date('d.m.Y', $datum_roka) . '</span>';
-                    echo  $ime_razreda;  
-                    echo '</a>';
+                        echo '</ul>';
+                    } else {
+                        echo "<br>Ni rezultatov.";
+                    }
+                } else {
+                    echo "Uporabnik ni prijavljen.";
                 }
-            }
-        } else {
-            echo '<div class="alert alert-warning">Ni rezultatov.</div>';
-        }
-    } else {
-        echo '<div class="alert alert-danger">Uporabnik ni prijavljen.</div>';
-    }
-    $link->close();
-?>
 
-
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+                $link->close(); 
+            ?>
         </div>
+        </div>
+        <div class="col1">
+            <div class="container">
+            <p class="nsl">Dodeljene naloge</p>
+            <?php
+                include("../../db.php");
+                            
+                if (isset($_SESSION['user_id'])) {
+                    $uporabnik_id = $_SESSION['user_id'];
+
+                    $sql = "SELECT n.Naslov, n.Rok, r.Ime_razreda, sn.Student_Naloga_ID FROM naloge AS n
+                    INNER JOIN uporabniki_razredi AS ur ON n.Razred_ID = ur.Razred_ID
+                    LEFT JOIN student_naloge AS sn ON n.Naloga_ID = sn.Naloga_ID AND sn.Student_ID = $uporabnik_id
+                    INNER JOIN razredi AS r ON n.Razred_ID = r.Razred_ID 
+                    WHERE ur.Uporabnik_ID = $uporabnik_id
+                    AND n.Rok >= CURDATE()
+                    ORDER BY n.Rok ASC";
+                
+                    $result = $link->query($sql);
+                    if (!$result) {
+                        die("Error: " . $link->error);
+                    }
+                    if ($result->num_rows > 0) {
+                        echo '<table class="table">';
+                        echo '<thead>';
+                        echo '<tr>';
+                        echo '<th scope="col"></th>';
+                        echo '<th scope="col" class="text2">Naslov</th>';
+                        echo '<th scope="col" class="text2">Rok oddaje</th>';
+                        
+                        echo '</tr>';
+                        echo '</thead>';
+                        echo '<tbody>';
+                        while ($row = $result->fetch_assoc()) {
+                            $rok = $row["Rok"];
+                            $naslov = $row["Naslov"];
+                            $datum_roka = strtotime($rok);
+                            $student_naloga_id = $row["Student_Naloga_ID"];
+                            
+                        
+                            if ($datum_roka < strtotime("today")) {
+                                echo '<tr class="rok-potekel">';
+                            } else {
+                                echo '<tr>';
+                            }
+                            echo '<th scope="row" ></th>';
+                            echo '<td class="text3"><a href="#">' . $naslov . '</a></td>';
+                            echo '<td class="text3">' . date('d.m.Y', $datum_roka) . '</td>';
+                           
+                            echo '</tr>';
+                        }
+                        echo '</tbody>';
+                        echo '</table>';
+                    } else {
+                        echo "Ni rezultatov.";
+                    }
+                } else {
+                    echo "Uporabnik ni prijavljen.";
+                }
+                
+                $link->close();
+            ?>
+
+
+
+        </div>
+       </div>
     </div>
