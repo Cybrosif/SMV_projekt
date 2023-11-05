@@ -1,5 +1,8 @@
 <?php
-include '../../db.php';
+    include '../../db.php';
+    include '../session_start.php';
+    include '../functions/check_student.php';
+
 
 $ime_razreda = null;
 $userRole = $_SESSION['user_vloga'];
@@ -149,14 +152,29 @@ if ($razredID) {
                             echo "</tr>";
                         }
                     
-                        // Free the result set
-                        mysqli_free_result($result);
-                    } else {
-                        // Handle query error
-                        echo "Error: " . mysqli_error($link);
+                    while ($row = mysqli_fetch_assoc($result)) {           
+                        $fileExtension = pathinfo($row['Pot_Do_Datoteke'], PATHINFO_EXTENSION);
+                        $downloadFileName = $row['gradiva_Naslov'] . '.' . $fileExtension;
+                        echo "<tr>";
+                        echo "<td class='text2'>" . $i . "</td>"; 
+                        echo "<td class='text2'>" . $row['naloge_Naslov'] . "</td>";
+                        echo "<td class='text2'><a href='../uploads/" . $row['Pot_Do_Datoteke'] . "' download='" . $downloadFileName . "'>" . $row['gradiva_Naslov'] . "</a></td>"; 
+                        echo "<td class='text2'>" . $row['Rok'] . "</td>"; 
+                        echo "<td class='text2'><button class='btn btn-primary submit' data-nalogaid='" . $row['Naloga_ID'] . "'>Naloži datoteko</button></td>";
+                        echo "</tr>";
+                        $i++;
                     }
-                ?>
-                </tbody>
+                
+                    // Free the result set
+                    mysqli_free_result($result);
+                } else {
+                    // Handle query error
+                    echo "Error: " . mysqli_error($link);
+                }
+            ?>
+            </tbody>
+        </table>
+
         </div>
     </div>
 </div>

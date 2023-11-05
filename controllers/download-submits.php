@@ -31,8 +31,14 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             copy($sourceFilePath, $destinationFilePath);
         }
 
-        // Create a zip file containing the copied files
-        $zipFileName = 'user_files.zip';
+        $query = "SELECT Naslov FROM naloge WHERE Naloga_ID = $taskId";
+        $result = mysqli_query($link, $query);
+        if ($result && mysqli_num_rows($result) > 0) {
+            // Fetch the result and store the Naslov in a variable
+            $row = mysqli_fetch_assoc($result);
+            $naslov = $row['Naslov'];
+        }
+        $zipFileName = $email.'-'.$naslov.'.zip';
         $zip = new ZipArchive();
         if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
             // Add files to the zip archive

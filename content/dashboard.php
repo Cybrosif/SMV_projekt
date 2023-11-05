@@ -1,3 +1,9 @@
+<?php
+include '../session_start.php';
+    if(isset($_SESSION['user_vloga']))
+        if($_SESSION['user_vloga'] == 'Administrator' || $_SESSION['user_vloga'] == 'Profesor')
+            echo '<script>window.location.href = "../views/home.php?page=classes";</script>';
+ ?>
 <head>
     <style>   
         .col {
@@ -63,6 +69,13 @@
         }
     </style>
 </head>
+    <div class="modal fade" id="editUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <!-- Modal content goes here -->
+                </div>
+            </div>
+    </div>
 
     <h1 class='text-center primary-text'>Nadzorna plošča</h1>
     <div class="row">
@@ -107,14 +120,24 @@
                 if (isset($_SESSION['user_id'])) {
                     $uporabnik_id = $_SESSION['user_id'];
 
-                    $sql = "SELECT n.Naslov, n.Rok, Student_naloga_ID, FROM naloge AS n
-                            INNER JOIN uporabniki_razredi AS ur ON n.Razred_ID = ur.Razred_ID
-                            WHERE ur.Uporabnik_ID = $uporabnik_id
-                            AND n.Rok <= DATE_ADD(CURDATE(), INTERVAL 1 WEEK)
-                            ORDER BY n.Rok ASC";
+                    $sql = "SELECT n.Naslov, n.Rok, r.Ime_razreda, n.Naloga_ID, sn.Student_Naloga_ID 
+                    FROM naloge AS n
+                    INNER JOIN uporabniki_razredi AS ur ON n.Razred_ID = ur.Razred_ID
+                    LEFT JOIN student_naloge AS sn ON n.Naloga_ID = sn.Naloga_ID AND sn.Student_ID = $uporabnik_id
+                    INNER JOIN razredi AS r ON n.Razred_ID = r.Razred_ID 
+                    WHERE ur.Uporabnik_ID = $uporabnik_id
+                    AND n.Rok >= CURDATE()
+                    AND sn.Student_Naloga_ID IS NULL
+                    ORDER BY n.Rok ASC";
+
+            
+
+
                 
                     $result = $link->query($sql);
-                
+                    if (!$result) {
+                        die("Error: " . $link->error);
+                    }
                     if ($result->num_rows > 0) {
                         echo '<table class="table">';
                         echo '<thead>';
@@ -122,7 +145,7 @@
                         echo '<th scope="col"></th>';
                         echo '<th scope="col" class="text2">Naslov</th>';
                         echo '<th scope="col" class="text2">Rok oddaje</th>';
-                        
+                        echo '<th scope="col" class="text2"></th>';
                         echo '</tr>';
                         echo '</thead>';
                         echo '<tbody>';
@@ -141,6 +164,7 @@
                             echo '<th scope="row" ></th>';
                             echo '<td class="text3"><a href="#">' . $naslov . '</a></td>';
                             echo '<td class="text3">' . date('d.m.Y', $datum_roka) . '</td>';
+                            echo '<td class="text3"><button class="btn btn-primary submit" data-nalogaid="' . $row['Naloga_ID'] . '">Oddaj</button></td>';
                            
                             echo '</tr>';
                         }
@@ -161,3 +185,21 @@
         </div>
        </div>
     </div>
+
+<script>
+    $(document).ready(function() {
+        $('table').on('click', '.submit', function(){
+            var nalogaId = $(this).data('nalogaid');     
+            $.ajax({
+                type: 'POST',
+                url: '../modal/upload-file-student.php', 
+                data: { nalogaId: nalogaId },
+                success: function(response){
+                    $('#editUserModal .modal-content').html(response);
+                    $('#editUserModal').modal('show');
+                    console.log(nalogaId);
+                }
+            });
+        });
+    });
+</script>
