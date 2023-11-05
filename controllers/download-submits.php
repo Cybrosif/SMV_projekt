@@ -1,10 +1,27 @@
 <?php
 include '../../db.php';
+
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (isset($_GET['email']) && isset($_GET['taskId'])) {
         $email = $_GET['email'];
         $taskId = $_GET['taskId'];
+        
+        $query = "SELECT Naslov FROM naloge WHERE Naloga_ID = $taskId";
+        $result = mysqli_query($link, $query);
 
+        if (!$result) {
+            die("Error: " . mysqli_error($link)); // Print MySQL error if query fails
+        }
+
+        if (mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            $naslov = $row['Naslov'];
+            mysqli_free_result($result); // Free the result set
+
+            // Rest of your code for creating the ZIP file and initiating download
+        }
+
+        // Fetch submission files from the database
         $stmt = $link->prepare("SELECT Pot_Do_Datoteke, Original_Filename
                                 FROM student_naloge
                                 WHERE Naloga_Id = ? 
@@ -13,49 +30,17 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $stmt->execute();
         $stmt->bind_result($potDoDatoteke, $originalFilename);
         
-        // Fetch the results
-        $filePaths = [];
-        while ($stmt->fetch()) {
-            // Add fetched file paths to the array
-            $filePaths[] = ['path' => '../uploads/'.$potDoDatoteke, 'filename' => $originalFilename];
-        }
-
-        // Create a temporary directory to store the files
-        $tempDir = '../temp/temp_zip_' . uniqid();
-        mkdir($tempDir);
-        
-        // Copy the files from the fetched paths to the temporary directory
-        foreach ($filePaths as $file) {
-            $sourceFilePath = $file['path'];
-            $destinationFilePath = $tempDir . '/' . $file['filename'];
-            copy($sourceFilePath, $destinationFilePath);
-        }
-
-        $query = "SELECT Naslov FROM naloge WHERE Naloga_ID = $taskId";
-        $result = mysqli_query($link, $query);
-        if ($result && mysqli_num_rows($result) > 0) {
-            // Fetch the result and store the Naslov in a variable
-            $row = mysqli_fetch_assoc($result);
-            $naslov = $row['Naslov'];
-        }
+        // Initialize ZIP archive
         $zipFileName = $email.'-'.$naslov.'.zip';
         $zip = new ZipArchive();
         if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
-            // Add files to the zip archive
-            $dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($tempDir));
-            foreach ($dir as $file) {
-                // Skip directories
-                if (!$file->isDir()) {
-                    $filePath = $file->getRealPath();
-                    $relativePath = substr($filePath, strlen($tempDir) + 1);
-                    $zip->addFile($filePath, $relativePath);
-                }
+            // Add submission files to the ZIP archive
+            while ($stmt->fetch()) {
+                $sourceFilePath = '../uploads/' . $potDoDatoteke;
+                $zip->addFile($sourceFilePath, $originalFilename);
             }
             $zip->close();
         }
-
-        // Delete the temporary directory
-        deleteDirectory($tempDir);
 
         // Set headers to force download the zip file
         header('Content-Type: application/zip');
@@ -69,28 +54,5 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     }
 } else {
     echo "Invalid request method.";
-}
-
-// Recursive function to delete a directory and its contents
-function deleteDirectory($dir) {
-    if (!file_exists($dir)) {
-        return true;
-    }
-
-    if (!is_dir($dir)) {
-        return unlink($dir);
-    }
-
-    foreach (scandir($dir) as $item) {
-        if ($item == '.' || $item == '..') {
-            continue;
-        }
-
-        if (!deleteDirectory($dir . DIRECTORY_SEPARATOR . $item)) {
-            return false;
-        }
-    }
-
-    return rmdir($dir);
 }
 ?>

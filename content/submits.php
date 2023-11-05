@@ -14,19 +14,20 @@
                     <tr>
                         <th scope="col" class="text2">#</th>
                         <th scope="col" class="text2">Email učenca</th>
+                        <th scope="col" class="text2">Ime in prrimek</th>
                         <th scope="col" class="text2">Datum oddaje</th>
                         <th scope="col" class="text2"></th>
                     </tr>
                 </thead>
                 <tbody>
                 <?php
-                   $sql = "SELECT uporabniki.Email, MAX(student_naloge.Datum_Oddaje) AS Latest_Submission_Date
+                   $sql = "SELECT uporabniki.Email, uporabniki.Ime, uporabniki.Priimek, MAX(student_naloge.Datum_Oddaje) AS Latest_Submission_Date
                    FROM student_naloge
                    JOIN naloge ON student_naloge.Naloga_ID = naloge.Naloga_ID
                    JOIN uporabniki ON student_naloge.Student_ID = uporabniki.ID
                    LEFT JOIN gradiva ON naloge.Gradiva_ID = gradiva.Gradivo_ID
                    WHERE student_naloge.Naloga_ID = $taksId
-                   GROUP BY uporabniki.Email";
+                   GROUP BY uporabniki.Email, uporabniki.Ime, uporabniki.Priimek";
            
                     $result = mysqli_query($link, $sql);
                     $i = 1;
@@ -36,6 +37,7 @@
                             echo "<tr>"; 
                             echo "<td>".$i."</td>";
                             echo "<td>".$row['Email']."</td>";
+                            echo "<td>".$row['Ime'].' '. $row['Priimek']."</td>";
                             echo "<td>".$row['Latest_Submission_Date']."</td>";
                             echo "<td><button class='btn btn-primary download-files' data-taskid='".$taksId."' data-email='".$row['Email']."'>Naloži oddaje</button></td>";
                             echo "</tr>";

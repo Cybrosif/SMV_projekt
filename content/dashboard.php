@@ -87,7 +87,7 @@ include '../session_start.php';
 
                 if (isset($_SESSION['user_id'])) {
                     $uporabnik_id = $_SESSION['user_id'];
-                    $sql = "SELECT r.Ime_razreda
+                    $sql = "SELECT r.Ime_razreda, r.Razred_ID
                             FROM uporabniki_razredi AS ur
                             INNER JOIN razredi AS r ON ur.Razred_ID = r.Razred_ID
                             WHERE ur.Uporabnik_ID = $uporabnik_id";
@@ -97,7 +97,7 @@ include '../session_start.php';
                         echo '<ul>';
                         while($row = $result->fetch_assoc()) {
                             $ime_razreda = $row["Ime_razreda"];
-                            echo '<li class="text2"><a href="#">' . $ime_razreda . '</a></li>';
+                            echo '<li class="text2"><a href="../views/home.php?page=classes-specific-student&razredID= '.$row['Razred_ID'].'">' . $ime_razreda . '</a></li>';
                         }
                         echo '</ul>';
                     } else {
@@ -120,7 +120,7 @@ include '../session_start.php';
                 if (isset($_SESSION['user_id'])) {
                     $uporabnik_id = $_SESSION['user_id'];
 
-                    $sql = "SELECT n.Naslov, n.Rok, r.Ime_razreda, n.Naloga_ID, sn.Student_Naloga_ID 
+                    $sql = "SELECT n.Naslov, n.Rok, r.Ime_razreda, r.Razred_ID, n.Naloga_ID, sn.Student_Naloga_ID 
                     FROM naloge AS n
                     INNER JOIN uporabniki_razredi AS ur ON n.Razred_ID = ur.Razred_ID
                     LEFT JOIN student_naloge AS sn ON n.Naloga_ID = sn.Naloga_ID AND sn.Student_ID = $uporabnik_id
@@ -144,6 +144,7 @@ include '../session_start.php';
                         echo '<tr>';
                         echo '<th scope="col"></th>';
                         echo '<th scope="col" class="text2">Naslov</th>';
+                        echo '<th scope="col" class="text2">Predmet</th>';
                         echo '<th scope="col" class="text2">Rok oddaje</th>';
                         echo '<th scope="col" class="text2"></th>';
                         echo '</tr>';
@@ -162,7 +163,8 @@ include '../session_start.php';
                                 echo '<tr>';
                             }
                             echo '<th scope="row" ></th>';
-                            echo '<td class="text3"><a href="#">' . $naslov . '</a></td>';
+                            echo '<td class="text3">' . $naslov . '</td>';
+                            echo '<td class="text3"><a href="../views/home.php?page=classes-specific-student&razredID= '.$row['Razred_ID'].'">' . $row['Ime_razreda'] . '</a></td>';
                             echo '<td class="text3">' . date('d.m.Y', $datum_roka) . '</td>';
                             echo '<td class="text3"><button class="btn btn-primary submit" data-nalogaid="' . $row['Naloga_ID'] . '">Oddaj</button></td>';
                            
