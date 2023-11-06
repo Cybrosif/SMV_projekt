@@ -159,7 +159,7 @@
                         
                         while ($row = mysqli_fetch_assoc($result)) {           
                             $fileExtension = pathinfo($row['Pot_Do_Datoteke'], PATHINFO_EXTENSION);
-                            $downloadFileName = $row['gradiva_Naslov'] . '.' . $fileExtension;
+                            $downloadFileName = $row['gradiva_Naslov'];
                             $visibilityClass = $row['Visible'] ? 'text-success' : 'text-danger';
                             echo "<tr>";
                             echo "<td>" . $i . "</td>"; 
