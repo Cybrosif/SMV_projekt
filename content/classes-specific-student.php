@@ -135,7 +135,8 @@ if ($razredID) {
                    gradiva.Naslov AS gradiva_Naslov
                    FROM naloge 
                    LEFT JOIN gradiva ON naloge.Gradiva_ID = gradiva.Gradivo_ID
-                   WHERE naloge.Razred_ID = $razredID";           
+                   WHERE naloge.Razred_ID = $razredID
+                   AND naloge.Visible = 1";           
                     $result = mysqli_query($link, $sql);
                     $i = 1;
                     if ($result) {

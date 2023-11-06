@@ -128,6 +128,7 @@ include '../session_start.php';
                     WHERE ur.Uporabnik_ID = $uporabnik_id
                     AND n.Rok >= CURDATE()
                     AND sn.Student_Naloga_ID IS NULL
+                    AND naloge.Visible = 1
                     ORDER BY n.Rok ASC";
 
             
