@@ -3,54 +3,85 @@ include '../session_start.php';
 include '../../db.php';
 include '../functions/check_if_admin.php';
 
+// Function to delete files from the server
+function deleteFileFromServer($filePath) {
+    $baseDir = '../uploads/'; // The base directory where files are stored
+    $fullPath = $baseDir . $filePath;
+
+    if (file_exists($fullPath)) {
+        if (!unlink($fullPath)) {
+            error_log("Failed to delete file: " . $fullPath);
+        }
+    } else {
+        error_log("File not found: " . $fullPath);
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $classId = $_POST['classId'];
 
-    // Check if the class exists in the database
-    $checkSql = "SELECT * FROM razredi WHERE Razred_ID = $classId";
-    $checkResult = $link->query($checkSql);
+    // Start transaction
+    mysqli_begin_transaction($link);
 
-    if ($checkResult->num_rows > 0) {
-        // Get list of assignments from naloge table
-        $assignmentsSql = "SELECT Naloga_ID FROM naloge WHERE Razred_ID = $classId";
-        $assignmentsResult = $link->query($assignmentsSql);
+    try {
+        // Get list of file paths from gradiva table
+        $gradivaSql = "SELECT Pot_Do_Datoteke FROM gradiva WHERE Razred_ID = ?";
+        if ($gradivaStmt = mysqli_prepare($link, $gradivaSql)) {
+            mysqli_stmt_bind_param($gradivaStmt, "i", $classId);
+            mysqli_stmt_execute($gradivaStmt);
+            $gradivaResult = mysqli_stmt_get_result($gradivaStmt);
 
-        while ($row = $assignmentsResult->fetch_assoc()) {
-            $assignmentId = $row['Naloga_ID'];
-
-            $assignmentsSql2 = "SELECT Pot_Do_Datoteke FROM student_naloge WHERE Naloga_ID = $assignmentId";
-            $assignmentsResult2 = $link->query($assignmentsSql2);
-            if ($assignmentsResult2 && $assignmentsResult2->num_rows > 0) {
-                // Fetch the single row as an associative array
-                $row = $assignmentsResult2->fetch_assoc();
-            
-                // Access the file path from the associative array
-                $filePath = $row['Pot_Do_Datoteke'];
-            
-                // Now $filePath contains the file path returned from the query
-                // You can use $filePath as needed
-            } 
-
-            $deleteStudentSubmissionSql = "DELETE FROM student_naloge WHERE Naloga_ID = $assignmentId";
-            $studentSubmissionsResult = $link->query($deleteStudentSubmissionSql);
-
-            $oldFilePath = "../uploads/" . $filePath;
-            if (file_exists($oldFilePath)) {
-                unlink($oldFilePath);  // Deletes the old file from the server
+            while ($row = mysqli_fetch_assoc($gradivaResult)) {
+                deleteFileFromServer($row['Pot_Do_Datoteke']);
             }
+            mysqli_stmt_close($gradivaStmt);
         }
 
-        // Delete assignments and class
-        $deleteAssignmentsSql = "DELETE FROM naloge WHERE Razred_ID = $classId";
-        $deleteClassSql = "DELETE FROM razredi WHERE Razred_ID = $classId";
+        // Get list of file paths from student_naloge table
+        $studentNalogeSql = "SELECT sn.Pot_Do_Datoteke FROM student_naloge sn INNER JOIN naloge n ON sn.Naloga_ID = n.Naloga_ID WHERE n.Razred_ID = ?";
+        if ($studentNalogeStmt = mysqli_prepare($link, $studentNalogeSql)) {
+            mysqli_stmt_bind_param($studentNalogeStmt, "i", $classId);
+            mysqli_stmt_execute($studentNalogeStmt);
+            $studentNalogeResult = mysqli_stmt_get_result($studentNalogeStmt);
 
-        if ($link->query($deleteAssignmentsSql) === TRUE && $link->query($deleteClassSql) === TRUE) {
-            echo 'Class, related assignments, student submissions, and files deleted successfully!';
-        } else {
-            echo 'Error deleting class: ' . $link->error;
+            while ($row = mysqli_fetch_assoc($studentNalogeResult)) {
+                deleteFileFromServer($row['Pot_Do_Datoteke']);
+            }
+            mysqli_stmt_close($studentNalogeStmt);
         }
-    } else {
-        echo 'Class not found!';
+
+        // Delete materials (gradiva) linked to the class
+        $deleteMaterialsSql = "DELETE FROM gradiva WHERE Razred_ID = ?";
+        if ($deleteMaterialsStmt = mysqli_prepare($link, $deleteMaterialsSql)) {
+            mysqli_stmt_bind_param($deleteMaterialsStmt, "i", $classId);
+            mysqli_stmt_execute($deleteMaterialsStmt);
+            mysqli_stmt_close($deleteMaterialsStmt);
+        }
+
+        // Delete assignments linked to the class
+        $deleteAssignmentsSql = "DELETE FROM naloge WHERE Razred_ID = ?";
+        if ($deleteAssignmentsStmt = mysqli_prepare($link, $deleteAssignmentsSql)) {
+            mysqli_stmt_bind_param($deleteAssignmentsStmt, "i", $classId);
+            mysqli_stmt_execute($deleteAssignmentsStmt);
+            mysqli_stmt_close($deleteAssignmentsStmt);
+        }
+
+        // Delete the class
+        $deleteClassSql = "DELETE FROM razredi WHERE Razred_ID = ?";
+        if ($deleteClassStmt = mysqli_prepare($link, $deleteClassSql)) {
+            mysqli_stmt_bind_param($deleteClassStmt, "i", $classId);
+            mysqli_stmt_execute($deleteClassStmt);
+            mysqli_stmt_close($deleteClassStmt);
+        }
+
+        // Commit transaction
+        mysqli_commit($link);
+        echo 'Class, related materials, assignments, student submissions, and files deleted successfully!';
+    } catch (Exception $e) {
+        // An exception has been thrown
+        mysqli_rollback($link);
+        error_log("Error: " . $e->getMessage());
+        echo 'Error deleting class and related data: ' . $e->getMessage();
     }
 } else {
     echo 'Invalid request';
