@@ -14,23 +14,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Task found, get Gradivo_ID and delete the file
             $taskData = mysqli_fetch_assoc($checkTaskResult);
             $gradivoId = $taskData['Gradiva_ID'];
+            
 
             if ($gradivoId !== null) {
+                
                 // Fetch file information from the database
                 $getFileQuery = "SELECT Pot_Do_Datoteke FROM gradiva WHERE Gradivo_ID = $gradivoId";
                 $getFileResult = mysqli_query($link, $getFileQuery);
 
                 if ($getFileResult && mysqli_num_rows($getFileResult) > 0) {
+                    
                     $fileData = mysqli_fetch_assoc($getFileResult);
                     $filePath = $fileData['Pot_Do_Datoteke'];
-
+                    
                     // Delete the file from the server
                     $fileFullPath = "../uploads/" . $filePath;
+                    
                     if (file_exists($fileFullPath)) {
+                        
                         unlink($fileFullPath);
+                        
                         // Delete the file information from the database
                         $deleteFileQuery = "DELETE FROM gradiva WHERE Gradivo_ID = $gradivoId";
-                        mysqli_query($link, $deleteFileQuery);
+                        $result = mysqli_query($link, $deleteFileQuery);
+
+                        if ($result) {
+                            echo "Record deleted successfully";
+                        } else {
+                            echo "Error deleting record: " . mysqli_error($link);
+                        }
+
                     } else {
                         echo "Error: File not found on the server.";
                     }

@@ -380,7 +380,7 @@ ALTER TABLE `gradiva`
 -- Constraints for table `naloge`
 --
 ALTER TABLE `naloge`
-  ADD CONSTRAINT `gradivo_ibfk_1` FOREIGN KEY (`Gradiva_ID`) REFERENCES `gradiva` (`Gradivo_ID`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `gradivo_ibfk_1` FOREIGN KEY (`Gradiva_ID`) REFERENCES `gradiva` (`Gradivo_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `naloge_ibfk_1` FOREIGN KEY (`Razred_ID`) REFERENCES `razredi` (`Razred_ID`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --
