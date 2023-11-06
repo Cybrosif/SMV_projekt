@@ -13,7 +13,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $newFileName = substr(str_shuffle("abcdefghijklmnopqrstuvwxyz"), 0, 8) . '_' . $user_id . '.' . $fileType;
         $target_file = "../uploads/" . $newFileName;
 
-        // Try to move the uploaded file to the target directory
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
             $insertQuery = "INSERT INTO gradiva (Razred_ID, Naslov, Pot_Do_Datoteke) VALUES ('$classId', '$name', '$newFileName')";
 

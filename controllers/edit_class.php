@@ -9,10 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $key = mysqli_real_escape_string($link, $_POST['key']);
     $teachers = isset($_POST['teachers']) ? $_POST['teachers'] : array();
 
-    // Update class information
     $updateClassSql = "UPDATE razredi SET Ime_razreda = '$name', Kljuc_Vpisa = '$key' WHERE Razred_ID = $classId";
     if ($link->query($updateClassSql) === TRUE) {
-        // Update teachers for the class
         $deleteTeachersSql = "DELETE FROM ucitelji_razredi WHERE Razred_ID = $classId";
         $link->query($deleteTeachersSql);
         

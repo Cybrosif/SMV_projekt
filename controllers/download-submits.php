@@ -10,15 +10,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $result = mysqli_query($link, $query);
 
         if (!$result) {
-            die("Error: " . mysqli_error($link)); // Print MySQL error if query fails
+            die("Error: " . mysqli_error($link)); 
         }
 
         if (mysqli_num_rows($result) > 0) {
             $row = mysqli_fetch_assoc($result);
             $naslov = $row['Naslov'];
-            mysqli_free_result($result); // Free the result set
-
-            // Rest of your code for creating the ZIP file and initiating download
+            mysqli_free_result($result); 
         }
 
         // Fetch submission files from the database
@@ -30,7 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $stmt->execute();
         $stmt->bind_result($potDoDatoteke, $originalFilename);
         
-        // Initialize ZIP archive
         $zipFileName = $email.'-'.$naslov.'.zip';
         $zip = new ZipArchive();
         if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
@@ -42,12 +39,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $zip->close();
         }
 
-        // Set headers to force download the zip file
         header('Content-Type: application/zip');
         header('Content-Disposition: attachment; filename="' . $zipFileName . '"');
         readfile($zipFileName);
 
-        // Delete the zip file after download
         unlink($zipFileName);
     } else {
         echo "Email or task ID is missing in the request.";

@@ -2,7 +2,6 @@
 include '../../db.php';
 include '../session_start.php';
 
-// Retrieve data from the AJAX request
 $enteredKey = mysqli_real_escape_string($link, $_POST['enteredKey']);
 $classId = mysqli_real_escape_string($link, $_POST['classId']);
 
@@ -20,7 +19,7 @@ if ($result) {
         if (mysqli_query($link, $insertSql)) {
             echo "success";
         } else {
-            echo "error_with_insert";
+            echo "Error with insert";
         }
     } else {
         

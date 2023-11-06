@@ -1,7 +1,6 @@
 <?php
     include '../../db.php';
     include '../session_start.php';
-    // PREVERJANJE CE JE DIJAK
 
     $sql = "SELECT * FROM razredi 
         WHERE Razred_ID NOT IN 
@@ -79,13 +78,11 @@
         $(".razred-row").on("click", function() {
             var razredId = $(this).data("razredid");
 
-            // Make an AJAX request to fetch data for the selected Razred_ID
             $.ajax({
                 type: "POST",
-                url: "../modal/class-join.php", // Modify this URL to the server-side script that fetches data based on Razred_ID
+                url: "../modal/class-join.php", 
                 data: { razredId: razredId },
                 success: function(response) {
-                    // Populate the modal content with the fetched data
                     $("#editUserModal .modal-content").html(response);
                     $("#editUserModal").modal("show");
                 }

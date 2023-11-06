@@ -65,19 +65,19 @@ include '../controllers/classes_add.php';
                     echo "<li class='list-group-item d-flex justify-content-between align-items-center'>";
                     echo "{$classes[$i]['Ime_razreda']}";
                     
-                    // Place the two buttons in a div for better control
+
                     echo "<div class='action-buttons'>";
 
-                    // "Naloge" button
+
                     echo "<a href='../views/home.php?page=specific_class&Razred_ID={$classes[$i]['Razred_ID']}' class='btn btn-dark-blue btn-sm mr-2'>Naloge</a>";
 
-                    // "Odstrani" button
+
                     echo "<form method='post' class='d-inline-block'>";
                     echo "<input type='hidden' name='remove' value='{$classes[$i]['Razred_ID']}'>";
                     echo "<button type='submit' class='btn btn-danger btn-sm'>Odstrani</button>";
                     echo "</form>";
 
-                    echo "</div>"; // Close action-buttons div
+                    echo "</div>";
 
                     echo "</li>";
                 }

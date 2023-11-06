@@ -27,13 +27,9 @@
 
     while ($row = $result2->fetch_assoc()) {
         $teacherId = $row["Ucitelj_ID"];
-        // Do something with $subjectId (as $ime is not defined in your query)
-        // For example, you can add subject IDs to the $subjects array
         $teachers[] = $teacherId;
     }
 
-    // Now $subjects array contains the IDs of subjects the user is associated with
-    // You can use this array as needed
     } else {
     echo "No results found";
     }
@@ -47,7 +43,6 @@
                 $teahcerName = $row["Ime"];
                 $teahcerSurname = $row["Priimek"];
                 $teahcerEmail = $row["Email"];
-                // Store class data in the $allSubjects array
                 $allTeachers[] = array("ID" => $teahcerId, "Email" => $teahcerEmail, "Ime" => $teahcerName, "Priimek" => $teahcerSurname);
             }
             } else {

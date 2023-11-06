@@ -49,5 +49,5 @@ $(document).ready(function() {
 
     $("#settingsForm input").on("input", checkInputs);
 
-    checkInputs(); // Check inputs on document ready
+    checkInputs(); 
 });

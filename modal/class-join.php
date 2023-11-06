@@ -13,7 +13,7 @@
     <div class="mb-3">
         <label for="inputText" class="form-label">Vpišite ključ za vpis</label>
         <input type="text" class="form-control" id="inputText" placeholder="Vpišite...">
-        <div id="error-message" class="text-danger mt-2"></div> <!-- Error message placeholder -->
+        <div id="error-message" class="text-danger mt-2"></div> 
     </div>
 </div>
 <div class="modal-footer">

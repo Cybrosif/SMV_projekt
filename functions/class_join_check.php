@@ -4,7 +4,6 @@ if ($_SESSION['user_vloga'] != 'Dijak') {
     die("Unauthorized access!");
 }
 
-// Check if student is already enrolled in the class
 $classId = $_POST['razredId'];
 $userId = $_SESSION['user_id'];
 

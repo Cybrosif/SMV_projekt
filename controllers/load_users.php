@@ -11,11 +11,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         while($row = $result->fetch_assoc()) {
             $users[] = $row;
         }
-        // Send the users data as a JSON response
         header('Content-Type: application/json');
         echo json_encode($users);
     } else {
-        // No users found
         echo "0 results";
     }
 }

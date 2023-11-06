@@ -6,7 +6,6 @@
         $taskId = $_POST['taskId'];
         $classId = $_POST['classId'];
 
-        // Fetch task data and file-related information from the database
         $query = "SELECT n.*, g.Naslov AS GradivaNaslov, g.Pot_Do_Datoteke AS GradivaPot
                   FROM naloge n
                   LEFT JOIN gradiva g ON n.Gradiva_ID = g.Gradivo_ID
@@ -19,10 +18,10 @@
             $taskName = $taskData['Naslov'];
             $deadline = $taskData['Rok'];
             $isVisible = $taskData['Visible'];
-            $fileTitle = $taskData['GradivaNaslov']; // File title from gradiva table
-            $filePath = $taskData['GradivaPot']; // File path from gradiva table
+            $fileTitle = $taskData['GradivaNaslov']; 
+            $filePath = $taskData['GradivaPot']; 
         } else {
-            // Handle error if no task found
+          
             echo "Task not found!";
         }
     }
@@ -59,17 +58,17 @@
    $(document).ready(function(){
     $("#submitBtn").on("click", function(){
         var name = $("#name").val();
-        var deadline = $("#deadline").val(); // Get deadline value
+        var deadline = $("#deadline").val();
         var fileToUpload = $("#fileToUpload")[0].files[0]; 
-        var isVisible = $("#isVisible").is(":checked"); // Get checkbox state
+        var isVisible = $("#isVisible").is(":checked");
         var taskId = <?php echo $taskId; ?>; 
         var classId = <?php echo $classId; ?>; 
 
         var formData = new FormData();
         formData.append("name", name); 
-        formData.append("deadline", deadline); // Append deadline to form data
+        formData.append("deadline", deadline);
         formData.append("fileToUpload", fileToUpload);
-        formData.append("isVisible", isVisible); // Append isVisible to form data
+        formData.append("isVisible", isVisible); 
         formData.append("taskId", taskId); 
         formData.append("classId", classId); 
 
@@ -84,7 +83,7 @@
                 location.reload();
             },
             error: function(xhr, status, error) {
-                console.error(xhr.responseText); // Handle errors
+                console.error(xhr.responseText); 
             }
         });
     });

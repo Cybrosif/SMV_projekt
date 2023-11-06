@@ -11,18 +11,14 @@ $razredID = $_GET['razredID'];
 
 $belongsRazred = false;
 if ($userId && $razredID) {
-    // Construct the query
     $sql = "SELECT 1 FROM uporabniki_razredi WHERE Uporabnik_ID = $userId AND Razred_ID = $razredID LIMIT 1";
     
-    // Execute the query
     $result = mysqli_query($link, $sql);
 
-    // Check for errors
     if (!$result) {
         die("Query failed: " . mysqli_error($link));
     }
 
-    // If there's at least one row in the result, set belongsRazred to true
     if (mysqli_num_rows($result) > 0) {
         $belongsRazred = true;
     }
@@ -31,13 +27,11 @@ if ($userId && $razredID) {
     mysqli_free_result($result);
 }
 
-// If the user is not a student or does not belong to the class, redirect them.
 if ($belongsRazred == false) {
     echo '<script type="text/javascript">window.location.href = "home.php?page=classes";</script>';
     exit; // Ensure no further code is executed after a redirect
 }
 
-// Fetch the razred name
 if ($razredID) {
     $stmt = $link->prepare("SELECT Ime_razreda FROM razredi WHERE Razred_ID = ?");
     $stmt->bind_param("i", $razredID);
@@ -165,10 +159,8 @@ if ($razredID) {
                         $i++;
                     }
                 
-                    // Free the result set
                     mysqli_free_result($result);
                 } else {
-                    // Handle query error
                     echo "Error: " . mysqli_error($link);
                 }
             ?>

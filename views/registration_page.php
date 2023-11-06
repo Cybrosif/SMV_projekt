@@ -86,7 +86,7 @@
 
 <script>
  $(document).ready(function() {
-    // Add event listener to the email input field
+
     
     $('#email').on('input', function() {
             var email = $(this).val();

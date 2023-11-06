@@ -54,7 +54,7 @@ $(document).ready(function() {
             return;
         }
 
-        errorText.text("");  // Clear any error messages if everything is valid
+        errorText.text("");  
         submitButton.prop("disabled", false);
     }
 

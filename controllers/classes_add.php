@@ -24,8 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $query = "INSERT IGNORE INTO uporabniki_razredi (Uporabnik_ID, Razred_ID) VALUES ($userId, $razredId)";
             mysqli_query($link, $query);
         } else {
-            // Handle invalid "Kljuc_Vpisa" here, for instance:
-            // echo "Invalid Kljuc_Vpisa provided!";
+
         }
     } elseif (isset($_POST['remove'])) {
         $removeId = $_POST['remove'];

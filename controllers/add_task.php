@@ -13,29 +13,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $isVisible = $_POST['isVisible'];
         $user_id = $_SESSION['user_id'];
 
-        $fileId = null; // Initialize fileId as null
+        $fileId = null;
 
-        // Check if file is uploaded
         if (isset($_FILES['fileToUpload']) && $_FILES['fileToUpload']['error'] == UPLOAD_ERR_OK) {
             $original_filename = basename($_FILES["fileToUpload"]["name"]);
             $fileType = strtolower(pathinfo($original_filename, PATHINFO_EXTENSION));
             $newFileName = substr(str_shuffle("abcdefghijklmnopqrstuvwxyz"), 0, 8) . '_' . $user_id . '.' . $fileType;
             $target_file = "../uploads/" . $newFileName;
 
-            // Try to move the uploaded file to the target directory
             if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                // Insert file information into the gradiva table
                 $insertFileQuery = "INSERT INTO gradiva (Razred_ID, Naslov, Pot_Do_Datoteke) VALUES ('$classId', '$original_filename', '$newFileName')";
                 if (mysqli_query($link, $insertFileQuery)) {
-                    // Get the ID of the inserted file
                     $fileId = mysqli_insert_id($link);
                 } else {
                     echo "Error inserting file information into the database: " . mysqli_error($link);
-                    exit(); // Exit the script to prevent further execution
+                    exit(); 
                 }
             } else {
                 echo "Sorry, there was an error uploading your file.";
-                exit(); // Exit the script to prevent further execution
+                exit(); 
             }
         }
         $visibility = 0;

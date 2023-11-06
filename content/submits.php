@@ -60,7 +60,6 @@
         var taskId = $(this).data('taskid');
         var email = $(this).data('email');
 
-        // Send an AJAX request to the PHP script with user ID and JSON-encoded file paths
         window.location.href = '../controllers/download-submits.php?email=' + email + '&taskId=' + taskId;
 
     });

@@ -45,11 +45,9 @@
         function loadClasses() {
             $.ajax({
                 type: 'POST',
-                url: '../controllers/load-classes.php', // Replace this with the actual URL to your server endpoint
+                url: '../controllers/load-classes.php', 
                 success: function(response) {
-                    //var classesArray = JSON.parse(response);
                     classesArray = response;
-                    // Do something with the classesArray
                     //console.log(classesArray);
                     loadTable(classesArray);
                 },
@@ -65,8 +63,6 @@
             tbody.empty();
             var i = 1;
             classesArray.forEach(function(classItem) {
-                    // Assuming classItem has properties like 'className', 'classDescription', etc.
-                    // Create a table row and append it to the table body
                     var row = $('<tr>');
                     row.append($('<td class="text3">').text(i));
                     row.append($('<td class="text3">').text(classItem.Ime_Razreda));
@@ -74,23 +70,20 @@
 
                     var editButton = $('<button>').addClass('btn btn-primary edit-btn mx-2').attr('data-classid', classItem.Razred_ID).text('Uredi');
                     var deleteButton = $('<button>').addClass('btn btn-primary btn-danger delete-btn').attr('data-classid', classItem.Razred_ID).text('Izbriši');
-                    // Append buttons to the row
                     row.append($('<td class="text3">').append(editButton).append(deleteButton));
 
-                    tbody.append(row); // Append the row to the table body
+                    tbody.append(row);
                     i++;
             });
         };
 
         $('#search').on('input', function() {
             var searchTerm = $(this).val().toLowerCase();
-            //console.log(searchTerm);
-            // Filter classesArray based on the search term
+
             var filteredClasses = classesArray.filter(function(classItem) {
                 return classItem.Ime_Razreda.toLowerCase().includes(searchTerm);
             });
 
-            // Update the table with filtered results
             loadTable(filteredClasses);
         });
 

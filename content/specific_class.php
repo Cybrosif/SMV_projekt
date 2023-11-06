@@ -37,11 +37,10 @@ $nalogeResult = mysqli_query($link, $nalogeQuery);
             padding: 20px;
         }
 
-        /* Scrollable container styles */
         .scrollable-container {
-            max-height: 500px;  /* Adjust this height as per your design requirements */
+            max-height: 500px;  
             overflow-y: auto;
-            padding: 1rem;  /* Optional, to give some space */
+            padding: 1rem;  
         }
     </style>
 </head>
@@ -99,12 +98,9 @@ $nalogeResult = mysqli_query($link, $nalogeQuery);
 
 <script>
    $(document).ready(function() {
-    // Initially, disable all submit buttons
     $('input[type="submit"]').prop('disabled', true);
 
-    // Add event listener for file input change
     $('input[type="file"]').on('change', function() {
-        // Get the container div for the current file input
         var container = $(this).closest('div[data-naloga-id]');
         var submitButton = container.find('input[type="submit"]');
 
@@ -115,26 +111,23 @@ $nalogeResult = mysqli_query($link, $nalogeQuery);
         }
     });
 
-    // Add event listener for form submission using AJAX
     $('#uploadForm').submit(function(event) {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault(); 
         
-        var formData = new FormData($(this)[0]); // Get form data
+        var formData = new FormData($(this)[0]); 
         $.ajax({
-            url: $(this).attr('action'), // Form action URL
-            type: 'POST', // Form submission method
-            data: formData, // Form data
+            url: $(this).attr('action'), 
+            type: 'POST',
+            data: formData, 
             async: false,
             cache: false,
             contentType: false,
             processData: false,
             success: function(response) {
-                // Handle success response here, if needed
                 location.reload();
                 console.log(response);
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                // Handle error here, if needed
                 console.error('AJAX error: ' + textStatus + ' - ' + errorThrown);
             }
         });

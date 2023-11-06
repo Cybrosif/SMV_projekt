@@ -12,24 +12,19 @@
 
         $sql = "SELECT 1 FROM ucitelji_razredi WHERE Ucitelj_ID = $userId AND Razred_ID = $razredID LIMIT 1";
 
-        // Execute the query
         $result = mysqli_query($link, $sql);
 
-        // Check for errors
         if (!$result) {
             die("Query failed: " . mysqli_error($link));
         }
 
-        // If there's at least one row in the result, set belongsRazred to true
         if (mysqli_num_rows($result) > 0) {
             $belongsRazred = true;
         }
 
-        // Free the result
         mysqli_free_result($result);
     }
 
-    // If the user is not a student or does not belong to the class, redirect them.
     if ($belongsRazred == false) {
         echo '<script type="text/javascript">window.location.href = "home.php?page=classes";</script>';
         exit; // Ensure no further code is executed after a redirect
@@ -44,7 +39,6 @@
 
     $result = mysqli_query($link, $sql);
 
-    // Check if the query was successful
     if($result) {
         // Fetch the data from the result and store it in variables
         $row = mysqli_fetch_assoc($result);
@@ -52,7 +46,6 @@
             $ime_razreda = $row['Ime_razreda'];
         }
 
-        // Free the result set
         mysqli_free_result($result);
     } else {
         // Handle query error
@@ -172,10 +165,8 @@
                             echo "</tr>";
                         }
                     
-                        // Free the result set
                         mysqli_free_result($result);
                     } else {
-                        // Handle query error
                         echo "Error: " . mysqli_error($link);
                     }
                 ?>

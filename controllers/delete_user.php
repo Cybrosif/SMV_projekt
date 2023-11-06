@@ -3,7 +3,6 @@ include '../session_start.php';
 include '../../db.php';
 include '../functions/check_if_admin.php';
 
-// Function to delete files from the server
 function deleteFileFromServer($filePath) {
     $baseDir = '../uploads/'; 
     $fullPath = $baseDir . $filePath;
@@ -20,7 +19,6 @@ function deleteFileFromServer($filePath) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userId = $_POST['userId'];
 
-    // Select all file paths associated with the user
     $query = "SELECT Pot_Do_Datoteke FROM student_naloge WHERE Student_ID = ?";
     if ($stmt = mysqli_prepare($link, $query)) {
         mysqli_stmt_bind_param($stmt, "i", $userId);
@@ -32,7 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_stmt_close($stmt);
     }
 
-    // Perform deletion operation in the database
     $sql = "DELETE FROM uporabniki WHERE ID = ?";
     if ($stmt = mysqli_prepare($link, $sql)) {
         mysqli_stmt_bind_param($stmt, "i", $userId);

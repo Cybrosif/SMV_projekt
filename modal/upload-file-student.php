@@ -60,26 +60,26 @@ $taskId = $_POST['nalogaId'];
 <script>
     $(document).ready(function(){
         $('#uploadForm').submit(function(event) {
-            event.preventDefault(); // Prevent the default form submission
-            console.log('Form submitted'); // Debugging: Check if this message appears in the console
-            var taskId = $('[name="taskId"]').val(); // Get the taskId from the hidden input field
-            var formData = new FormData($(this)[0]); // Get form data
-            formData.append('taskId', taskId); // Add taskId to the form data
+            event.preventDefault(); 
+            console.log('Form submitted'); 
+            var taskId = $('[name="taskId"]').val(); 
+            var formData = new FormData($(this)[0]); 
+            formData.append('taskId', taskId); 
 
             $.ajax({
-                url: $(this).attr('action'), // Form action URL
-                type: 'POST', // Form submission method
-                data: formData, // Form data
+                url: $(this).attr('action'),
+                type: 'POST', 
+                data: formData, 
                 async: false,
                 cache: false,
                 contentType: false,
                 processData: false,
                 success: function(response) {
-                    // Handle success response here, if needed
+                   
                     location.reload();
                 },
                 error: function(xhr, status, error) {
-                    console.log('Error:', error); // Debugging: Check if there are any errors
+                    console.log('Error:', error); 
                 }
             });
         });

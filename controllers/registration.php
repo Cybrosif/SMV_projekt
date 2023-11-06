@@ -17,7 +17,6 @@
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->store_result(); 
-    //$stmt->bind_result($id, $username, $hash, $mail, $lvl,$img_path, $money); 
     if ($stmt->num_rows > 0) {
         header('Location: ../index.php');
         exit();

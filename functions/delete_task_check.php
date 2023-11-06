@@ -3,7 +3,6 @@ if ($_SESSION['user_vloga'] != 'Profesor') {
     die("Unauthorized access!");
 }
 
-// If user is a professor, check if they are associated with the class
 if ($_SESSION['user_vloga'] == 'Profesor') {
     $classId = $_POST['razredId'];
     $userId = $_SESSION['user_id'];

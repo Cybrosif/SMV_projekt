@@ -49,7 +49,7 @@
                     location.reload();
                 },
                 error: function(xhr, status, error) {
-                    console.error(xhr.responseText); // Handle errors
+                    console.error(xhr.responseText); 
                 }
             });
         });

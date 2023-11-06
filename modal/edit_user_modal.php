@@ -34,25 +34,21 @@
 
     if ($result) {
     if ($result->num_rows > 0) {
-        $subjects = array(); // Initialize an empty array to store subject IDs
+        $subjects = array(); 
 
         while ($row = $result->fetch_assoc()) {
             $ime = $row["Ime"];
             $priimek = $row["Priimek"];
             $email = $row["Email"];
             $subjectId = $row["Razred_ID"];
-            // Do something with $ime and $subjectId
-            // For example, you can add subject IDs to the $subjects array
             $subjects[] = $subjectId;
         }
 
-        // Now $subjects array contains the IDs of subjects the user is associated with
-        // You can use this array as needed
     } else {
         echo "No results found";
     }
 
-    $result->free(); // Free the result set
+    $result->free(); 
     } else {
     echo "Error: " . $link->error;
     }
@@ -153,15 +149,15 @@
             var newText = '';
 
             if (currentText === originalText) {
-                newText = 'Skrij predmete:'; // Change text to this when button is clicked
+                newText = 'Skrij predmete:'; 
             } else {
-                newText = originalText; // Change text back to original when button is clicked again
+                newText = originalText;
             }
             $('#show-classes').text(newText);
 
-            // Toggle the arrow icon
+            
             $('#show-classes').change
-            // Toggle the visibility of the previous div
+           
             $('#hidden-div').toggle();
         });
 
