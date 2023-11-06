@@ -369,7 +369,7 @@
                             <i class="fas fa-pen me-2"></i>Upravljanje uporabnikov</a>
                             
                         <a href="home.php?page=classes-management" data-page="classes-management" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php if($currentPage == 'classes-management') echo 'active';?>">
-                            <i class="fas fa-pen me-2"></i>Upravljanje razredov</a>
+                            <i class="fas fa-pen me-2"></i>Upravljanje predmetov</a>
                     <?php
                         }
                         if (isset($_SESSION['user_vloga']) && 

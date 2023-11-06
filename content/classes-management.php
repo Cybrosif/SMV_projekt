@@ -6,7 +6,7 @@
 
 
 <div class="container">
-    <h1 class='text-center primary-text text1'>Upravljanje razredov</h1>
+    <h1 class='text-center primary-text text1'>Upravljanje predmetov</h1>
 
     <div class="modal fade" id="editUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog ">
@@ -27,7 +27,7 @@
         <thead>
             <tr>
                 <th scope="col" class="text2">#</th>
-                <th scope="col" class="text2">Ime razreda</th>
+                <th scope="col" class="text2">Ime predmeta</th>
                 <th scope="col" class="text2">Ključ vpisa</th>
                 <th scope="col" class="text2"></th>     
             </tr>

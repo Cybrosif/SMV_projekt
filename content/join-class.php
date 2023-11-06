@@ -27,7 +27,7 @@
         </div>
     </div>
 </div>
-<h1 class='text-center primary-text my-4'>Vpis v razred</h1>
+<h1 class='text-center primary-text my-4'>Vpis v predmet</h1>
 <div class="container text-center">
     <div class="mb-3 search">
         <label for="search">Išči:</label>
@@ -38,7 +38,7 @@
             <thead>
                 <tr>
                     <th scope="col" class="text2">#</th>
-                    <th scope="col" class="text2">Ime razreda</th>
+                    <th scope="col" class="text2">Ime predmeta</th>
                 </tr>
             </thead>
             <tbody>

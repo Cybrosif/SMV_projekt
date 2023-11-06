@@ -11,7 +11,7 @@
 </style>
 <form>
 <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Ustvari razred</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Ustvari predmet</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
@@ -23,7 +23,7 @@
                             
         <div class="mb-3">
             <label for='key' class='form-label'>Ključ vpisa:</label>
-            <input type='text' class='form-control' id='key' name='key' value='' placeholder="Vnesite priimek">
+            <input type='text' class='form-control' id='key' name='key' value='' placeholder="Vnesite ključ">
         </div>                
         <div id="error" class="error-message"></div>
 </div>
