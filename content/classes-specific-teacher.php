@@ -212,7 +212,7 @@
             $.ajax({
                 type: 'POST',
                 url: '../modal/edit_task_modal.php', 
-                data: { taskId: taskId, classId: classId }, // Include both taskId and classId
+                data: { taskId: taskId, classId: classId }, 
                 success: function(response){
                     $('#editUserModal .modal-content').html(response);
                     $('#editUserModal').modal('show');
@@ -232,7 +232,7 @@
                     $('#editUserModal').modal('show');
                 },
                 error: function(xhr, status, error) {
-                    console.error(xhr.responseText); // Log errors if any
+                    console.error(xhr.responseText); 
                 }
             });
         });
