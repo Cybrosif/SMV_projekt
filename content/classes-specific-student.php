@@ -143,7 +143,7 @@ if ($razredID) {
                         
                         while ($row = mysqli_fetch_assoc($result)) {           
                             $fileExtension = pathinfo($row['Pot_Do_Datoteke'], PATHINFO_EXTENSION);
-                            $downloadFileName = $row['gradiva_Naslov'] . '.' . $fileExtension;
+                            $downloadFileName = $row['gradiva_Naslov'];
                             echo "<tr>";
                             echo "<td>" . $i . "</td>"; 
                             echo "<td>" . $row['naloge_Naslov'] . "</td>";
@@ -155,7 +155,7 @@ if ($razredID) {
                     
                     while ($row = mysqli_fetch_assoc($result)) {           
                         $fileExtension = pathinfo($row['Pot_Do_Datoteke'], PATHINFO_EXTENSION);
-                        $downloadFileName = $row['gradiva_Naslov'] . '.' . $fileExtension;
+                        $downloadFileName = $row['gradiva_Naslov'];
                         echo "<tr>";
                         echo "<td class='text2'>" . $i . "</td>"; 
                         echo "<td class='text2'>" . $row['naloge_Naslov'] . "</td>";
